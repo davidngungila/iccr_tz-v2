@@ -151,34 +151,362 @@
     </div>
 </section>
 
-<!-- Call to Action -->
-<section id="join" class="py-24 bg-gradient-to-br from-teal-900 via-emerald-900 to-teal-900 text-white relative overflow-hidden">
-    <!-- Decorative Shapes -->
-    <div class="absolute inset-0 bg-grid-white/[0.05] bg-[length:20px_20px]"></div>
-    <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-20"></div>
-    <div class="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-20"></div>
+<!-- Open Gate Event Section -->
+<section class="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-2 border-indigo-100">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full text-sm font-bold mb-6 shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Recent Event</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Open Gate</span> Event
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    A powerful gathering that brought together graduates and students for spiritual renewal, networking, and fellowship.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <div class="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl p-6 mb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                                09-12
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-gray-900">January 2025</div>
+                                <div class="text-gray-600">4 Days of Transformation</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            The Open Gate event was a remarkable experience that opened doors for graduates to reconnect with their spiritual roots, network with fellow professionals, and be equipped for impactful service in their communities.
+                        </p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Spiritual renewal sessions</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Professional networking opportunities</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Workshops on faith in the workplace</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span>Fellowship and community building</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 text-white shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4">Event Highlights</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                                <div class="font-bold text-lg mb-1">Day 1-2: Spiritual Foundation</div>
+                                <p class="text-white/90 text-sm">Deep worship, prayer, and teaching sessions to strengthen our spiritual foundation.</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                                <div class="font-bold text-lg mb-1">Day 3: Professional Development</div>
+                                <p class="text-white/90 text-sm">Workshops on integrating faith with professional life and career growth.</p>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                                <div class="font-bold text-lg mb-1">Day 4: Networking & Commissioning</div>
+                                <p class="text-white/90 text-sm">Networking sessions and commissioning service to send graduates into their communities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-tight">Ready to Reconnect?</h2>
-        <p class="text-xl md:text-2xl text-teal-100 mb-12 leading-relaxed font-light">
-            Your journey didn't end at graduation. Join the <span class="font-bold text-white">ICCR Tanzania Graduate Network</span> today and take your place in our growing family.
-        </p>
+<!-- Testimonials Section - Advanced -->
+<section class="py-20 bg-white relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold mb-6">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                </svg>
+                <span>Graduate Testimonials</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+                What Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-orange-600">Graduates Say</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Stories of transformation, growth, and impact from our graduate community
+            </p>
+        </div>
         
-        <div class="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="https://wa.me/255123456789?text=I%20want%20to%20join%20Graduate%20Community" target="_blank" class="flex items-center justify-center gap-3 bg-white text-teal-900 px-8 py-5 rounded-xl font-bold text-lg hover:bg-teal-50 transition-all duration-300 shadow-xl hover:shadow-2xl shadow-emerald-900/20 transform hover:-translate-y-1">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                Join via WhatsApp
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @php
+                $graduateTestimonials = [
+                    [
+                        'name' => 'Dr. Anna Mwangi',
+                        'profession' => 'Medical Doctor',
+                        'university' => 'University of Dar es Salaam',
+                        'initials' => 'AM',
+                        'gradient' => 'from-green-400 to-blue-500',
+                        'text' => 'ICCR Graduate Network has been instrumental in helping me maintain my spiritual life while serving in the medical field. The Open Gate event was a powerful reminder of my calling to serve with compassion and faith.',
+                        'year' => 'Class of 2018'
+                    ],
+                    [
+                        'name' => 'Eng. John Kimario',
+                        'profession' => 'Civil Engineer',
+                        'university' => 'Dodoma University',
+                        'initials' => 'JK',
+                        'gradient' => 'from-blue-400 to-green-500',
+                        'text' => 'The networking opportunities through ICCR have opened doors I never imagined. Connecting with fellow Catholic professionals has enriched both my career and spiritual journey. The community support is incredible.',
+                        'year' => 'Class of 2019'
+                    ],
+                    [
+                        'name' => 'Dr. Sarah Mwambene',
+                        'profession' => 'Lecturer',
+                        'university' => 'Mwanza University',
+                        'initials' => 'SM',
+                        'gradient' => 'from-purple-400 to-pink-500',
+                        'text' => 'As an educator, being part of ICCR Graduate Network has helped me integrate my faith into my teaching. The mentorship program connected me with students, and I\'ve seen incredible transformation in their lives.',
+                        'year' => 'Class of 2017'
+                    ],
+                    [
+                        'name' => 'Mr. Peter Mwanga',
+                        'profession' => 'Business Consultant',
+                        'university' => 'Arusha University',
+                        'initials' => 'PM',
+                        'gradient' => 'from-green-400 to-blue-500',
+                        'text' => 'The Open Gate event was life-changing! It rekindled my passion for serving God in the marketplace. The workshops on faith and work have transformed how I approach my business and serve my clients.',
+                        'year' => 'Class of 2020'
+                    ],
+                    [
+                        'name' => 'Dr. Grace Kipanga',
+                        'profession' => 'Lawyer',
+                        'university' => 'Mbeya University',
+                        'initials' => 'GK',
+                        'gradient' => 'from-blue-400 to-green-500',
+                        'text' => 'ICCR has provided a platform where I can be both a professional and a faithful Catholic. The spiritual resilience resources have been crucial in maintaining my faith while navigating the legal profession.',
+                        'year' => 'Class of 2019'
+                    ],
+                    [
+                        'name' => 'Eng. David Joseph',
+                        'profession' => 'IT Professional',
+                        'university' => 'Moshi University',
+                        'initials' => 'DJ',
+                        'gradient' => 'from-indigo-400 to-purple-500',
+                        'text' => 'Joining the graduate network was the best decision after graduation. The community projects have allowed me to use my skills to serve others, and the fellowship has kept me grounded in my faith journey.',
+                        'year' => 'Class of 2021'
+                    ],
+                    [
+                        'name' => 'Ms. Mary Mwangi',
+                        'profession' => 'Social Worker',
+                        'university' => 'University of Dar es Salaam',
+                        'initials' => 'MM',
+                        'gradient' => 'from-pink-400 to-red-500',
+                        'text' => 'The impact and service opportunities through ICCR have aligned perfectly with my career in social work. Working with student chapters has been fulfilling, and I\'ve seen many lives transformed through our collective efforts.',
+                        'year' => 'Class of 2018'
+                    ],
+                    [
+                        'name' => 'Dr. James Mwambene',
+                        'profession' => 'Pharmacist',
+                        'university' => 'Mwanza University',
+                        'initials' => 'JM',
+                        'gradient' => 'from-teal-400 to-cyan-500',
+                        'text' => 'The Open Gate event reminded me why I joined ICCR in the first place. The spiritual renewal sessions were powerful, and connecting with other graduates has created lasting friendships and professional partnerships.',
+                        'year' => 'Class of 2020'
+                    ],
+                    [
+                        'name' => 'Ms. Elizabeth Kimario',
+                        'profession' => 'Accountant',
+                        'university' => 'Dodoma University',
+                        'initials' => 'EK',
+                        'gradient' => 'from-orange-400 to-yellow-500',
+                        'text' => 'ICCR Graduate Network has been my anchor in the professional world. The monthly gatherings and spiritual resources have helped me maintain integrity and serve with excellence in my field. Truly grateful for this community.',
+                        'year' => 'Class of 2021'
+                    ],
+                ];
+            @endphp
+            
+            @foreach($graduateTestimonials as $testimonial)
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="flex items-center gap-1 mb-4 text-yellow-400">
+                    @for($i = 0; $i < 5; $i++)
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    @endfor
+                </div>
+                <p class="text-gray-700 mb-6 leading-relaxed italic">
+                    "{{ $testimonial['text'] }}"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br {{ $testimonial['gradient'] }} rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        {{ $testimonial['initials'] }}
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-bold text-gray-900">{{ $testimonial['name'] }}</div>
+                        <div class="text-sm text-gray-600 font-medium">{{ $testimonial['profession'] }}</div>
+                        <div class="text-xs text-gray-500">{{ $testimonial['university'] }} • {{ $testimonial['year'] }}</div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action - Advanced -->
+<section id="join" class="py-32 bg-gradient-to-br from-teal-900 via-emerald-900 via-cyan-900 to-teal-900 text-white relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 bg-grid-white/[0.05] bg-[length:20px_20px]"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500 rounded-full mix-blend-overlay filter blur-[120px] opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500 rounded-full mix-blend-overlay filter blur-[120px] opacity-30 animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500 rounded-full mix-blend-overlay filter blur-[120px] opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    
+    <!-- Floating Particles -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-2 h-2 bg-white/30 rounded-full animate-bounce" style="animation-delay: 0s; animation-duration: 3s;"></div>
+        <div class="absolute top-40 right-20 w-3 h-3 bg-white/20 rounded-full animate-bounce" style="animation-delay: 1s; animation-duration: 4s;"></div>
+        <div class="absolute bottom-32 left-1/4 w-2 h-2 bg-white/25 rounded-full animate-bounce" style="animation-delay: 2s; animation-duration: 3.5s;"></div>
+        <div class="absolute bottom-20 right-1/3 w-3 h-3 bg-white/30 rounded-full animate-bounce" style="animation-delay: 0.5s; animation-duration: 4s;"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Badge -->
+        <div class="flex justify-center mb-8">
+            <div class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-sm font-bold border border-white/20 shadow-lg">
+                <svg class="w-5 h-5 text-yellow-300 animate-spin" style="animation-duration: 3s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+                <span class="text-emerald-200">Join Our Growing Community</span>
+            </div>
+        </div>
+
+        <!-- Main Heading -->
+        <div class="text-center mb-12">
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
+                <span class="block text-white drop-shadow-2xl">Ready to</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-300 drop-shadow-2xl animate-pulse">
+                    Reconnect?
+                </span>
+            </h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <p class="text-xl md:text-2xl lg:text-3xl text-teal-100 mb-6 leading-relaxed font-light">
+                    Your journey didn't end at graduation.
+                </p>
+                <p class="text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed">
+                    Join the <span class="font-bold text-yellow-300 relative inline-block">
+                        <span class="relative z-10">ICCR Tanzania Graduate Network</span>
+                        <span class="absolute bottom-0 left-0 right-0 h-3 bg-emerald-500/30 -rotate-1 transform"></span>
+                    </span> today and take your place in our growing family.
+                </p>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/20 shadow-2xl">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12">
+                    <div class="text-center group">
+                        <div class="text-4xl md:text-5xl font-extrabold text-yellow-300 mb-2 group-hover:scale-110 transition-transform duration-300">
+                            1,000+
+                        </div>
+                        <div class="text-sm md:text-base text-emerald-200 font-semibold uppercase tracking-wider">
+                            Active Graduates
+                        </div>
+                    </div>
+                    <div class="hidden sm:block w-px h-16 bg-white/20"></div>
+                    <div class="text-center group">
+                        <div class="text-4xl md:text-5xl font-extrabold text-cyan-300 mb-2 group-hover:scale-110 transition-transform duration-300">
+                            50+
+                        </div>
+                        <div class="text-sm md:text-base text-emerald-200 font-semibold uppercase tracking-wider">
+                            Cities & Regions
+                        </div>
+                    </div>
+                    <div class="hidden sm:block w-px h-16 bg-white/20"></div>
+                    <div class="text-center group">
+                        <div class="text-4xl md:text-5xl font-extrabold text-green-300 mb-2 group-hover:scale-110 transition-transform duration-300">
+                            100+
+                        </div>
+                        <div class="text-sm md:text-base text-emerald-200 font-semibold uppercase tracking-wider">
+                            Impact Projects
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+            <a href="https://wa.me/255123456789?text=I%20want%20to%20join%20Graduate%20Community" target="_blank" class="group relative flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 text-white px-10 py-6 rounded-2xl font-bold text-lg md:text-xl shadow-2xl hover:shadow-green-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 min-w-[280px] overflow-hidden">
+                <!-- Animated Background -->
+                <div class="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <!-- Button Content -->
+                <div class="relative z-10 flex items-center gap-3">
+                    <svg class="w-7 h-7 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    <span>Join via WhatsApp</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </div>
             </a>
-            <a href="{{ route('contact') }}" class="flex items-center justify-center gap-3 bg-transparent border-2 border-white/30 text-white px-8 py-5 rounded-xl font-bold text-lg hover:bg-white/10 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                Contact Us
+            
+            <a href="{{ route('contact') }}" class="group relative flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md border-2 border-white/40 text-white px-10 py-6 rounded-2xl font-bold text-lg md:text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-2 hover:scale-105 min-w-[280px]">
+                <svg class="w-7 h-7 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span>Contact Us</span>
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
             </a>
         </div>
         
-        <p class="mt-8 text-sm text-emerald-200 opacity-60">
-            Join over 1,000 graduates making a difference across Tanzania.
-        </p>
+        <!-- Footer Message -->
+        <div class="text-center">
+            <div class="inline-flex items-center gap-3 px-6 py-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+                <svg class="w-6 h-6 text-yellow-300 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                </svg>
+                <p class="text-lg md:text-xl text-emerald-100 font-semibold">
+                    Join over <span class="text-yellow-300 font-bold">1,000+ graduates</span> making a difference across Tanzania
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative Bottom Wave -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg class="w-full h-20 md:h-32 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,60 C300,100 600,20 900,60 C1050,80 1150,40 1200,60 L1200,120 L0,120 Z" opacity="0.3"></path>
+            <path d="M0,80 C300,120 600,40 900,80 C1050,100 1150,60 1200,80 L1200,120 L0,120 Z"></path>
+        </svg>
     </div>
 </section>
 
 @endsection
+

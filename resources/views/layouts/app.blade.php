@@ -319,7 +319,7 @@
                     
                     <!-- Programs Dropdown -->
                     <div class="relative nav-dropdown-parent">
-                        <button type="button" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center gap-1">
+                        <button type="button" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') || request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center gap-1">
                             Programs
                             <svg class="w-5 h-5 nav-dropdown-arrow transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -356,12 +356,12 @@
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Resources</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Download materials</p>
                                     </a>
-                                     <a href="{{ route('graduate') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('graduate') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
+                                    <a href="{{ route('graduate') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('graduate') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
                                         <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/11.jpg') }}" alt="Resources" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            <img src="{{ asset('images/11.jpg') }}" alt="Graduates" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Graduates</h3>
-                                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Community</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Graduate community</p>
                                     </a>
                                 </div>
                             </div>
@@ -411,7 +411,7 @@
                 
                 <!-- Mobile Programs Dropdown -->
                 <div class="mobile-dropdown">
-                    <button class="mobile-dropdown-btn w-full px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center justify-between">
+                    <button class="mobile-dropdown-btn w-full px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') || request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center justify-between">
                         <span>Programs</span>
                         <svg class="w-5 h-5 mobile-dropdown-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -623,19 +623,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('faq') }}" class="flex items-center gap-2 text-gray-400 hover:text-white transition group">
-                                <svg class="w-4 h-4 group-hover:text-green-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('faq') }}" class="flex items-center gap-2 text-gray-400 hover:text-white transition group">
+                            <svg class="w-4 h-4 group-hover:text-green-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                                 <span>FAQ</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.login') }}" class="flex items-center gap-2 text-gray-400 hover:text-white transition group">
-                                <svg class="w-4 h-4 group-hover:text-green-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                                </svg>
-                                <span>Admin Login</span>
                             </a>
                         </li>
                     </ul>
