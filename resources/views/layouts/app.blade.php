@@ -356,6 +356,13 @@
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Resources</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Download materials</p>
                                     </a>
+                                     <a href="{{ route('graduate') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('graduate') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
+                                        <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
+                                            <img src="{{ asset('images/11.jpg') }}" alt="Resources" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                        </div>
+                                        <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Graduates</h3>
+                                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Community</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -415,6 +422,7 @@
                         <a href="{{ route('events') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('events') ? 'text-green-600 bg-green-50' : '' }}">Events</a>
                         <a href="{{ route('media') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('media') ? 'text-green-600 bg-green-50' : '' }}">Media</a>
                         <a href="{{ route('resources') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('resources') ? 'text-green-600 bg-green-50' : '' }}">Resources</a>
+                        <a href="{{ route('graduate') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('graduate') ? 'text-green-600 bg-green-50' : '' }}">Graduates</a>
                     </div>
                 </div>
                 

@@ -202,5 +202,14 @@ class PageController extends Controller
     {
         return view('pages.legal.code-of-conduct');
     }
+    public function codes()
+    {
+        return view('pages.codes');
+    }
+
+    public function graduate()
+    {
+        return view('pages.graduate');
+    }
 }
 
