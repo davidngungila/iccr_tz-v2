@@ -26,9 +26,13 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminController::class, 'login'])->name('login');
+    Route::post('/login', [AdminController::class, 'authenticate'])->name('authenticate');
+    Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/pages', [AdminController::class, 'pages'])->name('pages');
     Route::get('/events', [AdminController::class, 'events'])->name('events');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
+    Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
 });
