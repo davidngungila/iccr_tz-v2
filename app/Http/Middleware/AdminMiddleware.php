@@ -15,6 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            return redirect()->route('admin.login')->with('error', 'You must be an admin to access this page.');
+        }
+        
         return $next($request);
     }
 }
