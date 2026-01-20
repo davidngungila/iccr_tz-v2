@@ -421,34 +421,40 @@
                     <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
                         <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-green-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
                             <div class="relative h-48 bg-gradient-to-br from-green-500 via-green-600 to-blue-600 overflow-hidden">
-                                <img src="{{ asset('images/07.jpg') }}" alt="Open Gate Camp" class="w-full h-full object-cover object-center">
+                                @if($event->banner_image)
+                                    <img src="{{ $event->banner_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover object-center">
+                                @else
+                                    <img src="{{ asset('images/07.jpg') }}" alt="{{ $event->title }}" class="w-full h-full object-cover object-center">
+                                @endif
                                 <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">15</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">March 2026</div>
-                        </div>
+                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">{{ ucfirst($event->status) }}</div>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">{{ $event->start_date->format('d') }}</div>
+                                    <div class="text-lg font-semibold drop-shadow-md">{{ $event->start_date->format('F Y') }}</div>
+                                </div>
                                 <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-green-600/70 to-transparent"></div>
-                    </div>
+                            </div>
                             <div class="p-5">
                                 <div class="flex items-center justify-between mb-2">
+                                    @if($event->location)
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Moshi & Arusha</span>
+                                        <span class="text-xs text-gray-500 font-medium">{{ Str::limit($event->location, 15) }}</span>
                                     </div>
+                                    @endif
                                     <div class="flex items-center gap-1 text-green-600">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
-                                        <span class="text-xs font-semibold">Mar 15</span>
+                                        <span class="text-xs font-semibold">{{ $event->start_date->format('M d') }}</span>
                                     </div>
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-green-600 transition leading-tight">OPEN GATE CAMP</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A transformative spiritual camp bringing together students from Moshi and Arusha regions.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg text-xs font-semibold hover:bg-green-700 transition shadow-md hover:shadow-lg w-full justify-center">
+                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-green-600 transition leading-tight">{{ Str::limit($event->title, 40) }}</h3>
+                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">{{ Str::limit($event->description ?? $event->description_sw ?? 'Join us for this amazing event', 80) }}</p>
+                                <a href="{{ route('event.detail', $event->slug) }}" class="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg text-xs font-semibold hover:bg-green-700 transition shadow-md hover:shadow-lg w-full justify-center">
                                     <span>Learn More</span>
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -456,10 +462,22 @@
                                 </a>
                             </div>
                         </div>
-                </div>
-                
-                    <!-- Event 2: PERFECT VISION -->
+                    </div>
+                    @endforeach
+                    
+                    @if($upcomingEvents->count() === 0)
+                    <!-- Placeholder when no events -->
                     <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
+                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-8 text-center">
+                            <p class="text-gray-600">More events coming soon!</p>
+                        </div>
+                    </div>
+                    @endif
+                    
+                </div>
+            </div>
+        </div>
+        @endif
                         <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
                             <div class="relative h-48 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 overflow-hidden">
                                 <img src="{{ asset('images/08.jpg') }}" alt="Perfect Vision" class="w-full h-full object-cover object-center">
