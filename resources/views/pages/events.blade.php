@@ -194,6 +194,117 @@
         </div>
         
         <div class="space-y-8" id="events-container">
+            <!-- Featured Event: International Easter Conference 2026 -->
+            <div class="event-item group bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50 rounded-2xl shadow-2xl border-4 border-yellow-400 overflow-hidden hover:shadow-3xl hover:border-yellow-500 transition-all duration-300 transform hover:-translate-y-2" data-category="conference">
+                <div class="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 px-6 py-3 text-center">
+                    <div class="flex items-center justify-center gap-2 text-white font-bold text-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                        </svg>
+                        <span>FEATURED EVENT - DON'T MISS THIS!</span>
+                    </div>
+                </div>
+                <div class="md:flex">
+                    <div class="md:w-1/3 relative h-64 md:h-auto bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600 overflow-hidden">
+                        <div class="absolute inset-0 bg-black opacity-20"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-white z-10 p-4">
+                            <div class="text-5xl md:text-6xl font-bold mb-2 drop-shadow-lg">APR</div>
+                            <div class="text-3xl md:text-4xl font-bold mb-2 drop-shadow-lg">2026</div>
+                            <div class="text-xl md:text-2xl font-semibold drop-shadow-md mt-2">MBEYA</div>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 p-6 md:p-8">
+                        <div class="flex items-center gap-2 mb-4 flex-wrap">
+                            <div class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full text-sm font-bold shadow-lg">
+                                🔥 URGENT
+                            </div>
+                            <div class="px-4 py-2 bg-red-500 text-white rounded-full text-sm font-bold">
+                                CONFERENCE
+                            </div>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition">
+                            International Easter Conference 2026
+                        </h3>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4 rounded">
+                            <p class="text-gray-800 font-semibold text-lg leading-relaxed">
+                                <strong>USIFANYE MISTAKE KABISA KUKOSA KONGAMANO HILI!</strong><br>
+                                Toka nimeuzulia, nakuwa mpya kifikra, kiujuzi, kiuchumi, mtazamo na kimahusiano, kifamilia na natiwa ujasiri wa uthubutu limetumika kuwa daraja kwa ajili ya watu wengi. <strong>MAMBO NI MAZURI - TWENDE KWA PAMOJA!</strong>
+                            </p>
+                        </div>
+                        
+                        <!-- Prayer Service Section -->
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                HUDUMA YA MAOMBI NA MAOMBEZI
+                            </h4>
+                            <p class="text-gray-700 mb-2"><strong>Siku za Maombi:</strong> Jumatano na Alhamisi</p>
+                            <p class="text-gray-700 mb-3"><strong>Muda:</strong> Saa 02-03 Usiku</p>
+                            <a href="https://meet.google.com/jea-zvpr-ctn" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition mb-2">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.414 1.414-2.125-2.125-5.66 5.66 1.415 1.414 4.246-4.246 2.125 2.126 1.414-1.415z"/>
+                                </svg>
+                                Join Google Meet
+                            </a>
+                            <p class="text-sm text-gray-600 mt-2">Code: <strong>jea-zvpr-ctn</strong></p>
+                        </div>
+
+                        <!-- Fundraising Event -->
+                        <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4 rounded">
+                            <h4 class="font-bold text-green-900 mb-2">Physical Fundraising Event</h4>
+                            <p class="text-gray-700 mb-2"><strong>Tarehe:</strong> 15 Februari 2026</p>
+                            <p class="text-gray-700"><strong>Mahali:</strong> Jijini MBEYA</p>
+                            <p class="text-gray-600 text-sm mt-2">Tunawakaribisha sana kwenye Physical Fundraising kuwezesha Kongamano la Kimataifa la Pasaka 2026</p>
+                        </div>
+
+                        <!-- Payment Information -->
+                        <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-4 rounded">
+                            <h4 class="font-bold text-purple-900 mb-3">Namba za Malipo - UMOJA WA VYUO TANZANIA</h4>
+                            <div class="space-y-2 text-sm">
+                                <p class="text-gray-700"><strong>1. Namba za Simu VODA:</strong> <span class="font-mono">0792 573 433</span> - CCR UMOJA WA VYUO TZ</p>
+                                <p class="text-gray-700"><strong>2. Lipa Namba VODA:</strong> <span class="font-mono">58286111</span> - CCR UMOJA WA VYUO TZ</p>
+                                <p class="text-gray-700"><strong>3. CRDB Bank A/c:</strong> <span class="font-mono">0150027996201</span> - Catholic Charismatic Renewal</p>
+                            </div>
+                        </div>
+
+                        <!-- Lent Schedule -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-4 rounded">
+                            <h4 class="font-bold text-indigo-900 mb-3">RATIBA YA KWARESMA 2026</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                <p class="text-gray-700">• <strong>Jumatano ya Majivu:</strong> Februari 18, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Kwanza:</strong> Februari 22, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Pili:</strong> Machi 1, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Tatu:</strong> Machi 8, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Nne (Laetare):</strong> Machi 15, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Tano:</strong> Machi 22, 2026</p>
+                                <p class="text-gray-700">• <strong>Dominika ya Matawi:</strong> Machi 29, 2026</p>
+                                <p class="text-gray-700">• <strong>Alhamisi Kuu:</strong> Aprili 2, 2026</p>
+                                <p class="text-gray-700">• <strong>Ijumaa Kuu:</strong> Aprili 3, 2026</p>
+                                <p class="text-gray-700">• <strong>Jumamosi Kuu (Mkesha wa Pasaka):</strong> Aprili 4, 2026</p>
+                                <p class="text-gray-700">• <strong>Jumapili ya Pasaka:</strong> Aprili 5, 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-4 mt-6">
+                            <a href="https://meet.google.com/jea-zvpr-ctn" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg font-bold hover:from-yellow-600 hover:to-orange-600 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Join Prayer Service</span>
+                            </a>
+                            <a href="{{ route('get-involved') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-bold hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <span>Register for Conference</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Event 1 -->
             <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="worship">
                 <div class="md:flex">
