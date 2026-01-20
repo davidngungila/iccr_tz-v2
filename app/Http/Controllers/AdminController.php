@@ -448,9 +448,14 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sw' => 'nullable|string',
             'slug' => 'nullable|string|max:255|unique:events,slug',
             'description' => 'nullable|string',
+            'description_sw' => 'nullable|string',
             'content' => 'nullable|string',
+            'content_sw' => 'nullable|string',
+            'full_details' => 'nullable|string',
+            'full_details_sw' => 'nullable|string',
             'banner_image' => 'nullable|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
@@ -458,6 +463,18 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
+            'payment_info' => 'nullable|string',
+            'payment_info_sw' => 'nullable|string',
+            'prayer_meeting_link' => 'nullable|url',
+            'prayer_meeting_code' => 'nullable|string|max:255',
+            'prayer_schedule' => 'nullable|string',
+            'prayer_schedule_sw' => 'nullable|string',
+            'registration_info' => 'nullable|string',
+            'registration_info_sw' => 'nullable|string',
+            'contact_phone' => 'nullable|string|max:255',
+            'contact_email' => 'nullable|email|max:255',
+            'schedule' => 'nullable|string',
+            'schedule_sw' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {
@@ -486,9 +503,14 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sw' => 'nullable|string',
             'slug' => 'nullable|string|max:255|unique:events,slug,' . $event->id,
             'description' => 'nullable|string',
+            'description_sw' => 'nullable|string',
             'content' => 'nullable|string',
+            'content_sw' => 'nullable|string',
+            'full_details' => 'nullable|string',
+            'full_details_sw' => 'nullable|string',
             'banner_image' => 'nullable|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
@@ -496,6 +518,18 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
+            'payment_info' => 'nullable|string',
+            'payment_info_sw' => 'nullable|string',
+            'prayer_meeting_link' => 'nullable|url',
+            'prayer_meeting_code' => 'nullable|string|max:255',
+            'prayer_schedule' => 'nullable|string',
+            'prayer_schedule_sw' => 'nullable|string',
+            'registration_info' => 'nullable|string',
+            'registration_info_sw' => 'nullable|string',
+            'contact_phone' => 'nullable|string|max:255',
+            'contact_email' => 'nullable|email|max:255',
+            'schedule' => 'nullable|string',
+            'schedule_sw' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {

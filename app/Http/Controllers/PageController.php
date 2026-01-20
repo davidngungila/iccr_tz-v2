@@ -33,7 +33,31 @@ class PageController extends Controller
 
     public function events()
     {
-        return view('pages.events');
+        $upcomingEvents = \App\Models\Event::where('status', 'upcoming')
+            ->orderBy('start_date', 'asc')
+            ->get();
+        $pastEvents = \App\Models\Event::where('status', 'past')
+            ->orderBy('start_date', 'desc')
+            ->limit(10)
+            ->get();
+        $featuredEvent = \App\Models\Event::where('is_featured', true)
+            ->where('status', 'upcoming')
+            ->orderBy('start_date', 'asc')
+            ->first();
+        
+        return view('pages.events', compact('upcomingEvents', 'pastEvents', 'featuredEvent'));
+    }
+
+    public function eventDetail($slug)
+    {
+        $event = \App\Models\Event::where('slug', $slug)->firstOrFail();
+        $relatedEvents = \App\Models\Event::where('status', 'upcoming')
+            ->where('id', '!=', $event->id)
+            ->orderBy('start_date', 'asc')
+            ->limit(3)
+            ->get();
+        
+        return view('pages.event-detail', compact('event', 'relatedEvents'));
     }
 
     public function media()

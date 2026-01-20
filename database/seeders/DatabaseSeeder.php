@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         // Seed admin user
         $this->call(AdminUserSeeder::class);
         
+        // Seed events
+        $this->call(EventsSeeder::class);
+        
         // User::factory(10)->create();
 
         // User::factory()->create([
