@@ -305,15 +305,15 @@
                     </div>
                     
                     <!-- Notifications -->
-                    <div class="relative group">
-                        <button class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition">
+                    <div class="relative" id="notificationsDropdown">
+                        <button class="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition" id="notificationsBtn">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                             </svg>
                             <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <!-- Notifications Dropdown -->
-                        <div class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 z-50">
+                        <div class="absolute right-0 mt-1 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible pointer-events-none transition-all duration-200 transform translate-y-2 z-50" id="notificationsMenu">
                             <div class="p-4 border-b border-gray-200">
                                 <h3 class="font-semibold text-gray-900">Notifications</h3>
                             </div>
@@ -346,8 +346,8 @@
                     </a>
                     
                     <!-- User Dropdown -->
-                    <div class="relative group">
-                        <button class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+                    <div class="relative" id="userDropdown">
+                        <button class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition" id="userDropdownBtn">
                             <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </div>
@@ -361,7 +361,7 @@
                         </button>
                         
                         <!-- Enhanced Dropdown Menu -->
-                        <div class="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 z-50">
+                        <div class="absolute right-0 mt-1 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible pointer-events-none transition-all duration-200 transform translate-y-2 z-50" id="userDropdownMenu">
                             <!-- User Info Header -->
                             <div class="p-5 bg-gradient-to-br from-green-50 to-blue-50 border-b border-gray-200">
                                 <div class="flex items-center gap-3">
@@ -490,6 +490,48 @@
                 }
             }
         });
+
+        // User Dropdown Hover Control
+        let userDropdownTimeout;
+        const userDropdownBtn = document.getElementById('userDropdownBtn');
+        const userDropdownMenu = document.getElementById('userDropdownMenu');
+        const userDropdown = document.getElementById('userDropdown');
+
+        if (userDropdownBtn && userDropdownMenu) {
+            userDropdown.addEventListener('mouseenter', function() {
+                clearTimeout(userDropdownTimeout);
+                userDropdownMenu.classList.remove('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-2');
+                userDropdownMenu.classList.add('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');
+            });
+
+            userDropdown.addEventListener('mouseleave', function() {
+                userDropdownTimeout = setTimeout(function() {
+                    userDropdownMenu.classList.remove('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');
+                    userDropdownMenu.classList.add('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-2');
+                }, 100);
+            });
+        }
+
+        // Notifications Dropdown Hover Control
+        let notificationsTimeout;
+        const notificationsBtn = document.getElementById('notificationsBtn');
+        const notificationsMenu = document.getElementById('notificationsMenu');
+        const notificationsDropdown = document.getElementById('notificationsDropdown');
+
+        if (notificationsBtn && notificationsMenu) {
+            notificationsDropdown.addEventListener('mouseenter', function() {
+                clearTimeout(notificationsTimeout);
+                notificationsMenu.classList.remove('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-2');
+                notificationsMenu.classList.add('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');
+            });
+
+            notificationsDropdown.addEventListener('mouseleave', function() {
+                notificationsTimeout = setTimeout(function() {
+                    notificationsMenu.classList.remove('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0');
+                    notificationsMenu.classList.add('opacity-0', 'invisible', 'pointer-events-none', 'translate-y-2');
+                }, 100);
+            });
+        }
     </script>
     @stack('scripts')
 </body>
