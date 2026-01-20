@@ -50,6 +50,24 @@
         .sidebar-dropdown.open {
             max-height: 500px;
         }
+        
+        /* Custom Scrollbar for Sidebar */
+        nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        nav::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+        
+        nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.7);
+        }
     </style>
 </head>
 <body class="bg-gray-50" style="font-family: 'Mazzard', 'Inter', sans-serif;">
@@ -58,16 +76,7 @@
         <!-- Logo -->
         <div class="flex items-center justify-between h-20 px-6 border-b border-gray-700 bg-gray-900/50 backdrop-blur-sm">
             <div class="flex items-center gap-3">
-                <div class="relative">
-                    <img src="{{ asset('images/logo.png') }}" alt="ICCR Logo" class="w-10 h-10 rounded-lg">
-                    @if(Auth::user()->isAdmin())
-                        <div class="absolute -top-1 -right-1 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-1 shadow-lg">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                        </div>
-                    @endif
-                </div>
+                <img src="{{ asset('images/logo.png') }}" alt="ICCR Logo" class="w-10 h-10 rounded-lg">
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="text-lg font-bold text-white">ICCR Admin</h1>
@@ -91,7 +100,7 @@
         </div>
         
         <!-- Navigation -->
-        <nav class="mt-4 px-3 space-y-1 overflow-y-auto h-[calc(100vh-80px)]">
+        <nav class="mt-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden h-[calc(100vh-80px)]" style="scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.5) transparent;">
             <!-- 1️⃣ Dashboard -->
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">🧭</span>
