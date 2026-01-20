@@ -196,6 +196,36 @@ class AdminController extends Controller
         return redirect()->route('admin.pages')->with('success', 'Page deleted successfully!');
     }
 
+    public function editPageContent($pageName)
+    {
+        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate'];
+        if (!in_array($pageName, $validPages)) {
+            return redirect()->route('admin.pages')->with('error', 'Invalid page');
+        }
+        return view('admin.pages.edit-content', compact('pageName'));
+    }
+
+    public function updatePageContent(Request $request, $pageName)
+    {
+        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate'];
+        if (!in_array($pageName, $validPages)) {
+            return redirect()->route('admin.pages')->with('error', 'Invalid page');
+        }
+
+        foreach ($request->except(['_token']) as $key => $value) {
+            Setting::set($pageName . '_' . $key, $value, 'text', 'pages');
+        }
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'PageContent',
+            'description' => "Updated {$pageName} page content",
+        ]);
+
+        return redirect()->route('admin.pages.edit-content', $pageName)->with('success', 'Page content updated successfully!');
+    }
+
     // ==================== HOMEPAGE MANAGEMENT ====================
     
     public function homepage()
@@ -974,7 +1004,7 @@ class AdminController extends Controller
     
     public function security()
     {
-        $logs = ActivityLog::with('user')->orderBy('created_at', 'desc')->paginate(50);
+        $logs = ActivityLog::with('user')->orderBy('created_at', 'desc')->take(10)->get();
         return view('admin.security.index', compact('logs'));
     }
 

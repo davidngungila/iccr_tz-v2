@@ -42,6 +42,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Pages
         Route::resource('pages', AdminController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])->names(['index' => 'pages', 'create' => 'pages.create', 'store' => 'pages.store', 'edit' => 'pages.edit', 'update' => 'pages.update', 'destroy' => 'pages.delete']);
+        Route::get('/pages/{pageName}/edit-content', [AdminController::class, 'editPageContent'])->name('pages.edit-content');
+        Route::post('/pages/{pageName}/update-content', [AdminController::class, 'updatePageContent'])->name('pages.update-content');
         
         // Homepage
         Route::get('/homepage', [AdminController::class, 'homepage'])->name('homepage');

@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('title', 'Pages Management')
-@section('subtitle', 'Manage all website pages')
+@section('subtitle', 'Manage all website pages - Edit structure or content')
 
 @section('content')
 <div class="mb-8 flex items-center justify-between">
@@ -51,6 +51,9 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="{{ route('admin.pages.edit', $page) }}" class="text-blue-600 hover:text-blue-900 mr-4">Edit</a>
+                        @if(in_array($page->slug, ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate']))
+                            <a href="{{ route('admin.pages.edit-content', $page->slug) }}" class="text-green-600 hover:text-green-900 mr-4">Edit Content</a>
+                        @endif
                         <form action="{{ route('admin.pages.delete', $page) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             @method('DELETE')
