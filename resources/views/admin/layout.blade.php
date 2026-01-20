@@ -68,6 +68,12 @@
         nav::-webkit-scrollbar-thumb:hover {
             background: rgba(156, 163, 175, 0.7);
         }
+        
+        /* Force scrollbar to be visible when content overflows */
+        nav {
+            overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body class="bg-gray-50" style="font-family: 'Mazzard', 'Inter', sans-serif;">
@@ -100,7 +106,7 @@
         </div>
         
         <!-- Navigation -->
-        <nav class="mt-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden h-[calc(100vh-80px)]" style="scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.5) transparent;">
+        <nav class="mt-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden" style="height: calc(100vh - 80px); scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.5) transparent;">
             <!-- 1️⃣ Dashboard -->
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">🧭</span>
@@ -342,17 +348,8 @@
                     <!-- User Dropdown -->
                     <div class="relative group">
                         <button class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
-                            <div class="relative">
-                                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </div>
-                                @if(Auth::user()->isAdmin())
-                                    <div class="absolute -bottom-1 -right-1 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-1 shadow-lg border-2 border-white">
-                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                        </svg>
-                                    </div>
-                                @endif
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </div>
                             <div class="text-left hidden lg:block">
                                 <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
@@ -368,17 +365,8 @@
                             <!-- User Info Header -->
                             <div class="p-5 bg-gradient-to-br from-green-50 to-blue-50 border-b border-gray-200">
                                 <div class="flex items-center gap-3">
-                                    <div class="relative">
-                                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg text-lg">
-                                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                        </div>
-                                        @if(Auth::user()->isAdmin())
-                                            <div class="absolute -bottom-1 -right-1 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-1 shadow-lg border-2 border-white">
-                                                <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                                </svg>
-                                            </div>
-                                        @endif
+                                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg text-lg">
+                                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-sm font-bold text-gray-900 truncate">{{ Auth::user()->name }}</p>
