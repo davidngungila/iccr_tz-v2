@@ -20,13 +20,13 @@
                     <span class="tracking-wide uppercase">ICCR Professional Network</span>
                 </div>
                 
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 drop-shadow-2xl leading-tight">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 drop-shadow-2xl leading-tight">
                     Faith in the <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-300">Marketplace</span>
                 </h1>
                 
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-light mb-8 drop-shadow-lg text-blue-100 max-w-3xl mx-auto leading-normal">
+                <p class="text-lg sm:text-xl md:text-2xl font-light mb-6 drop-shadow-lg text-blue-100 max-w-2xl mx-auto">
                     Empowering Catholic professionals to lead with integrity, serve with compassion, and transform society through the Gospel.
-                </h2>
+                </p>
                 
                 <div class="flex flex-col sm:flex-row gap-5 justify-center items-center mt-8">
                     <a href="#join" class="group bg-white text-indigo-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center gap-2">
@@ -357,6 +357,324 @@
     </div>
 </section>
 
+<!-- Membership Benefits - Detailed -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-6 border border-indigo-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Exclusive Benefits</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                What You Get as a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Member</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Comprehensive support for your professional and spiritual journey
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Benefit 1 -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:border-indigo-300 hover:shadow-2xl transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Professional Networking</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Monthly networking events across Tanzania</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Industry-specific professional groups</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Access to exclusive job opportunities</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Career mentorship programs</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Benefit 2 -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-300 hover:shadow-2xl transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Spiritual Resources</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Weekly online prayer sessions</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Monthly spiritual formation workshops</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Access to digital library of resources</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Annual retreats and conferences</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Benefit 3 -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:border-green-300 hover:shadow-2xl transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Community Impact</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Volunteer opportunities in community projects</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Support student chapters nationwide</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Leadership development programs</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Recognition and awards for service</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How to Join Section -->
+<section class="py-20 bg-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-bold mb-6 border border-green-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                </svg>
+                <span>Get Started</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                How to <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Join</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Simple steps to become part of our growing community
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 shadow-lg">1</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Register Online</h3>
+                <p class="text-gray-600">Fill out the membership registration form with your details and professional information.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 shadow-lg">2</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Verification</h3>
+                <p class="text-gray-600">Our team will verify your graduation details and ICCR membership during college.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 shadow-lg">3</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Welcome Package</h3>
+                <p class="text-gray-600">Receive your welcome package with resources, network access, and event calendar.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 shadow-lg">4</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Start Connecting</h3>
+                <p class="text-gray-600">Attend your first event, join a regional chapter, and begin networking with fellow graduates.</p>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="https://wa.me/255123456789?text=I%20want%20to%20join%20Graduate%20Community" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                <span>Join via WhatsApp</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Regional Chapters -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-bold mb-6 border border-blue-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Regional Presence</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Active <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Chapters</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Connect with graduates in your region
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @php
+                $chapters = [
+                    ['name' => 'Dar es Salaam', 'members' => '150+', 'color' => 'from-blue-500 to-cyan-600'],
+                    ['name' => 'Arusha', 'members' => '80+', 'color' => 'from-green-500 to-emerald-600'],
+                    ['name' => 'Mwanza', 'members' => '95+', 'color' => 'from-purple-500 to-pink-600'],
+                    ['name' => 'Dodoma', 'members' => '70+', 'color' => 'from-indigo-500 to-blue-600'],
+                    ['name' => 'Mbeya', 'members' => '60+', 'color' => 'from-orange-500 to-red-600'],
+                    ['name' => 'Moshi', 'members' => '45+', 'color' => 'from-teal-500 to-cyan-600'],
+                ];
+            @endphp
+            @foreach($chapters as $chapter)
+            <div class="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 hover:border-blue-300 hover:shadow-2xl transition-all duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">{{ $chapter['name'] }}</h3>
+                    <div class="w-12 h-12 bg-gradient-to-br {{ $chapter['color'] }} rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
+                        {{ substr($chapter['name'], 0, 1) }}
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-gray-600 mb-4">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <span class="font-semibold">{{ $chapter['members'] }} Members</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Regular monthly meetings and networking events</p>
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors text-sm">
+                    Contact Chapter Leader →
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm font-bold mb-6 border border-yellow-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Common Questions</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Frequently Asked <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-orange-600">Questions</span>
+            </h2>
+        </div>
+
+        <div class="space-y-6">
+            @php
+                $faqs = [
+                    [
+                        'question' => 'Who can join the ICCR Graduate Network?',
+                        'answer' => 'Any graduate who was an active member of ICCR during their college years can join. We welcome professionals from all fields and industries who share our Catholic values and commitment to service.'
+                    ],
+                    [
+                        'question' => 'Is there a membership fee?',
+                        'answer' => 'No, membership in the ICCR Graduate Network is completely free. We believe in making this community accessible to all graduates regardless of their financial situation.'
+                    ],
+                    [
+                        'question' => 'How often are events held?',
+                        'answer' => 'We organize monthly networking events in major cities, quarterly spiritual formation workshops, and annual conferences. Regional chapters also host their own regular gatherings.'
+                    ],
+                    [
+                        'question' => 'Can I join if I live outside Tanzania?',
+                        'answer' => 'Yes! We have members across the globe. While most events are in Tanzania, we offer online participation options and have international chapters in development.'
+                    ],
+                    [
+                        'question' => 'What support is available for new graduates?',
+                        'answer' => 'New graduates receive mentorship matching, career guidance, access to job opportunities, and integration into regional chapters. We also provide resources for transitioning from student to professional life.'
+                    ],
+                    [
+                        'question' => 'How do I update my contact information?',
+                        'answer' => 'You can update your information through our online portal or by contacting your regional chapter leader. Keeping your information current ensures you receive all event invitations and resources.'
+                    ],
+                ];
+            @endphp
+            @foreach($faqs as $faq)
+            <div class="bg-gray-50 rounded-xl p-6 border-2 border-gray-100 hover:border-indigo-200 transition-all duration-300">
+                <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-start gap-3">
+                    <svg class="w-6 h-6 text-indigo-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>{{ $faq['question'] }}</span>
+                </h3>
+                <p class="text-gray-600 ml-9 leading-relaxed">{{ $faq['answer'] }}</p>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Contact/Join CTA -->
+<section id="join" class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Join Our Community?</h2>
+        <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+            Connect with us today and become part of a network that's transforming lives and communities across Tanzania.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/255123456789?text=I%20want%20to%20join%20Graduate%20Community" target="_blank" class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-indigo-50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                <span>Join via WhatsApp</span>
+            </a>
+            <a href="{{ route('contact') }}" class="bg-white/10 backdrop-blur-md border-2 border-white/40 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
 
 @endsection
 
