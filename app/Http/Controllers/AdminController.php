@@ -198,7 +198,7 @@ class AdminController extends Controller
 
     public function editPageContent($pageName)
     {
-        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate'];
+        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate', 'leadership', 'history', 'programs', 'partnerships'];
         if (!in_array($pageName, $validPages)) {
             return redirect()->route('admin.pages')->with('error', 'Invalid page');
         }
@@ -207,7 +207,7 @@ class AdminController extends Controller
 
     public function updatePageContent(Request $request, $pageName)
     {
-        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate'];
+        $validPages = ['about', 'ministries', 'events', 'media', 'resources', 'get-involved', 'contact', 'faq', 'graduate', 'leadership', 'history', 'programs', 'partnerships'];
         if (!in_array($pageName, $validPages)) {
             return redirect()->route('admin.pages')->with('error', 'Invalid page');
         }

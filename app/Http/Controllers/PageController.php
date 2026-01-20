@@ -211,5 +211,25 @@ class PageController extends Controller
     {
         return view('pages.graduate');
     }
+
+    public function leadership()
+    {
+        return view('pages.leadership');
+    }
+
+    public function history()
+    {
+        return view('pages.history');
+    }
+
+    public function programs()
+    {
+        return view('pages.programs');
+    }
+
+    public function partnerships()
+    {
+        return view('pages.partnerships');
+    }
 }
 

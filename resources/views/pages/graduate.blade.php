@@ -654,6 +654,195 @@
     </div>
 </section>
 
+<!-- Leadership Team Section -->
+<section class="py-20 bg-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold mb-6 border border-purple-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <span>Our Leadership</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Graduate Network <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Leadership</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Dedicated leaders committed to serving and growing our community
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @php
+                $leaders = [
+                    ['name' => 'Dr. Michael Mwangi', 'role' => 'National Coordinator', 'university' => 'University of Dar es Salaam', 'initials' => 'MM', 'gradient' => 'from-indigo-500 to-blue-600'],
+                    ['name' => 'Eng. Sarah Kimario', 'role' => 'Programs Director', 'university' => 'Dodoma University', 'initials' => 'SK', 'gradient' => 'from-purple-500 to-pink-600'],
+                    ['name' => 'Dr. John Mwambene', 'role' => 'Regional Coordinator', 'university' => 'Mwanza University', 'initials' => 'JM', 'gradient' => 'from-green-500 to-teal-600'],
+                ];
+            @endphp
+            @foreach($leaders as $leader)
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-300 hover:shadow-2xl transition-all duration-300 text-center">
+                <div class="w-24 h-24 bg-gradient-to-br {{ $leader['gradient'] }} rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 shadow-lg">
+                    {{ $leader['initials'] }}
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $leader['name'] }}</h3>
+                <p class="text-purple-600 font-semibold mb-3">{{ $leader['role'] }}</p>
+                <p class="text-gray-600 text-sm mb-4">{{ $leader['university'] }}</p>
+                <div class="flex justify-center gap-3">
+                    <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Programs & Initiatives Section -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-bold mb-6 border border-blue-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                </svg>
+                <span>Active Programs</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Programs & <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Initiatives</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Comprehensive programs designed to support your growth and impact
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            @php
+                $programs = [
+                    ['title' => 'Mentorship Program', 'description' => 'Connect with experienced professionals who guide your career and spiritual journey.', 'icon' => 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', 'color' => 'from-blue-500 to-cyan-600'],
+                    ['title' => 'Career Development', 'description' => 'Workshops, seminars, and resources to advance your professional skills and opportunities.', 'icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', 'color' => 'from-green-500 to-emerald-600'],
+                    ['title' => 'Spiritual Formation', 'description' => 'Regular retreats, prayer sessions, and spiritual growth opportunities.', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', 'color' => 'from-purple-500 to-pink-600'],
+                    ['title' => 'Community Service', 'description' => 'Impact projects that serve communities and advance the mission of the Church.', 'icon' => 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9', 'color' => 'from-orange-500 to-red-600'],
+                ];
+            @endphp
+            @foreach($programs as $program)
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-100 hover:border-blue-300 hover:shadow-2xl transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br {{ $program['color'] }} rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $program['icon'] }}"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ $program['title'] }}</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">{{ $program['description'] }}</p>
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors inline-flex items-center gap-2">
+                    Learn More
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- Success Stories & Impact Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-bold mb-6 border border-green-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+                <span>Our Impact</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Success <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Stories</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Real impact from our graduate community
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-100">
+                <div class="text-5xl font-bold text-green-600 mb-4">50+</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Community Projects</h3>
+                <p class="text-gray-600">Graduates have initiated and completed impactful community service projects across Tanzania.</p>
+            </div>
+            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 border-2 border-blue-100">
+                <div class="text-5xl font-bold text-blue-600 mb-4">200+</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Mentorship Pairs</h3>
+                <p class="text-gray-600">Successful mentorship relationships connecting experienced professionals with new graduates.</p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border-2 border-purple-100">
+                <div class="text-5xl font-bold text-purple-600 mb-4">1000+</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Lives Impacted</h3>
+                <p class="text-gray-600">Through our programs, events, and community initiatives, we've touched thousands of lives.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Resources Library Section -->
+<section class="py-20 bg-gradient-to-b from-white to-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-6 border border-indigo-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                <span>Resources</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Resource <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Library</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Access exclusive resources for your professional and spiritual growth
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @php
+                $resources = [
+                    ['title' => 'Spiritual Guides', 'count' => '25+', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'],
+                    ['title' => 'Career Tools', 'count' => '40+', 'icon' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
+                    ['title' => 'Video Library', 'count' => '100+', 'icon' => 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
+                    ['title' => 'Event Recordings', 'count' => '60+', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
+                ];
+            @endphp
+            @foreach($resources as $resource)
+            <div class="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 hover:border-indigo-300 hover:shadow-2xl transition-all duration-300 text-center">
+                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $resource['icon'] }}"/>
+                    </svg>
+                </div>
+                <div class="text-3xl font-bold text-indigo-600 mb-2">{{ $resource['count'] }}</div>
+                <h3 class="text-lg font-bold text-gray-900">{{ $resource['title'] }}</h3>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{{ route('resources') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                <span>Explore All Resources</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- Contact/Join CTA -->
 <section id="join" class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white relative overflow-hidden">
     <div class="absolute inset-0 bg-black opacity-20"></div>

@@ -25,6 +25,10 @@ Route::get('/code-of-conduct', [PageController::class, 'codeOfConduct'])->name('
 
 Route::get('/codes', [PageController::class, 'codes'])->name('codes');
 Route::get('/graduate', [PageController::class, 'graduate'])->name('graduate');
+Route::get('/leadership', [PageController::class, 'leadership'])->name('leadership');
+Route::get('/history', [PageController::class, 'history'])->name('history');
+Route::get('/programs', [PageController::class, 'programs'])->name('programs');
+Route::get('/partnerships', [PageController::class, 'partnerships'])->name('partnerships');
 
 // Newsletter subscription
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
