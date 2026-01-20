@@ -16,8 +16,27 @@ class PageController extends Controller
         // Take first 9 videos for slider
         $homeVideos = array_slice($allVideos, 0, 9);
         
+        // Get featured upcoming event (Easter Conference)
+        $featuredEvent = \App\Models\Event::where('is_featured', true)
+            ->where('status', 'upcoming')
+            ->orderBy('start_date', 'asc')
+            ->first();
+        
+        // Get other upcoming events
+        $upcomingEvents = \App\Models\Event::where('status', 'upcoming')
+            ->where(function($query) use ($featuredEvent) {
+                if ($featuredEvent) {
+                    $query->where('id', '!=', $featuredEvent->id);
+                }
+            })
+            ->orderBy('start_date', 'asc')
+            ->limit(3)
+            ->get();
+        
         return view('pages.home', [
-            'home_videos' => $homeVideos
+            'home_videos' => $homeVideos,
+            'featuredEvent' => $featuredEvent,
+            'upcomingEvents' => $upcomingEvents
         ]);
     }
 
