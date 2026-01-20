@@ -644,6 +644,7 @@
                     <p class="text-gray-400 text-sm">
                         @php
                             $copyrightText = \App\Models\Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.');
+                            $copyrightText = str_replace('{year}', date('Y'), $copyrightText);
                         @endphp
                         {!! $copyrightText !!}
                     </p>
