@@ -10,6 +10,11 @@
     <div class="max-w-md w-full mx-4">
         <div class="bg-white rounded-2xl shadow-2xl p-8">
             <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl mb-4 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                    </svg>
+                </div>
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">ICCR Admin</h1>
                 <p class="text-gray-600">Sign in to manage your website</p>
             </div>
@@ -64,4 +69,3 @@
     </div>
 </body>
 </html>
-

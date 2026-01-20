@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
+            $table->string('menu_type')->default('main'); // main, footer
             $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('content')->nullable();
-            $table->string('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
+            $table->string('url')->nullable();
             $table->string('route_name')->nullable();
-            $table->string('view_path')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->string('icon')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->integer('order')->default(0);
+            $table->boolean('is_external')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('menu_items');
     }
 };
