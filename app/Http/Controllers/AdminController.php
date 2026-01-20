@@ -359,7 +359,7 @@ class AdminController extends Controller
 
     public function blogCategories()
     {
-        $categories = BlogCategory::orderBy('order')->orderBy('name')->get();
+        $categories = BlogCategory::withCount('posts')->orderBy('order')->orderBy('name')->get();
         return view('admin.blog.categories', compact('categories'));
     }
 
@@ -382,7 +382,7 @@ class AdminController extends Controller
 
     public function blogTags()
     {
-        $tags = BlogTag::orderBy('name')->get();
+        $tags = BlogTag::withCount('posts')->orderBy('name')->get();
         return view('admin.blog.tags', compact('tags'));
     }
 
