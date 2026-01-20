@@ -72,7 +72,7 @@
         </div>
         
         <!-- Navigation -->
-        <nav class="mt-4 px-3 space-y-1 overflow-y-auto h-[calc(100vh-180px)]">
+        <nav class="mt-4 px-3 space-y-1 overflow-y-auto h-[calc(100vh-80px)]">
             <!-- 1️⃣ Dashboard -->
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">🧭</span>
@@ -243,30 +243,6 @@
                 </div>
             </div>
         </nav>
-        
-        <!-- User Info & Logout -->
-        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700 bg-gray-900/50 backdrop-blur-sm">
-            <div class="mb-3 px-3">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-white truncate">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-400 truncate">{{ Auth::user()->email }}</p>
-                    </div>
-                </div>
-            </div>
-            <form action="{{ route('admin.logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-300 hover:bg-red-600 hover:text-white transition-all duration-200 bg-gray-800/50">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
-                    <span class="font-medium">Logout</span>
-                </button>
-            </form>
-        </div>
     </aside>
 
     <!-- Main Content -->
