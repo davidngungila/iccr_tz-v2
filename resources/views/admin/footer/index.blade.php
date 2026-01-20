@@ -67,17 +67,123 @@
                 </div>
             </div>
 
-            <!-- Copyright -->
+            <!-- About Section -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <span class="text-2xl">ℹ️</span>
+                    About Section
+                </h2>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">About Text</label>
+                    <textarea name="footer_about_text" rows="4"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">{{ old('footer_about_text', $settings['about_text']) }}</textarea>
+                    <p class="text-xs text-gray-500 mt-1">This text appears in the footer about section</p>
+                </div>
+            </div>
+
+            <!-- Additional Social Media -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <span class="text-2xl">🔗</span>
+                    Additional Social Media
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Twitter/X</label>
+                        <input type="url" name="footer_social_twitter" value="{{ old('footer_social_twitter', $settings['social_twitter']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                               placeholder="https://twitter.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">LinkedIn</label>
+                        <input type="url" name="footer_social_linkedin" value="{{ old('footer_social_linkedin', $settings['social_linkedin']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                               placeholder="https://linkedin.com/...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">TikTok</label>
+                        <input type="url" name="footer_social_tiktok" value="{{ old('footer_social_tiktok', $settings['social_tiktok']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                               placeholder="https://tiktok.com/...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp Contact -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <span class="text-2xl">💬</span>
+                    WhatsApp Contact
+                </h2>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">WhatsApp Number</label>
+                    <input type="text" name="footer_contact_whatsapp" value="{{ old('footer_contact_whatsapp', $settings['contact_whatsapp']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                           placeholder="+255 123 456 789">
+                    <p class="text-xs text-gray-500 mt-1">Include country code (e.g., +255)</p>
+                </div>
+            </div>
+
+            <!-- Section Titles -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <span class="text-2xl">📋</span>
+                    Section Titles
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Quick Links Title</label>
+                        <input type="text" name="footer_quick_links_title" value="{{ old('footer_quick_links_title', $settings['quick_links_title']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Resources Title</label>
+                        <input type="text" name="footer_resources_title" value="{{ old('footer_resources_title', $settings['resources_title']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Legal Title</label>
+                        <input type="text" name="footer_legal_title" value="{{ old('footer_legal_title', $settings['legal_title']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright & Footer Text -->
             <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                     <span class="text-2xl">©</span>
-                    Copyright Text
+                    Copyright & Footer Text
                 </h2>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Copyright Text</label>
-                    <input type="text" name="footer_copyright_text" value="{{ old('footer_copyright_text', $settings['copyright_text']) }}"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                           placeholder="© 2024 ICCR Tanzania. All rights reserved.">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Copyright Text</label>
+                        <input type="text" name="footer_copyright_text" value="{{ old('footer_copyright_text', $settings['copyright_text']) }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                               placeholder="© 2026 ICCR Tanzania. All rights reserved.">
+                        <p class="text-xs text-gray-500 mt-1">Use {year} for dynamic year (e.g., © {year} ICCR Tanzania)</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">"Made with" Text</label>
+                            <input type="text" name="footer_made_with_text" value="{{ old('footer_made_with_text', $settings['made_with_text']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                   placeholder="Made with">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Community Text</label>
+                            <input type="text" name="footer_community_text" value="{{ old('footer_community_text', $settings['community_text']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                   placeholder="for the community">
+                        </div>
+                        <div>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="footer_show_heart" value="1" {{ old('footer_show_heart', $settings['show_heart']) ? 'checked' : '' }}
+                                       class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                <span class="text-sm font-medium text-gray-700">Show Heart Icon</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -194,59 +194,45 @@
         </div>
         
         <div class="space-y-8" id="events-container">
-            @forelse($upcomingEvents as $event)
-            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="conference">
+            <!-- Event 1 -->
+            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="worship">
                 <div class="md:flex">
                     <div class="md:w-1/3 relative h-64 md:h-auto bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
-                        @if($event->banner_image)
-                            <img src="{{ $event->banner_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        @else
-                            <img src="{{ asset('images/03.jpg') }}" alt="{{ $event->title }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                        @endif
+                        <img src="{{ asset('images/03.jpg') }}" alt="Night of Praise" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                         <div class="absolute inset-0 bg-black opacity-30"></div>
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
-                            <div class="text-6xl font-bold mb-2 drop-shadow-lg">{{ $event->start_date->format('d') }}</div>
-                            <div class="text-2xl font-semibold drop-shadow-md">{{ $event->start_date->format('F') }}</div>
-                            <div class="text-xl mt-2 drop-shadow-md">{{ $event->start_date->format('Y') }}</div>
+                            <div class="text-6xl font-bold mb-2 drop-shadow-lg">25</div>
+                            <div class="text-2xl font-semibold drop-shadow-md">January</div>
+                            <div class="text-xl mt-2 drop-shadow-md">2026</div>
                         </div>
                     </div>
                     <div class="md:w-2/3 p-8">
                         <div class="flex items-center gap-2 mb-4">
-                            @if($event->is_featured)
-                            <div class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">
-                                Featured
+                            <div class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                                Upcoming
                             </div>
-                            @endif
-                            <div class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                                {{ ucfirst($event->status) }}
-                            </div>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">{{ $event->title }}</h3>
-                        @if($event->title_sw)
-                        <h4 class="text-xl text-gray-600 mb-4">{{ $event->title_sw }}</h4>
-                        @endif
+                    </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition">Night of Praise</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed text-lg">
-                            {{ Str::limit($event->description ?? $event->description_sw ?? 'Join us for this amazing event', 150) }}
+                            Join us for an evening of powerful worship, prayer, and fellowship. This event brings together students from across Tanzania for a night of praise and spiritual renewal.
                         </p>
                         <div class="flex flex-wrap gap-6 mb-6">
-                            @if($event->location)
                             <span class="flex items-center text-gray-600 text-base">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
-                                {{ $event->location }}
+                                Dar es Salaam
                             </span>
-                            @endif
                             <span class="flex items-center text-gray-600 text-base">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                {{ $event->start_date->format('g:i A') }}
+                                6:00 PM
                             </span>
                         </div>
-                        <a href="{{ route('event.detail', $event->slug) }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
-                            <span>View Details</span>
+                        <a href="{{ route('get-involved') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                            <span>Register Now</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                             </svg>
@@ -254,11 +240,6 @@
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="text-center py-12">
-                <p class="text-gray-600 text-lg">No upcoming events at this time. Check back soon!</p>
-            </div>
-            @endforelse
 
             <!-- Event 2 -->
             <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1" data-category="retreat">

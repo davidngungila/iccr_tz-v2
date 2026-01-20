@@ -8,11 +8,6 @@
     <title>@yield('title', 'ICCR Tanzania - Inter-Colleges Catholic Charismatic Renewal')</title>
     <meta name="description" content="@yield('description', 'ICCR Tanzania - Uniting Catholic students in colleges and higher education institutions through the Charismatic Renewal movement.')">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
-
     <!-- Fonts - Mazzard (Primary) with Inter as fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -319,7 +314,7 @@
                     
                     <!-- Programs Dropdown -->
                     <div class="relative nav-dropdown-parent">
-                        <button type="button" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') || request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center gap-1">
+                        <button type="button" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center gap-1">
                             Programs
                             <svg class="w-5 h-5 nav-dropdown-arrow transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -355,13 +350,6 @@
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Resources</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Download materials</p>
-                                    </a>
-                                    <a href="{{ route('graduate') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('graduate') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
-                                        <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/11.jpg') }}" alt="Graduates" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                        </div>
-                                        <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Graduates</h3>
-                                        <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Graduate community</p>
                                     </a>
                                 </div>
                             </div>
@@ -411,7 +399,7 @@
                 
                 <!-- Mobile Programs Dropdown -->
                 <div class="mobile-dropdown">
-                    <button class="mobile-dropdown-btn w-full px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') || request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center justify-between">
+                    <button class="mobile-dropdown-btn w-full px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('ministries') || request()->routeIs('events') || request()->routeIs('media') || request()->routeIs('resources') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }} flex items-center justify-between">
                         <span>Programs</span>
                         <svg class="w-5 h-5 mobile-dropdown-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -422,7 +410,6 @@
                         <a href="{{ route('events') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('events') ? 'text-green-600 bg-green-50' : '' }}">Events</a>
                         <a href="{{ route('media') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('media') ? 'text-green-600 bg-green-50' : '' }}">Media</a>
                         <a href="{{ route('resources') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('resources') ? 'text-green-600 bg-green-50' : '' }}">Resources</a>
-                        <a href="{{ route('graduate') }}" class="block px-4 py-2 rounded-lg text-sm font-bold text-gray-600 hover:text-green-600 hover:bg-green-50 transition {{ request()->routeIs('graduate') ? 'text-green-600 bg-green-50' : '' }}">Graduates</a>
                     </div>
                 </div>
                 
@@ -460,7 +447,10 @@
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6 leading-relaxed max-w-md">
-                        Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.
+                        @php
+                            $aboutText = \App\Models\Setting::get('footer_about_text', 'Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.');
+                        @endphp
+                        {{ $aboutText }}
                     </p>
                     
                     <!-- Contact Info -->
@@ -639,36 +629,8 @@
                 <div class="max-w-md mx-auto text-center">
                     <h3 class="text-white font-bold text-xl mb-3">Stay Connected</h3>
                     <p class="text-gray-400 mb-4 text-sm">Subscribe to our newsletter for updates on events and activities</p>
-                    
-                    <!-- Success Message -->
-                    @if(session('newsletter_success'))
-                        <div class="mb-4 p-3 bg-green-600/20 border border-green-500 rounded-lg text-green-300 text-sm">
-                            {{ session('newsletter_success') }}
-                        </div>
-                    @endif
-                    
-                    <!-- Error Message -->
-                    @if(session('newsletter_error'))
-                        <div class="mb-4 p-3 bg-red-600/20 border border-red-500 rounded-lg text-red-300 text-sm">
-                            {{ session('newsletter_error') }}
-                        </div>
-                    @endif
-                    
-                    @error('email')
-                        <div class="mb-4 p-3 bg-red-600/20 border border-red-500 rounded-lg text-red-300 text-sm">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                    
-                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex flex-col sm:flex-row gap-3">
-                        @csrf
-                        <input 
-                            type="email" 
-                            name="email" 
-                            placeholder="Enter your email" 
-                            value="{{ old('email') }}"
-                            required
-                            class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent @error('email') border-red-500 @enderror">
+                    <form class="flex flex-col sm:flex-row gap-3">
+                        <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                         <button type="submit" class="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
                             Subscribe
                         </button>
@@ -680,14 +642,23 @@
             <div class="border-t border-gray-800 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-gray-400 text-sm">
-                        &copy; {{ date('Y') }} <span class="text-white font-semibold">ICCR Tanzania</span>. All rights reserved.
+                        @php
+                            $copyrightText = \App\Models\Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.');
+                        @endphp
+                        {!! $copyrightText !!}
                     </p>
                     <div class="flex items-center gap-2 text-sm text-gray-400">
-                        <span>Made with</span>
+                        @php
+                            $madeWithText = \App\Models\Setting::get('footer_made_with_text', 'Made with');
+                            $showHeart = \App\Models\Setting::get('footer_show_heart', true);
+                        @endphp
+                        <span>{{ $madeWithText }}</span>
+                        @if($showHeart)
                         <svg class="w-4 h-4 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
                         </svg>
-                        <span>for the community</span>
+                        @endif
+                        <span>{{ \App\Models\Setting::get('footer_community_text', 'for the community') }}</span>
                     </div>
                 </div>
             </div>

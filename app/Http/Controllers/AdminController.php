@@ -448,14 +448,9 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'title_sw' => 'nullable|string',
             'slug' => 'nullable|string|max:255|unique:events,slug',
             'description' => 'nullable|string',
-            'description_sw' => 'nullable|string',
             'content' => 'nullable|string',
-            'content_sw' => 'nullable|string',
-            'full_details' => 'nullable|string',
-            'full_details_sw' => 'nullable|string',
             'banner_image' => 'nullable|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
@@ -463,18 +458,6 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
-            'payment_info' => 'nullable|string',
-            'payment_info_sw' => 'nullable|string',
-            'prayer_meeting_link' => 'nullable|url',
-            'prayer_meeting_code' => 'nullable|string|max:255',
-            'prayer_schedule' => 'nullable|string',
-            'prayer_schedule_sw' => 'nullable|string',
-            'registration_info' => 'nullable|string',
-            'registration_info_sw' => 'nullable|string',
-            'contact_phone' => 'nullable|string|max:255',
-            'contact_email' => 'nullable|email|max:255',
-            'schedule' => 'nullable|string',
-            'schedule_sw' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {
@@ -503,14 +486,9 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'title_sw' => 'nullable|string',
             'slug' => 'nullable|string|max:255|unique:events,slug,' . $event->id,
             'description' => 'nullable|string',
-            'description_sw' => 'nullable|string',
             'content' => 'nullable|string',
-            'content_sw' => 'nullable|string',
-            'full_details' => 'nullable|string',
-            'full_details_sw' => 'nullable|string',
             'banner_image' => 'nullable|url',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
@@ -518,18 +496,6 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
-            'payment_info' => 'nullable|string',
-            'payment_info_sw' => 'nullable|string',
-            'prayer_meeting_link' => 'nullable|url',
-            'prayer_meeting_code' => 'nullable|string|max:255',
-            'prayer_schedule' => 'nullable|string',
-            'prayer_schedule_sw' => 'nullable|string',
-            'registration_info' => 'nullable|string',
-            'registration_info_sw' => 'nullable|string',
-            'contact_phone' => 'nullable|string|max:255',
-            'contact_email' => 'nullable|email|max:255',
-            'schedule' => 'nullable|string',
-            'schedule_sw' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {
@@ -853,13 +819,24 @@ class AdminController extends Controller
     public function footer()
     {
         $settings = [
-            'contact_email' => Setting::get('footer_contact_email', ''),
-            'contact_phone' => Setting::get('footer_contact_phone', ''),
+            'contact_email' => Setting::get('footer_contact_email', 'info@iccr.or.tz'),
+            'contact_phone' => Setting::get('footer_contact_phone', '+255 123 456 789'),
             'contact_address' => Setting::get('footer_contact_address', ''),
+            'contact_whatsapp' => Setting::get('footer_contact_whatsapp', ''),
             'social_facebook' => Setting::get('footer_social_facebook', ''),
             'social_youtube' => Setting::get('footer_social_youtube', ''),
             'social_instagram' => Setting::get('footer_social_instagram', ''),
-            'copyright_text' => Setting::get('footer_copyright_text', ''),
+            'social_twitter' => Setting::get('footer_social_twitter', ''),
+            'social_linkedin' => Setting::get('footer_social_linkedin', ''),
+            'social_tiktok' => Setting::get('footer_social_tiktok', ''),
+            'copyright_text' => Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.'),
+            'made_with_text' => Setting::get('footer_made_with_text', 'Made with'),
+            'community_text' => Setting::get('footer_community_text', 'for the community'),
+            'show_heart' => Setting::get('footer_show_heart', true),
+            'about_text' => Setting::get('footer_about_text', 'Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.'),
+            'quick_links_title' => Setting::get('footer_quick_links_title', 'Quick Links'),
+            'resources_title' => Setting::get('footer_resources_title', 'Resources'),
+            'legal_title' => Setting::get('footer_legal_title', 'Legal'),
         ];
         
         return view('admin.footer.index', compact('settings'));
@@ -868,9 +845,11 @@ class AdminController extends Controller
     public function updateFooter(Request $request)
     {
         $fields = [
-            'footer_contact_email', 'footer_contact_phone', 'footer_contact_address',
-            'footer_social_facebook', 'footer_social_youtube', 'footer_social_instagram',
-            'footer_copyright_text',
+            'footer_contact_email', 'footer_contact_phone', 'footer_contact_address', 'footer_contact_whatsapp',
+            'footer_social_facebook', 'footer_social_youtube', 'footer_social_instagram', 
+            'footer_social_twitter', 'footer_social_linkedin', 'footer_social_tiktok',
+            'footer_copyright_text', 'footer_made_with_text', 'footer_community_text',
+            'footer_about_text', 'footer_quick_links_title', 'footer_resources_title', 'footer_legal_title',
         ];
 
         foreach ($fields as $field) {
@@ -878,6 +857,16 @@ class AdminController extends Controller
                 Setting::set($field, $request->input($field), 'text', 'footer');
             }
         }
+
+        // Handle boolean field
+        Setting::set('footer_show_heart', $request->has('footer_show_heart') ? true : false, 'boolean', 'footer');
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'Footer',
+            'description' => 'Updated footer settings',
+        ]);
 
         return redirect()->route('admin.footer')->with('success', 'Footer settings updated successfully!');
     }
