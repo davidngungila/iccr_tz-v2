@@ -447,10 +447,7 @@
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6 leading-relaxed max-w-md">
-                        @php
-                            $aboutText = \App\Models\Setting::get('footer_about_text', 'Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.');
-                        @endphp
-                        {{ $aboutText }}
+                        Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.
                     </p>
                     
                     <!-- Contact Info -->
@@ -640,27 +637,32 @@
             
             <!-- Bottom Bar -->
             <div class="border-t border-gray-800 pt-8">
+                @php
+                    use App\Models\Setting;
+                    $copyrightText = Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.');
+                    $madeWithText = Setting::get('footer_made_with_text', 'Made with');
+                    $communityText = Setting::get('footer_community_text', 'for the community');
+                    $showHeart = Setting::get('footer_show_heart', true);
+                @endphp
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-gray-400 text-sm">
-                        @php
-                            $copyrightText = \App\Models\Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.');
-                            $copyrightText = str_replace('{year}', date('Y'), $copyrightText);
-                        @endphp
                         {!! $copyrightText !!}
                     </p>
+                    @if($madeWithText || $communityText)
                     <div class="flex items-center gap-2 text-sm text-gray-400">
-                        @php
-                            $madeWithText = \App\Models\Setting::get('footer_made_with_text', 'Made with');
-                            $showHeart = \App\Models\Setting::get('footer_show_heart', true);
-                        @endphp
-                        <span>{{ $madeWithText }}</span>
-                        @if($showHeart)
-                        <svg class="w-4 h-4 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-                        </svg>
+                        @if($madeWithText)
+                            <span>{{ $madeWithText }}</span>
                         @endif
-                        <span>{{ \App\Models\Setting::get('footer_community_text', 'for the community') }}</span>
+                        @if($showHeart)
+                            <svg class="w-4 h-4 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                            </svg>
+                        @endif
+                        @if($communityText)
+                            <span>{{ $communityText }}</span>
+                        @endif
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

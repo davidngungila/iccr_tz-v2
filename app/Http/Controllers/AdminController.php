@@ -819,24 +819,16 @@ class AdminController extends Controller
     public function footer()
     {
         $settings = [
-            'contact_email' => Setting::get('footer_contact_email', 'info@iccr.or.tz'),
-            'contact_phone' => Setting::get('footer_contact_phone', '+255 123 456 789'),
+            'contact_email' => Setting::get('footer_contact_email', ''),
+            'contact_phone' => Setting::get('footer_contact_phone', ''),
             'contact_address' => Setting::get('footer_contact_address', ''),
-            'contact_whatsapp' => Setting::get('footer_contact_whatsapp', ''),
             'social_facebook' => Setting::get('footer_social_facebook', ''),
             'social_youtube' => Setting::get('footer_social_youtube', ''),
             'social_instagram' => Setting::get('footer_social_instagram', ''),
-            'social_twitter' => Setting::get('footer_social_twitter', ''),
-            'social_linkedin' => Setting::get('footer_social_linkedin', ''),
-            'social_tiktok' => Setting::get('footer_social_tiktok', ''),
             'copyright_text' => Setting::get('footer_copyright_text', '© 2026 ICCR Tanzania. All rights reserved.'),
             'made_with_text' => Setting::get('footer_made_with_text', 'Made with'),
             'community_text' => Setting::get('footer_community_text', 'for the community'),
             'show_heart' => Setting::get('footer_show_heart', true),
-            'about_text' => Setting::get('footer_about_text', 'Inter-Colleges Catholic Charismatic Renewal Tanzania. Uniting Catholic students in colleges and higher education institutions through the Holy Spirit – Unity, Love, Evangelization.'),
-            'quick_links_title' => Setting::get('footer_quick_links_title', 'Quick Links'),
-            'resources_title' => Setting::get('footer_resources_title', 'Resources'),
-            'legal_title' => Setting::get('footer_legal_title', 'Legal'),
         ];
         
         return view('admin.footer.index', compact('settings'));
@@ -845,11 +837,9 @@ class AdminController extends Controller
     public function updateFooter(Request $request)
     {
         $fields = [
-            'footer_contact_email', 'footer_contact_phone', 'footer_contact_address', 'footer_contact_whatsapp',
-            'footer_social_facebook', 'footer_social_youtube', 'footer_social_instagram', 
-            'footer_social_twitter', 'footer_social_linkedin', 'footer_social_tiktok',
+            'footer_contact_email', 'footer_contact_phone', 'footer_contact_address',
+            'footer_social_facebook', 'footer_social_youtube', 'footer_social_instagram',
             'footer_copyright_text', 'footer_made_with_text', 'footer_community_text',
-            'footer_about_text', 'footer_quick_links_title', 'footer_resources_title', 'footer_legal_title',
         ];
 
         foreach ($fields as $field) {
