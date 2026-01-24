@@ -1592,15 +1592,29 @@ class AdminController extends Controller
                 ->update(['is_primary' => false]);
         }
 
-        // Only update password if provided (allow blank to keep current)
-        if ($provider->type === 'sms' && empty($validated['sms_password'])) {
-            unset($validated['sms_password']);
+        // Handle password/token updates
+        // For SMS: Always update the Bearer token (required field)
+        // For Email: Only update if provided and not empty (allow blank to keep current)
+        if ($provider->type === 'email') {
+            // For email, only update if provided and not empty
+            if (empty($validated['mail_password'])) {
+                unset($validated['mail_password']);
+            }
         }
-        if ($provider->type === 'email' && empty($validated['mail_password'])) {
-            unset($validated['mail_password']);
-        }
+        // For SMS, sms_password is required and will always be updated
+
+        // Log the update for debugging
+        Log::info('Updating NotificationProvider', [
+            'provider_id' => $provider->id,
+            'type' => $provider->type,
+            'has_sms_password' => isset($validated['sms_password']),
+            'sms_password_length' => isset($validated['sms_password']) ? strlen($validated['sms_password']) : 0,
+        ]);
 
         $provider->update($validated);
+        
+        // Refresh the model to get updated values
+        $provider->refresh();
         
         ActivityLog::create([
             'user_id' => Auth::id(),
