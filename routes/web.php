@@ -99,6 +99,46 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/events/{event}/registration/{registration}/pdf', [AdminController::class, 'generateRegistrationPDF'])->name('events.registration.pdf');
         Route::get('/events/{event}/id-card/{registration}', [AdminController::class, 'generateIDCard'])->name('events.id-card');
         
+        // Event Management - Programs
+        Route::get('/events/{event}/programs', [\App\Http\Controllers\EventManagementController::class, 'programs'])->name('events.programs');
+        Route::post('/events/{event}/programs', [\App\Http\Controllers\EventManagementController::class, 'storeProgram'])->name('events.programs.store');
+        Route::put('/events/programs/{program}', [\App\Http\Controllers\EventManagementController::class, 'updateProgram'])->name('events.programs.update');
+        Route::delete('/events/programs/{program}', [\App\Http\Controllers\EventManagementController::class, 'deleteProgram'])->name('events.programs.delete');
+        
+        // Event Management - Volunteers
+        Route::get('/events/{event}/volunteers', [\App\Http\Controllers\EventManagementController::class, 'volunteers'])->name('events.volunteers');
+        Route::post('/events/{event}/volunteers', [\App\Http\Controllers\EventManagementController::class, 'storeVolunteer'])->name('events.volunteers.store');
+        Route::put('/events/volunteers/{volunteer}', [\App\Http\Controllers\EventManagementController::class, 'updateVolunteer'])->name('events.volunteers.update');
+        Route::delete('/events/volunteers/{volunteer}', [\App\Http\Controllers\EventManagementController::class, 'deleteVolunteer'])->name('events.volunteers.delete');
+        
+        // Event Management - Prayer Requests
+        Route::get('/events/{event}/prayer-requests', [\App\Http\Controllers\EventManagementController::class, 'prayerRequests'])->name('events.prayer-requests');
+        Route::get('/prayer-requests', [\App\Http\Controllers\EventManagementController::class, 'prayerRequests'])->name('prayer-requests');
+        Route::put('/prayer-requests/{prayerRequest}', [\App\Http\Controllers\EventManagementController::class, 'updatePrayerRequestStatus'])->name('prayer-requests.update');
+        
+        // Event Management - Testimonies
+        Route::get('/events/{event}/testimonies', [\App\Http\Controllers\EventManagementController::class, 'testimonies'])->name('events.testimonies');
+        Route::get('/testimonies', [\App\Http\Controllers\EventManagementController::class, 'testimonies'])->name('testimonies');
+        Route::post('/events/{event}/testimonies', [\App\Http\Controllers\EventManagementController::class, 'storeTestimony'])->name('events.testimonies.store');
+        Route::post('/testimonies', [\App\Http\Controllers\EventManagementController::class, 'storeTestimony'])->name('testimonies.store');
+        Route::put('/testimonies/{testimony}', [\App\Http\Controllers\EventManagementController::class, 'updateTestimony'])->name('testimonies.update');
+        Route::delete('/testimonies/{testimony}', [\App\Http\Controllers\EventManagementController::class, 'deleteTestimony'])->name('testimonies.delete');
+        
+        // Attendance Management
+        Route::get('/events/{event}/attendance', [\App\Http\Controllers\AttendanceController::class, 'index'])->name('events.attendance');
+        Route::post('/events/{event}/attendance/{registration}/check-in', [\App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('events.attendance.check-in');
+        Route::put('/events/attendance/{attendance}/check-out', [\App\Http\Controllers\AttendanceController::class, 'checkOut'])->name('events.attendance.check-out');
+        Route::post('/events/{event}/attendance/scan-qr', [\App\Http\Controllers\AttendanceController::class, 'scanQR'])->name('events.attendance.scan-qr');
+        Route::get('/events/{event}/attendance/export', [\App\Http\Controllers\AttendanceController::class, 'exportAttendance'])->name('events.attendance.export');
+        
+        // Payment Management
+        Route::get('/events/{event}/payments', [\App\Http\Controllers\PaymentController::class, 'index'])->name('events.payments');
+        Route::post('/events/{event}/payments', [\App\Http\Controllers\PaymentController::class, 'store'])->name('events.payments.store');
+        Route::post('/events/{event}/payments/{registration}', [\App\Http\Controllers\PaymentController::class, 'store'])->name('events.payments.store.registration');
+        Route::put('/events/payments/{payment}', [\App\Http\Controllers\PaymentController::class, 'update'])->name('events.payments.update');
+        Route::delete('/events/payments/{payment}', [\App\Http\Controllers\PaymentController::class, 'delete'])->name('events.payments.delete');
+        Route::get('/events/{event}/payments/export', [\App\Http\Controllers\PaymentController::class, 'exportPayments'])->name('events.payments.export');
+        
         // Media
         Route::get('/media', [AdminController::class, 'media'])->name('media');
         Route::get('/media/create', [AdminController::class, 'createMedia'])->name('media.create');

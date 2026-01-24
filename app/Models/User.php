@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'role',
+        'permissions',
     ];
 
     /**
@@ -45,11 +47,41 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'permissions' => 'array',
         ];
     }
     
     public function isAdmin(): bool
     {
-        return $this->is_admin === true;
+        return $this->is_admin === true || $this->role === 'super_admin';
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+        
+        return in_array($permission, $this->permissions ?? []);
+    }
+
+    public function canManageEvents(): bool
+    {
+        return in_array($this->role, ['super_admin', 'event_coordinator']);
+    }
+
+    public function canManageRegistrations(): bool
+    {
+        return in_array($this->role, ['super_admin', 'event_coordinator', 'registration_officer']);
+    }
+
+    public function canManagePayments(): bool
+    {
+        return in_array($this->role, ['super_admin', 'event_coordinator', 'finance_officer']);
     }
 }

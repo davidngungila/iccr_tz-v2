@@ -987,10 +987,36 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
+            // New fields
+            'event_type' => 'nullable|in:physical,online,hybrid',
+            'theme' => 'nullable|string|max:255',
+            'scripture' => 'nullable|string|max:255',
+            'gallery' => 'nullable|string', // JSON array
+            'google_maps_link' => 'nullable|url',
+            'organizing_team' => 'nullable|string', // JSON array
+            'contacts' => 'nullable|string', // JSON array
+            'fee_type' => 'nullable|in:free,paid',
+            'fee_amount' => 'nullable|numeric|min:0',
+            'fee_currency' => 'nullable|string|max:3',
+            'max_attendees' => 'nullable|integer|min:1',
+            'registration_type' => 'nullable|in:individual,group,both',
+            'auto_confirm' => 'boolean',
+            'require_payment' => 'boolean',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        // Process JSON fields
+        if (isset($validated['gallery']) && is_string($validated['gallery'])) {
+            $validated['gallery'] = json_decode($validated['gallery'], true) ?? [];
+        }
+        if (isset($validated['organizing_team']) && is_string($validated['organizing_team'])) {
+            $validated['organizing_team'] = json_decode($validated['organizing_team'], true) ?? [];
+        }
+        if (isset($validated['contacts']) && is_string($validated['contacts'])) {
+            $validated['contacts'] = json_decode($validated['contacts'], true) ?? [];
         }
 
         $event = Event::create($validated);
@@ -1025,10 +1051,36 @@ class AdminController extends Controller
             'status' => 'required|in:upcoming,past,cancelled',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
+            // New fields
+            'event_type' => 'nullable|in:physical,online,hybrid',
+            'theme' => 'nullable|string|max:255',
+            'scripture' => 'nullable|string|max:255',
+            'gallery' => 'nullable|string', // JSON array
+            'google_maps_link' => 'nullable|url',
+            'organizing_team' => 'nullable|string', // JSON array
+            'contacts' => 'nullable|string', // JSON array
+            'fee_type' => 'nullable|in:free,paid',
+            'fee_amount' => 'nullable|numeric|min:0',
+            'fee_currency' => 'nullable|string|max:3',
+            'max_attendees' => 'nullable|integer|min:1',
+            'registration_type' => 'nullable|in:individual,group,both',
+            'auto_confirm' => 'boolean',
+            'require_payment' => 'boolean',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
+        }
+
+        // Process JSON fields
+        if (isset($validated['gallery']) && is_string($validated['gallery'])) {
+            $validated['gallery'] = json_decode($validated['gallery'], true) ?? [];
+        }
+        if (isset($validated['organizing_team']) && is_string($validated['organizing_team'])) {
+            $validated['organizing_team'] = json_decode($validated['organizing_team'], true) ?? [];
+        }
+        if (isset($validated['contacts']) && is_string($validated['contacts'])) {
+            $validated['contacts'] = json_decode($validated['contacts'], true) ?? [];
         }
 
         $event->update($validated);
