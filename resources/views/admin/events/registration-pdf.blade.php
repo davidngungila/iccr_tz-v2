@@ -213,6 +213,35 @@
             background: white;
             color: #16a34a;
         }
+        .qr-code-section {
+            text-align: center;
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border: 2px solid #16a34a;
+            border-radius: 6px;
+        }
+        .qr-code-label {
+            font-size: 8px;
+            font-weight: bold;
+            color: #16a34a;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .qr-code {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #16a34a;
+            border-radius: 4px;
+            padding: 3px;
+            background: white;
+        }
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
         .print-button {
             position: fixed;
             bottom: 20px;
@@ -410,6 +439,16 @@
         <div class="barcode">
             {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
         </div>
+        
+        <!-- QR Code -->
+        @if(isset($qrCodeBase64))
+        <div class="qr-code-section">
+            <div class="qr-code-label">Scan QR Code for Verification</div>
+            <div class="qr-code">
+                <img src="{{ $qrCodeBase64 }}" alt="QR Code">
+            </div>
+        </div>
+        @endif
         
         <!-- Footer -->
         <div class="receipt-footer">
