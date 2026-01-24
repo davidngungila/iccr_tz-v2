@@ -18,4 +18,9 @@ class Event extends Model
         'is_featured' => 'boolean',
         'order' => 'integer',
     ];
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
 }
