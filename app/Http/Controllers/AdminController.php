@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Api\Upload\UploadApi;
 
 class AdminController extends Controller
 {
@@ -1239,7 +1240,7 @@ class AdminController extends Controller
             $folder = $request->get('folder', 'iccr-tanzania');
             $resourceType = $request->get('resource_type', 'image');
             
-            // Use Cloudinary Admin API via the SDK
+            // Use Cloudinary Admin API
             $options = [
                 'resource_type' => $resourceType,
                 'max_results' => $maxResults,
@@ -1253,8 +1254,9 @@ class AdminController extends Controller
                 $options['prefix'] = $folder . '/';
             }
             
-            // Access Admin API through Cloudinary facade
-            $result = \Cloudinary\Admin\AdminApi::assets($options);
+            // Get Admin API instance
+            $adminApi = new \Cloudinary\Api\Admin\AdminApi();
+            $result = $adminApi->assets($options);
             
             return response()->json([
                 'success' => true,
