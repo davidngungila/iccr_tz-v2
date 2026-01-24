@@ -780,17 +780,58 @@ class AdminController extends Controller
     
     public function generateTicket(Event $event, EventRegistration $registration)
     {
-        return view('admin.events.ticket', compact('event', 'registration'));
+        try {
+            // Generate PDF using DomPDF
+            $html = view('admin.events.ticket', compact('event', 'registration'))->render();
+            
+            // Use DomPDF if available, otherwise return HTML for browser print
+            if (class_exists('\Dompdf\Dompdf')) {
+                $dompdf = new \Dompdf\Dompdf();
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A4', 'portrait');
+                $dompdf->render();
+                
+                $filename = "ticket-{$event->slug}-{$registration->id}.pdf";
+                return $dompdf->stream($filename, ['Attachment' => true]);
+            } else {
+                // Fallback: Return HTML with proper headers for browser PDF generation
+                return response()->make($html, 200, [
+                    'Content-Type' => 'text/html; charset=utf-8',
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Ticket generation failed: ' . $e->getMessage());
+            // Fallback to HTML view
+            return view('admin.events.ticket', compact('event', 'registration'));
+        }
     }
     
     public function generateRegistrationPDF(Event $event, EventRegistration $registration)
     {
-        $html = view('admin.events.registration-pdf', compact('event', 'registration'))->render();
-        
-        return response()->make($html, 200, [
-            'Content-Type' => 'text/html',
-            'Content-Disposition' => "attachment; filename=\"{$event->slug}-{$registration->id}-registration.pdf\"",
-        ]);
+        try {
+            // Generate PDF using DomPDF
+            $html = view('admin.events.registration-pdf', compact('event', 'registration'))->render();
+            
+            // Use DomPDF if available, otherwise return HTML for browser print
+            if (class_exists('\Dompdf\Dompdf')) {
+                $dompdf = new \Dompdf\Dompdf();
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A4', 'portrait');
+                $dompdf->render();
+                
+                $filename = "{$event->slug}-{$registration->id}-registration.pdf";
+                return $dompdf->stream($filename, ['Attachment' => true]);
+            } else {
+                // Fallback: Return HTML with proper headers for browser PDF generation
+                return response()->make($html, 200, [
+                    'Content-Type' => 'text/html; charset=utf-8',
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Registration PDF generation failed: ' . $e->getMessage());
+            // Fallback to HTML view
+            return view('admin.events.registration-pdf', compact('event', 'registration'));
+        }
     }
 
     public function createEvent()

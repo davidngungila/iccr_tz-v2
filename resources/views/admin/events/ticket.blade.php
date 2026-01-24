@@ -5,8 +5,13 @@
     <title>Event Ticket - {{ $event->title }}</title>
     <style>
         @media print {
-            body { margin: 0; }
-            .no-print { display: none; }
+            body { margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            .ticket-container { box-shadow: none; border: none; }
+        }
+        @page {
+            margin: 0;
+            size: A4 portrait;
         }
         body {
             font-family: 'Arial', sans-serif;

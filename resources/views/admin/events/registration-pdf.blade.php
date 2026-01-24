@@ -5,8 +5,12 @@
     <title>Registration Confirmation - {{ $event->title }}</title>
     <style>
         @media print {
-            body { margin: 0; }
-            .no-print { display: none; }
+            body { margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+        }
+        @page {
+            margin: 20mm;
+            size: A4 portrait;
         }
         body {
             font-family: 'Arial', sans-serif;
