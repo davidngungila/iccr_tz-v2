@@ -57,6 +57,8 @@
             background: white;
             padding: 8px;
             border-radius: 8px;
+            display: block;
+            margin: 0 auto;
         }
         .ticket-header h1 {
             margin: 0;
@@ -152,7 +154,7 @@
             word-break: break-word;
         }
         .ticket-number {
-            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
+            background: #16a34a;
             color: white;
             padding: 10px;
             text-align: center;
@@ -232,9 +234,11 @@
     <div class="ticket-container">
         <!-- Header -->
         <div class="ticket-header">
+            @if(isset($logoExists) && $logoExists)
             <div class="logo-container">
-                <img src="{{ asset('images/logo.png') }}" alt="ICCR Tanzania Logo">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="ICCR Tanzania">
             </div>
+            @endif
             <h1>ICCR Tanzania</h1>
             <p>Event Admission Ticket</p>
         </div>
@@ -246,18 +250,18 @@
             <!-- Event Info -->
             <div class="ticket-info">
                 <div class="info-row">
-                    <span class="info-label">📅 Date</span>
+                    <span class="info-label">Date:</span>
                     <span class="info-value">{{ $event->start_date->format('M j, Y') }}@if($event->end_date && $event->end_date->format('Y-m-d') !== $event->start_date->format('Y-m-d')) - {{ $event->end_date->format('M j, Y') }}@endif</span>
                 </div>
                 @if($event->start_date->format('H:i') !== '00:00')
                 <div class="info-row">
-                    <span class="info-label">🕐 Time</span>
+                    <span class="info-label">Time:</span>
                     <span class="info-value">{{ $event->start_date->format('g:i A') }}@if($event->end_date) - {{ $event->end_date->format('g:i A') }}@endif</span>
                 </div>
                 @endif
                 @if($event->location)
                 <div class="info-row">
-                    <span class="info-label">📍 Location</span>
+                    <span class="info-label">Location:</span>
                     <span class="info-value">{{ $event->location }}</span>
                 </div>
                 @endif

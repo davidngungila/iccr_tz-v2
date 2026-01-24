@@ -58,6 +58,8 @@
             background: white;
             padding: 5px;
             border-radius: 6px;
+            display: block;
+            margin: 0 auto;
         }
         .receipt-header h1 {
             font-size: 14px;
@@ -142,7 +144,7 @@
         .registration-id {
             text-align: center;
             padding: 8px;
-            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
+            background: #16a34a;
             color: #fff;
             font-family: 'Courier New', monospace;
             font-size: 12px;
@@ -240,9 +242,11 @@
     <div class="receipt-container">
         <!-- Header -->
         <div class="receipt-header">
+            @if(isset($logoExists) && $logoExists)
             <div class="logo-container">
-                <img src="{{ asset('images/logo.png') }}" alt="ICCR Tanzania Logo">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="ICCR Tanzania">
             </div>
+            @endif
             <h1>ICCR Tanzania</h1>
             <p>Inter-Colleges Catholic Charismatic Renewal</p>
             <p>Registration Receipt</p>

@@ -781,8 +781,12 @@ class AdminController extends Controller
     public function generateTicket(Event $event, EventRegistration $registration)
     {
         try {
+            // Get absolute path to logo for DomPDF
+            $logoPath = public_path('images/logo.png');
+            $logoExists = file_exists($logoPath);
+            
             // Generate PDF using DomPDF
-            $html = view('admin.events.ticket', compact('event', 'registration'))->render();
+            $html = view('admin.events.ticket', compact('event', 'registration', 'logoPath', 'logoExists'))->render();
             
             // Use DomPDF if available, otherwise return HTML for browser print
             if (class_exists('\Dompdf\Dompdf')) {
@@ -790,6 +794,7 @@ class AdminController extends Controller
                 $dompdf->loadHtml($html);
                 // Set paper size for receipt printer (80mm width)
                 $dompdf->setPaper([0, 0, 226.77, 841.89], 'portrait'); // 80mm x auto (80mm = 226.77 points)
+                $dompdf->setOption('isRemoteEnabled', true);
                 $dompdf->render();
                 
                 $filename = "ticket-{$event->slug}-{$registration->id}.pdf";
@@ -810,8 +815,12 @@ class AdminController extends Controller
     public function generateRegistrationPDF(Event $event, EventRegistration $registration)
     {
         try {
+            // Get absolute path to logo for DomPDF
+            $logoPath = public_path('images/logo.png');
+            $logoExists = file_exists($logoPath);
+            
             // Generate PDF using DomPDF
-            $html = view('admin.events.registration-pdf', compact('event', 'registration'))->render();
+            $html = view('admin.events.registration-pdf', compact('event', 'registration', 'logoPath', 'logoExists'))->render();
             
             // Use DomPDF if available, otherwise return HTML for browser print
             if (class_exists('\Dompdf\Dompdf')) {
@@ -819,6 +828,7 @@ class AdminController extends Controller
                 $dompdf->loadHtml($html);
                 // Set paper size for receipt printer (80mm width)
                 $dompdf->setPaper([0, 0, 226.77, 841.89], 'portrait'); // 80mm x auto (80mm = 226.77 points)
+                $dompdf->setOption('isRemoteEnabled', true);
                 $dompdf->render();
                 
                 // Include registrant name in filename
