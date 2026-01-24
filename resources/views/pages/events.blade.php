@@ -194,55 +194,127 @@
         </div>
         
         <div class="space-y-8" id="events-container">
-            <!-- Event 1 -->
-            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="worship">
+            @forelse($upcomingEvents as $event)
+            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="all">
                 <div class="md:flex">
-                    <div class="md:w-1/3 relative h-64 md:h-auto bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
-                        <img src="{{ asset('images/03.jpg') }}" alt="Night of Praise" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                    <div class="md:w-1/3 relative h-64 md:h-auto bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 overflow-hidden">
+                        @if($event->banner_image)
+                            <img src="{{ $event->banner_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                        @endif
                         <div class="absolute inset-0 bg-black opacity-30"></div>
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
-                            <div class="text-6xl font-bold mb-2 drop-shadow-lg">25</div>
-                            <div class="text-2xl font-semibold drop-shadow-md">January</div>
-                            <div class="text-xl mt-2 drop-shadow-md">2026</div>
+                            <div class="text-6xl font-bold mb-2 drop-shadow-lg">{{ $event->start_date->format('d') }}</div>
+                            <div class="text-2xl font-semibold drop-shadow-md">{{ $event->start_date->format('F') }}</div>
+                            <div class="text-xl mt-2 drop-shadow-md">{{ $event->start_date->format('Y') }}</div>
                         </div>
                     </div>
                     <div class="md:w-2/3 p-8">
                         <div class="flex items-center gap-2 mb-4">
-                            <div class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
-                                Upcoming
+                            <div class="px-3 py-1 {{ $event->status === 'upcoming' ? 'bg-green-100 text-green-700' : ($event->status === 'past' ? 'bg-gray-100 text-gray-700' : 'bg-red-100 text-red-700') }} rounded-full text-sm font-semibold">
+                                {{ ucfirst($event->status) }}
                             </div>
-                    </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition">Night of Praise</h3>
+                            @if($event->is_featured)
+                            <div class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                Featured
+                            </div>
+                            @endif
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition">
+                            <a href="{{ route('event.show', $event->slug) }}" class="hover:underline">{{ $event->title }}</a>
+                        </h3>
                         <p class="text-gray-700 mb-6 leading-relaxed text-lg">
-                            Join us for an evening of powerful worship, prayer, and fellowship. This event brings together students from across Tanzania for a night of praise and spiritual renewal.
+                            {{ $event->description ?: \Illuminate\Support\Str::limit(strip_tags($event->content ?? ''), 150) }}
                         </p>
                         <div class="flex flex-wrap gap-6 mb-6">
+                            @if($event->location)
                             <span class="flex items-center text-gray-600 text-base">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
-                                Dar es Salaam
+                                {{ $event->location }}
                             </span>
+                            @endif
                             <span class="flex items-center text-gray-600 text-base">
                                 <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                6:00 PM
+                                {{ $event->start_date->format('g:i A') }}
+                                @if($event->end_date && $event->end_date->format('Y-m-d') === $event->start_date->format('Y-m-d'))
+                                    - {{ $event->end_date->format('g:i A') }}
+                                @endif
                             </span>
                         </div>
-                        <a href="{{ route('get-involved') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
-                            <span>Register Now</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
-                        </a>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="{{ route('event.show', $event->slug) }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <span>Learn More</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </a>
+                            <a href="{{ route('get-involved') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 transition shadow-md hover:shadow-lg">
+                                <span>Register</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            @empty
+            <div class="text-center py-16">
+                <svg class="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">No Upcoming Events</h3>
+                <p class="text-gray-600 mb-6">Check back soon for new events!</p>
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-blue-700 transition">
+                    <span>Contact Us</span>
+                </a>
+            </div>
+            @endforelse
 
+            @if(isset($pastEvents) && $pastEvents->count() > 0)
+            <!-- Past Events Section -->
+            <div class="mt-16 pt-16 border-t-2 border-gray-200">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Past Events</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($pastEvents as $event)
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1">
+                        @if($event->banner_image)
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="{{ $event->banner_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black opacity-30"></div>
+                        </div>
+                        @endif
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">Past</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">
+                                <a href="{{ route('event.show', $event->slug) }}" class="hover:text-blue-600 transition">{{ $event->title }}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm line-clamp-2">{{ $event->description ?: \Illuminate\Support\Str::limit(strip_tags($event->content ?? ''), 100) }}</p>
+                            <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span>{{ $event->start_date->format('M d, Y') }}</span>
+                            </div>
+                            <a href="{{ route('event.show', $event->slug) }}" class="text-blue-600 font-semibold text-sm hover:text-blue-700 transition">
+                                View Details →
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+            <!-- OLD HARDCODED EVENTS - REMOVED -->
             <!-- Event 2 -->
-            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1" data-category="retreat">
+            <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1" data-category="retreat" style="display: none;">
                 <div class="md:flex">
                     <div class="md:w-1/3 relative h-64 md:h-auto bg-gradient-to-br from-purple-500 to-pink-600 overflow-hidden">
                         <img src="{{ asset('images/04.jpg') }}" alt="Regional Spiritual Camp" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
@@ -601,8 +673,6 @@
         </div>
     </div>
 </section>
-
-<!-- Past Events Gallery Section - Enhanced -->
 <section class="py-20 bg-white relative overflow-hidden">
     <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
     

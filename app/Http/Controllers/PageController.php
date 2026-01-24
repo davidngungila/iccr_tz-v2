@@ -45,7 +45,35 @@ class PageController extends Controller
 
     public function events()
     {
-        return view('pages.events');
+        $upcomingEvents = Event::where('status', 'upcoming')
+            ->where('start_date', '>=', now())
+            ->orderBy('start_date', 'asc')
+            ->get();
+        
+        $pastEvents = Event::where('status', 'past')
+            ->orWhere(function($query) {
+                $query->where('status', 'upcoming')
+                      ->where('start_date', '<', now());
+            })
+            ->orderBy('start_date', 'desc')
+            ->limit(6)
+            ->get();
+        
+        return view('pages.events', compact('upcomingEvents', 'pastEvents'));
+    }
+
+    public function showEvent($slug)
+    {
+        $event = Event::where('slug', $slug)->firstOrFail();
+        
+        // Get related events (same status, different event)
+        $relatedEvents = Event::where('status', $event->status)
+            ->where('id', '!=', $event->id)
+            ->orderBy('start_date', 'asc')
+            ->limit(3)
+            ->get();
+        
+        return view('pages.event-detail', compact('event', 'relatedEvents'));
     }
 
     public function media()

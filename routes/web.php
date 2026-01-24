@@ -8,6 +8,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/ministries', [PageController::class, 'ministries'])->name('ministries');
 Route::get('/events', [PageController::class, 'events'])->name('events');
+Route::get('/events/{slug}', [PageController::class, 'showEvent'])->name('event.show');
 Route::get('/media', [PageController::class, 'media'])->name('media');
 // Redirect old /resources to new /resource-library to avoid server conflicts
 Route::get('/resources', function () {
