@@ -173,7 +173,7 @@ class NotificationService
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => $smsUrl,
                         CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_POST => true,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
                         CURLOPT_POSTFIELDS => $body,
                         CURLOPT_HTTPHEADER => [
                             'Authorization: Bearer ' . $bearerToken,
@@ -207,7 +207,7 @@ class NotificationService
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => $smsUrl,
                         CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_POST => true,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
                         CURLOPT_POSTFIELDS => $body,
                         CURLOPT_HTTPHEADER => [
                             'Authorization: Basic ' . $auth,
