@@ -106,9 +106,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Communication Settings
         Route::get('/communication', [AdminController::class, 'communicationSettings'])->name('communication');
-        Route::post('/communication', [AdminController::class, 'updateCommunicationSettings'])->name('communication.update');
-        Route::post('/communication/test-sms', [AdminController::class, 'testSMSConnection'])->name('communication.test-sms');
-        Route::post('/communication/test-email', [AdminController::class, 'testEmailConnection'])->name('communication.test-email');
+        Route::get('/communication/create', [AdminController::class, 'createProvider'])->name('communication.create');
+        Route::post('/communication', [AdminController::class, 'storeProvider'])->name('communication.store');
+        Route::get('/communication/{provider}', [AdminController::class, 'viewProvider'])->name('communication.view');
+        Route::get('/communication/{provider}/edit', [AdminController::class, 'editProvider'])->name('communication.edit');
+        Route::put('/communication/{provider}', [AdminController::class, 'updateProvider'])->name('communication.update');
+        Route::delete('/communication/{provider}', [AdminController::class, 'deleteProvider'])->name('communication.delete');
+        Route::post('/communication/{provider}/test', [AdminController::class, 'testProviderConnection'])->name('communication.test');
         Route::post('/cloudinary/upload', [AdminController::class, 'uploadToCloudinary'])->name('cloudinary.upload');
         Route::delete('/cloudinary/{publicId}', [AdminController::class, 'deleteCloudinaryAsset'])->name('cloudinary.delete');
         

@@ -1413,136 +1413,162 @@ class AdminController extends Controller
     
     public function communicationSettings()
     {
-        $smsProvider = NotificationProvider::where('type', 'sms')->where('is_primary', true)->first();
-        $emailProvider = NotificationProvider::where('type', 'email')->where('is_primary', true)->first();
+        $providers = NotificationProvider::orderBy('type')->orderBy('is_primary', 'desc')->orderBy('name')->get();
         
-        // Get fallback settings from SystemSetting
-        $smsSettings = [
-            'sms_username' => SystemSetting::getValue('sms_username') ?: env('SMS_USERNAME', ''),
-            'sms_password' => SystemSetting::getValue('sms_password') ?: env('SMS_PASSWORD', ''),
-            'sms_from' => SystemSetting::getValue('sms_from') ?: env('SMS_FROM', 'ICCR TZ'),
-            'sms_url' => SystemSetting::getValue('sms_url') ?: env('SMS_URL', ''),
-        ];
-        
-        $emailSettings = [
-            'mail_host' => SystemSetting::getValue('mail_host') ?: env('MAIL_HOST', ''),
-            'mail_port' => SystemSetting::getValue('mail_port') ?: env('MAIL_PORT', '587'),
-            'mail_username' => SystemSetting::getValue('mail_username') ?: env('MAIL_USERNAME', ''),
-            'mail_password' => SystemSetting::getValue('mail_password') ?: env('MAIL_PASSWORD', ''),
-            'mail_encryption' => SystemSetting::getValue('mail_encryption') ?: env('MAIL_ENCRYPTION', 'tls'),
-            'mail_from_address' => SystemSetting::getValue('mail_from_address') ?: env('MAIL_FROM_ADDRESS', ''),
-            'mail_from_name' => SystemSetting::getValue('mail_from_name') ?: env('MAIL_FROM_NAME', 'ICCR Tanzania'),
-        ];
-        
-        return view('admin.communication.index', compact('smsProvider', 'emailProvider', 'smsSettings', 'emailSettings'));
+        return view('admin.communication.index', compact('providers'));
     }
 
-    public function updateCommunicationSettings(Request $request)
+    public function viewProvider(NotificationProvider $provider)
+    {
+        return view('admin.communication.view', compact('provider'));
+    }
+
+    public function editProvider(NotificationProvider $provider)
+    {
+        return view('admin.communication.edit', compact('provider'));
+    }
+
+    public function createProvider(Request $request)
+    {
+        $type = $request->get('type', 'sms');
+        return view('admin.communication.create', compact('type'));
+    }
+
+    public function storeProvider(Request $request)
     {
         $validated = $request->validate([
-            // SMS Provider
-            'sms_provider_name' => 'nullable|string|max:255',
-            'sms_username' => 'nullable|string|max:255',
-            'sms_password' => 'nullable|string|max:255',
-            'sms_from' => 'nullable|string|max:255',
-            'sms_url' => 'nullable|url|max:500',
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:sms,email',
+            'is_primary' => 'boolean',
+            'is_active' => 'boolean',
             
-            // Email Provider
-            'email_provider_name' => 'nullable|string|max:255',
-            'mail_host' => 'nullable|string|max:255',
-            'mail_port' => 'nullable|integer|min:1|max:65535',
-            'mail_username' => 'nullable|string|max:255',
-            'mail_password' => 'nullable|string|max:255',
-            'mail_encryption' => 'nullable|in:tls,ssl,none',
-            'mail_from_address' => 'nullable|email|max:255',
-            'mail_from_name' => 'nullable|string|max:255',
+            // SMS fields
+            'sms_username' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_password' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_from' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_url' => 'required_if:type,sms|nullable|url|max:500',
+            
+            // Email fields
+            'mail_host' => 'required_if:type,email|nullable|string|max:255',
+            'mail_port' => 'required_if:type,email|nullable|integer|min:1|max:65535',
+            'mail_username' => 'required_if:type,email|nullable|string|max:255',
+            'mail_password' => 'required_if:type,email|nullable|string|max:255',
+            'mail_encryption' => 'required_if:type,email|nullable|in:tls,ssl,none',
+            'mail_from_address' => 'required_if:type,email|nullable|email|max:255',
+            'mail_from_name' => 'required_if:type,email|nullable|string|max:255',
+            
+            'notes' => 'nullable|string|max:1000',
         ]);
 
-        try {
-            // Update or create SMS provider
-            if ($request->filled('sms_username') && $request->filled('sms_url')) {
-                $smsProvider = NotificationProvider::updateOrCreate(
-                    ['type' => 'sms', 'is_primary' => true],
-                    [
-                        'name' => $request->sms_provider_name ?: 'Default SMS Provider',
-                        'is_active' => true,
-                        'sms_username' => $request->sms_username,
-                        'sms_password' => $request->sms_password,
-                        'sms_from' => $request->sms_from,
-                        'sms_url' => $request->sms_url,
-                    ]
-                );
-                
-                // Also save to SystemSetting as fallback
-                SystemSetting::setValue('sms_username', $request->sms_username, 'text', 'communication');
-                SystemSetting::setValue('sms_password', $request->sms_password, 'text', 'communication');
-                SystemSetting::setValue('sms_from', $request->sms_from, 'text', 'communication');
-                SystemSetting::setValue('sms_url', $request->sms_url, 'text', 'communication');
-            }
-
-            // Update or create Email provider
-            if ($request->filled('mail_host') && $request->filled('mail_username')) {
-                $emailProvider = NotificationProvider::updateOrCreate(
-                    ['type' => 'email', 'is_primary' => true],
-                    [
-                        'name' => $request->email_provider_name ?: 'Default Email Provider',
-                        'is_active' => true,
-                        'mail_host' => $request->mail_host,
-                        'mail_port' => $request->mail_port ?? 587,
-                        'mail_username' => $request->mail_username,
-                        'mail_password' => $request->mail_password,
-                        'mail_encryption' => $request->mail_encryption ?? 'tls',
-                        'mail_from_address' => $request->mail_from_address,
-                        'mail_from_name' => $request->mail_from_name,
-                    ]
-                );
-                
-                // Also save to SystemSetting as fallback
-                SystemSetting::setValue('mail_host', $request->mail_host, 'text', 'communication');
-                SystemSetting::setValue('mail_port', $request->mail_port ?? 587, 'text', 'communication');
-                SystemSetting::setValue('mail_username', $request->mail_username, 'text', 'communication');
-                SystemSetting::setValue('mail_password', $request->mail_password, 'text', 'communication');
-                SystemSetting::setValue('mail_encryption', $request->mail_encryption ?? 'tls', 'text', 'communication');
-                SystemSetting::setValue('mail_from_address', $request->mail_from_address, 'text', 'communication');
-                SystemSetting::setValue('mail_from_name', $request->mail_from_name, 'text', 'communication');
-            }
-
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'action' => 'updated',
-                'model_type' => 'CommunicationSettings',
-                'model_id' => 0,
-                'description' => 'Updated communication settings (SMS & Email)',
-            ]);
-
-            return redirect()->route('admin.communication')->with('success', 'Communication settings updated successfully!');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update settings: ' . $e->getMessage())->withInput();
+        // If setting as primary, unset other primary providers of same type
+        if ($request->filled('is_primary') && $request->is_primary) {
+            NotificationProvider::where('type', $validated['type'])
+                ->where('id', '!=', $request->id ?? 0)
+                ->update(['is_primary' => false]);
         }
+
+        $provider = NotificationProvider::create($validated);
+        
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'created',
+            'model_type' => 'NotificationProvider',
+            'model_id' => $provider->id,
+            'description' => "Created {$validated['type']} provider: {$provider->name}",
+        ]);
+
+        return redirect()->route('admin.communication')->with('success', 'Provider created successfully!');
     }
 
-    public function testSMSConnection(Request $request)
+    public function updateProvider(Request $request, NotificationProvider $provider)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:sms,email',
+            'is_primary' => 'boolean',
+            'is_active' => 'boolean',
+            
+            // SMS fields
+            'sms_username' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_password' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_from' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_url' => 'required_if:type,sms|nullable|url|max:500',
+            
+            // Email fields
+            'mail_host' => 'required_if:type,email|nullable|string|max:255',
+            'mail_port' => 'required_if:type,email|nullable|integer|min:1|max:65535',
+            'mail_username' => 'required_if:type,email|nullable|string|max:255',
+            'mail_password' => 'required_if:type,email|nullable|string|max:255',
+            'mail_encryption' => 'required_if:type,email|nullable|in:tls,ssl,none',
+            'mail_from_address' => 'required_if:type,email|nullable|email|max:255',
+            'mail_from_name' => 'required_if:type,email|nullable|string|max:255',
+            
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        // If setting as primary, unset other primary providers of same type
+        if ($request->filled('is_primary') && $request->is_primary) {
+            NotificationProvider::where('type', $validated['type'])
+                ->where('id', '!=', $provider->id)
+                ->update(['is_primary' => false]);
+        }
+
+        $provider->update($validated);
+        
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'NotificationProvider',
+            'model_id' => $provider->id,
+            'description' => "Updated {$validated['type']} provider: {$provider->name}",
+        ]);
+
+        return redirect()->route('admin.communication')->with('success', 'Provider updated successfully!');
+    }
+
+    public function deleteProvider(NotificationProvider $provider)
+    {
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'deleted',
+            'model_type' => 'NotificationProvider',
+            'model_id' => $provider->id,
+            'description' => "Deleted {$provider->type} provider: {$provider->name}",
+        ]);
+        
+        $provider->delete();
+        return redirect()->route('admin.communication')->with('success', 'Provider deleted successfully!');
+    }
+
+    public function testProviderConnection(Request $request, NotificationProvider $provider)
     {
         $request->validate([
-            'phone' => 'required|string',
-            'message' => 'nullable|string|max:160',
+            'test_value' => 'required|string',
         ]);
 
         try {
             $notificationService = new NotificationService();
-            $message = $request->message ?? 'Test SMS from ICCR Tanzania. If you receive this, your SMS configuration is working correctly!';
             
-            $result = $notificationService->sendSMS($request->phone, $message);
+            if ($provider->type === 'sms') {
+                $message = 'Test SMS from ICCR Tanzania. If you receive this, your SMS configuration is working correctly!';
+                $result = $notificationService->sendSMS($request->test_value, $message, $provider);
+            } else {
+                $subject = 'Test Email from ICCR Tanzania';
+                $message = 'This is a test email. If you receive this, your email configuration is working correctly!';
+                $result = $notificationService->sendEmail($request->test_value, $subject, $message, [], $provider);
+            }
             
             if ($result) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'SMS sent successfully! Please check the phone number.',
+                    'message' => $provider->type === 'sms' 
+                        ? 'SMS sent successfully! Please check the phone number.' 
+                        : 'Test email sent successfully! Please check your inbox.',
                 ]);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'SMS sending failed. Please check your configuration and logs.',
+                    'message' => ucfirst($provider->type) . ' sending failed. Please check your configuration and logs.',
                 ], 500);
             }
         } catch (\Exception $e) {
@@ -1553,35 +1579,4 @@ class AdminController extends Controller
         }
     }
 
-    public function testEmailConnection(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        try {
-            $notificationService = new NotificationService();
-            $subject = 'Test Email from ICCR Tanzania';
-            $message = 'This is a test email. If you receive this, your email configuration is working correctly!';
-            
-            $result = $notificationService->sendEmail($request->email, $subject, $message);
-            
-            if ($result) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Test email sent successfully! Please check your inbox.',
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Email sending failed. Please check your configuration and logs.',
-                ], 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Test failed: ' . $e->getMessage(),
-            ], 500);
-        }
-    }
 }
