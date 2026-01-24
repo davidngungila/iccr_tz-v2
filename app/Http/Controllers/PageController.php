@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Setting;
 
 class PageController extends Controller
 {
@@ -286,6 +287,31 @@ class PageController extends Controller
     public function partnerships()
     {
         return view('pages.partnerships');
+    }
+
+    public function donate()
+    {
+        // Get payment details from settings
+        $paymentDetails = [
+            'title' => Setting::get('donate_title', 'Support Our Mission'),
+            'description' => Setting::get('donate_description', 'Your generous contributions help us organize events, provide resources, and serve our communities across Tanzania.'),
+            'vodacom_phone' => Setting::get('donate_vodacom_phone', ''),
+            'vodacom_name' => Setting::get('donate_vodacom_name', ''),
+            'tigopesa_phone' => Setting::get('donate_tigopesa_phone', ''),
+            'tigopesa_name' => Setting::get('donate_tigopesa_name', ''),
+            'airtelmoney_phone' => Setting::get('donate_airtelmoney_phone', ''),
+            'airtelmoney_name' => Setting::get('donate_airtelmoney_name', ''),
+            'mpesa_phone' => Setting::get('donate_mpesa_phone', ''),
+            'mpesa_name' => Setting::get('donate_mpesa_name', ''),
+            'bank_account' => Setting::get('donate_bank_account', ''),
+            'bank_name' => Setting::get('donate_bank_name', ''),
+            'bank_branch' => Setting::get('donate_bank_branch', ''),
+            'bank_swift' => Setting::get('donate_bank_swift', ''),
+            'paypal_email' => Setting::get('donate_paypal_email', ''),
+            'other_methods' => Setting::get('donate_other_methods', ''),
+        ];
+        
+        return view('pages.donate', compact('paymentDetails'));
     }
 }
 

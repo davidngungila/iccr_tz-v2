@@ -19,6 +19,7 @@ Route::get('/resources', function () {
 
 Route::get('/resource-library', [PageController::class, 'resources'])->name('resources');
 Route::get('/get-involved', [PageController::class, 'getInvolved'])->name('get-involved');
+Route::get('/donate', [PageController::class, 'donate'])->name('donate');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
@@ -134,6 +135,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Footer
         Route::get('/footer', [AdminController::class, 'footer'])->name('footer');
         Route::post('/footer', [AdminController::class, 'updateFooter'])->name('footer.update');
+        
+        // Donate / Payment Details
+        Route::get('/donate', [AdminController::class, 'donateSettings'])->name('donate');
+        Route::post('/donate', [AdminController::class, 'updateDonateSettings'])->name('donate.update');
         
         // Messages
         Route::get('/messages', [AdminController::class, 'contactMessages'])->name('messages.index');

@@ -1088,6 +1088,60 @@ class AdminController extends Controller
         return redirect()->route('admin.footer')->with('success', 'Footer settings updated successfully!');
     }
 
+    // ==================== DONATE / PAYMENT DETAILS ====================
+    
+    public function donateSettings()
+    {
+        $settings = [
+            'donate_title' => Setting::get('donate_title', 'Support Our Mission'),
+            'donate_description' => Setting::get('donate_description', 'Your generous contributions help us organize events, provide resources, and serve our communities across Tanzania.'),
+            'donate_vodacom_phone' => Setting::get('donate_vodacom_phone', ''),
+            'donate_vodacom_name' => Setting::get('donate_vodacom_name', ''),
+            'donate_tigopesa_phone' => Setting::get('donate_tigopesa_phone', ''),
+            'donate_tigopesa_name' => Setting::get('donate_tigopesa_name', ''),
+            'donate_airtelmoney_phone' => Setting::get('donate_airtelmoney_phone', ''),
+            'donate_airtelmoney_name' => Setting::get('donate_airtelmoney_name', ''),
+            'donate_mpesa_phone' => Setting::get('donate_mpesa_phone', ''),
+            'donate_mpesa_name' => Setting::get('donate_mpesa_name', ''),
+            'donate_bank_account' => Setting::get('donate_bank_account', ''),
+            'donate_bank_name' => Setting::get('donate_bank_name', ''),
+            'donate_bank_branch' => Setting::get('donate_bank_branch', ''),
+            'donate_bank_swift' => Setting::get('donate_bank_swift', ''),
+            'donate_paypal_email' => Setting::get('donate_paypal_email', ''),
+            'donate_other_methods' => Setting::get('donate_other_methods', ''),
+        ];
+        
+        return view('admin.donate.index', compact('settings'));
+    }
+
+    public function updateDonateSettings(Request $request)
+    {
+        $fields = [
+            'donate_title', 'donate_description',
+            'donate_vodacom_phone', 'donate_vodacom_name',
+            'donate_tigopesa_phone', 'donate_tigopesa_name',
+            'donate_airtelmoney_phone', 'donate_airtelmoney_name',
+            'donate_mpesa_phone', 'donate_mpesa_name',
+            'donate_bank_account', 'donate_bank_name', 'donate_bank_branch', 'donate_bank_swift',
+            'donate_paypal_email', 'donate_other_methods',
+        ];
+
+        foreach ($fields as $field) {
+            if ($request->has($field)) {
+                Setting::set($field, $request->input($field), 'text', 'donate');
+            }
+        }
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'DonateSettings',
+            'description' => 'Updated donation/payment details',
+        ]);
+
+        return redirect()->route('admin.donate')->with('success', 'Payment details updated successfully!');
+    }
+
     // ==================== FORMS & MESSAGES ====================
     
     public function contactMessages()

@@ -424,6 +424,12 @@
                 <span class="font-medium">Footer & Info</span>
             </a>
             
+            <!-- 💳 Payment Details -->
+            <a href="{{ route('admin.donate') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.donate*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                <span class="text-xl">💳</span>
+                <span class="font-medium">Payment Details</span>
+            </a>
+            
             <!-- 1️⃣1️⃣ Forms & Messages -->
             <div class="sidebar-dropdown-parent">
                 <button onclick="toggleDropdown('messages')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.messages*') ? 'bg-gray-800 text-white' : '' }}">
