@@ -93,12 +93,12 @@
     </div>
 
     <!-- Carousel Navigation Arrows -->
-    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg" aria-label="Previous slide">
+    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-40 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg pointer-events-auto" aria-label="Previous slide">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
     </button>
-    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg" aria-label="Next slide">
+    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-40 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg pointer-events-auto" aria-label="Next slide">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
@@ -106,9 +106,9 @@
 
     <!-- Carousel Indicators -->
     @if($slides->count() > 0)
-    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2 bg-black/20 backdrop-blur-sm rounded-full">
+    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-40 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2 bg-black/30 backdrop-blur-md rounded-full pointer-events-auto">
         @foreach($slides as $index => $slide)
-        <button class="carousel-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white {{ $index === 0 ? 'opacity-100' : 'opacity-50' }} transition-all duration-300 border-2 border-white/70 hover:opacity-100 hover:scale-125 shadow-lg" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}"></button>
+        <button class="carousel-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white transition-all duration-300 border-2 {{ $index === 0 ? 'opacity-100 border-white scale-125' : 'opacity-50 border-white/70' }} hover:opacity-100 hover:scale-125 shadow-lg" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}"></button>
         @endforeach
     </div>
     @endif
@@ -1086,7 +1086,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update indicators
         indicators.forEach((indicator, i) => {
-            indicator.style.opacity = i === index ? '1' : '0.5';
+            if (i === index) {
+                indicator.style.opacity = '1';
+                indicator.style.transform = 'scale(1.25)';
+                indicator.classList.add('border-white');
+                indicator.classList.remove('border-white/70');
+            } else {
+                indicator.style.opacity = '0.5';
+                indicator.style.transform = 'scale(1)';
+                indicator.classList.remove('border-white');
+                indicator.classList.add('border-white/70');
+            }
         });
 
         currentSlide = index;
@@ -1111,17 +1121,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    nextBtn.addEventListener('click', () => {
-        nextSlide();
-        stopAutoSlide();
-        startAutoSlide();
-    });
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
 
-    prevBtn.addEventListener('click', () => {
-        prevSlide();
-        stopAutoSlide();
-        startAutoSlide();
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoSlide();
+            startAutoSlide();
+        });
+    }
 
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
