@@ -85,10 +85,10 @@
                             Uniting Catholic students across Tanzania<br>
                             through the Holy Spirit in prayer, worship, and fellowship
                         </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endforelse
     </div>
 
@@ -290,12 +290,12 @@
                                 @endif
                                 <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
                                 <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">{{ ucfirst($event->status) }}</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
                                     <div class="text-5xl font-bold mb-1 drop-shadow-lg">{{ $event->start_date->format('d') }}</div>
                                     <div class="text-lg font-semibold drop-shadow-md">{{ $event->start_date->format('F Y') }}</div>
-                                </div>
+                        </div>
                                 <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);"></div>
-                            </div>
+                    </div>
                             <div class="p-5">
                                 <div class="flex items-center justify-between mb-2">
                                     @if($event->location)
@@ -324,11 +324,11 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                </div>
                     @empty
                     <div class="col-span-full text-center py-12">
                         <p class="text-gray-600 text-lg">No featured events at the moment. Check back soon!</p>
-                    </div>
+                                </div>
                     @endforelse
                 </div>
                     </div>
@@ -1084,17 +1084,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Update indicators
+        // Update indicators - ensure all dots are visible
         indicators.forEach((indicator, i) => {
             if (i === index) {
+                // Active indicator - fully visible and larger
                 indicator.style.opacity = '1';
                 indicator.style.transform = 'scale(1.25)';
-                indicator.classList.add('border-white');
+                indicator.style.borderColor = 'rgba(255, 255, 255, 1)';
+                indicator.classList.add('ring-2', 'ring-white/50');
                 indicator.classList.remove('border-white/70');
             } else {
-                indicator.style.opacity = '0.5';
+                // Inactive indicators - visible but dimmed
+                indicator.style.opacity = '0.6';
                 indicator.style.transform = 'scale(1)';
-                indicator.classList.remove('border-white');
+                indicator.style.borderColor = 'rgba(255, 255, 255, 0.7)';
+                indicator.classList.remove('ring-2', 'ring-white/50');
                 indicator.classList.add('border-white/70');
             }
         });
@@ -1122,19 +1126,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners
     if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            stopAutoSlide();
-            startAutoSlide();
-        });
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopAutoSlide();
+        startAutoSlide();
+    });
     }
 
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            stopAutoSlide();
-            startAutoSlide();
-        });
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopAutoSlide();
+        startAutoSlide();
+    });
     }
 
     indicators.forEach((indicator, index) => {
