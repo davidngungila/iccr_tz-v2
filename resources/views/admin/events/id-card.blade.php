@@ -35,120 +35,73 @@
             width: 85.6mm;
             height: 53.98mm;
             background: white;
-            border: 2px solid #16a34a;
+            border: 3px solid #16a34a;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
             position: relative;
-        }
-        .id-card-front {
-            width: 100%;
-            height: 100%;
-            display: flex;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
         }
-        .id-card-left {
-            width: 40%;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
-            color: white;
-            position: relative;
-        }
-        .id-card-left::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 2px;
+        .id-card-content {
+            width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .logo-section {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        .logo-section img {
-            max-width: 50px;
-            height: auto;
-            background: white;
-            padding: 3px;
-            border-radius: 4px;
-        }
-        .organization-name {
-            font-size: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 3px;
-        }
-        .id-card-right {
-            width: 60%;
-            padding: 8px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
         .card-header {
             text-align: center;
-            margin-bottom: 5px;
+            border-bottom: 2px solid #16a34a;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
         }
-        .card-title {
-            font-size: 7px;
-            color: #6b7280;
+        .organization-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #16a34a;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 2px;
         }
-        .event-name {
-            font-size: 9px;
-            font-weight: bold;
-            color: #16a34a;
-            line-height: 1.2;
+        .card-subtitle {
+            font-size: 7px;
+            color: #2563eb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .participant-info {
+        .card-body {
             flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 3px 0;
         }
-        .participant-photo {
+        .left-section {
+            flex: 1;
+            padding-right: 4px;
+        }
+        .right-section {
             width: 35px;
-            height: 35px;
-            border-radius: 4px;
-            border: 2px solid #16a34a;
-            background: #f3f4f6;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 5px;
-            overflow: hidden;
-        }
-        .participant-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .photo-placeholder {
-            font-size: 10px;
-            color: #9ca3af;
-            text-align: center;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 4px;
         }
         .participant-name {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: #111827;
-            text-align: center;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+            line-height: 1.2;
         }
         .participant-details {
             font-size: 7px;
-            color: #6b7280;
+            color: #374151;
             line-height: 1.4;
         }
         .detail-row {
@@ -157,38 +110,53 @@
         }
         .detail-label {
             font-weight: 600;
-            width: 35px;
+            width: 40px;
             color: #2563eb;
+            flex-shrink: 0;
         }
         .detail-value {
             flex: 1;
             color: #111827;
+            word-break: break-word;
         }
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 5px;
-            padding-top: 5px;
-            border-top: 1px solid #e5e7eb;
+        .event-info {
+            background: #16a34a;
+            color: white;
+            padding: 3px 5px;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
         }
         .registration-id {
-            font-size: 7px;
+            font-size: 8px;
             font-weight: bold;
             color: #16a34a;
             font-family: 'Courier New', monospace;
+            text-align: center;
+            background: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid #16a34a;
+            margin-bottom: 3px;
         }
         .qr-code {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #e5e7eb;
+            width: 32px;
+            height: 32px;
+            border: 2px solid #16a34a;
             border-radius: 4px;
             padding: 2px;
             background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .qr-code img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
         .status-badge {
             display: inline-block;
@@ -209,6 +177,23 @@
         .status-cancelled {
             background: #ef4444;
             color: white;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 3px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 6px;
+            color: #6b7280;
+        }
+        .footer-left {
+            flex: 1;
+        }
+        .footer-right {
+            text-align: right;
+            font-weight: 600;
+            color: #16a34a;
         }
         .print-button {
             position: fixed;
@@ -232,70 +217,86 @@
 </head>
 <body>
     <div class="id-card-container">
-        <div class="id-card-front">
-            <!-- Left Section (Logo & Organization) -->
-            <div class="id-card-left">
-                @if(isset($logoExists) && $logoExists)
-                <div class="logo-section">
-                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="ICCR">
-                </div>
-                @endif
+        <div class="id-card-content">
+            <!-- Header -->
+            <div class="card-header">
                 <div class="organization-name">ICCR Tanzania</div>
-                <div style="font-size: 6px; text-align: center; opacity: 0.9; margin-top: auto;">
-                    <div>Event Participant</div>
-                    <div style="margin-top: 3px;">ID Card</div>
-                </div>
+                <div class="card-subtitle">Inter-Colleges Catholic Charismatic Renewal</div>
             </div>
             
-            <!-- Right Section (Participant Info) -->
-            <div class="id-card-right">
-                <div class="card-header">
-                    <div class="card-title">Event Registration</div>
-                    <div class="event-name">{{ Str::limit($event->title, 30) }}</div>
-                </div>
-                
-                <div class="participant-info">
-                    <div class="participant-photo">
-                        <div class="photo-placeholder">
-                            <div style="font-size: 8px;">PHOTO</div>
-                        </div>
+            <!-- Body -->
+            <div class="card-body">
+                <!-- Left Section (Participant Info) -->
+                <div class="left-section">
+                    <div class="event-info">
+                        {{ Str::limit($event->title, 35) }}
                     </div>
                     
-                    <div class="participant-name">{{ Str::limit($registration->full_name, 25) }}</div>
+                    <div class="participant-name">
+                        {{ Str::limit($registration->full_name, 30) }}
+                    </div>
                     
                     <div class="participant-details">
                         @if($registration->institution)
                         <div class="detail-row">
-                            <span class="detail-label">Inst:</span>
-                            <span class="detail-value">{{ Str::limit($registration->institution, 20) }}</span>
+                            <span class="detail-label">Institution:</span>
+                            <span class="detail-value">{{ Str::limit($registration->institution, 22) }}</span>
+                        </div>
+                        @endif
+                        @if($registration->campus)
+                        <div class="detail-row">
+                            <span class="detail-label">Campus:</span>
+                            <span class="detail-value">{{ Str::limit($registration->campus, 22) }}</span>
                         </div>
                         @endif
                         @if($registration->course)
                         <div class="detail-row">
                             <span class="detail-label">Course:</span>
-                            <span class="detail-value">{{ Str::limit($registration->course, 18) }}</span>
+                            <span class="detail-value">{{ Str::limit($registration->course, 22) }}</span>
+                        </div>
+                        @endif
+                        @if($registration->year_of_study)
+                        <div class="detail-row">
+                            <span class="detail-label">Year:</span>
+                            <span class="detail-value">{{ $registration->year_of_study }}</span>
                         </div>
                         @endif
                         <div class="detail-row">
                             <span class="detail-label">Date:</span>
                             <span class="detail-value">{{ $event->start_date->format('M j, Y') }}</span>
                         </div>
+                        @if($event->location)
                         <div class="detail-row">
-                            <span class="detail-label">Status:</span>
-                            <span class="detail-value">
-                                <span class="status-badge status-{{ $registration->status }}">{{ ucfirst($registration->status) }}</span>
-                            </span>
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">{{ Str::limit($event->location, 20) }}</span>
                         </div>
+                        @endif
                     </div>
                 </div>
                 
-                <div class="card-footer">
+                <!-- Right Section (ID & QR Code) -->
+                <div class="right-section">
                     <div class="registration-id">
-                        ID: {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
+                        {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
                     </div>
+                    
                     <div class="qr-code">
                         <img src="{{ $qrCodeBase64 }}" alt="QR Code">
                     </div>
+                    
+                    <div style="margin-top: 3px; text-align: center;">
+                        <span class="status-badge status-{{ $registration->status }}">{{ ucfirst($registration->status) }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="card-footer">
+                <div class="footer-left">
+                    Participant ID Card | Valid for this event only
+                </div>
+                <div class="footer-right">
+                    {{ date('Y') }} ICCR
                 </div>
             </div>
         </div>
@@ -311,4 +312,3 @@
     </script>
 </body>
 </html>
-
