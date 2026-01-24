@@ -17,6 +17,9 @@ use App\Models\NewsletterSubscription;
 use App\Models\ActivityLog;
 use App\Models\User;
 use App\Models\CarouselSlide;
+use App\Models\NotificationProvider;
+use App\Models\SystemSetting;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1402,6 +1405,182 @@ class AdminController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Connection failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // ==================== COMMUNICATION SETTINGS ====================
+    
+    public function communicationSettings()
+    {
+        $smsProvider = NotificationProvider::where('type', 'sms')->where('is_primary', true)->first();
+        $emailProvider = NotificationProvider::where('type', 'email')->where('is_primary', true)->first();
+        
+        // Get fallback settings from SystemSetting
+        $smsSettings = [
+            'sms_username' => SystemSetting::getValue('sms_username') ?: env('SMS_USERNAME', ''),
+            'sms_password' => SystemSetting::getValue('sms_password') ?: env('SMS_PASSWORD', ''),
+            'sms_from' => SystemSetting::getValue('sms_from') ?: env('SMS_FROM', 'ICCR TZ'),
+            'sms_url' => SystemSetting::getValue('sms_url') ?: env('SMS_URL', ''),
+        ];
+        
+        $emailSettings = [
+            'mail_host' => SystemSetting::getValue('mail_host') ?: env('MAIL_HOST', ''),
+            'mail_port' => SystemSetting::getValue('mail_port') ?: env('MAIL_PORT', '587'),
+            'mail_username' => SystemSetting::getValue('mail_username') ?: env('MAIL_USERNAME', ''),
+            'mail_password' => SystemSetting::getValue('mail_password') ?: env('MAIL_PASSWORD', ''),
+            'mail_encryption' => SystemSetting::getValue('mail_encryption') ?: env('MAIL_ENCRYPTION', 'tls'),
+            'mail_from_address' => SystemSetting::getValue('mail_from_address') ?: env('MAIL_FROM_ADDRESS', ''),
+            'mail_from_name' => SystemSetting::getValue('mail_from_name') ?: env('MAIL_FROM_NAME', 'ICCR Tanzania'),
+        ];
+        
+        return view('admin.communication.index', compact('smsProvider', 'emailProvider', 'smsSettings', 'emailSettings'));
+    }
+
+    public function updateCommunicationSettings(Request $request)
+    {
+        $validated = $request->validate([
+            // SMS Provider
+            'sms_provider_name' => 'nullable|string|max:255',
+            'sms_username' => 'nullable|string|max:255',
+            'sms_password' => 'nullable|string|max:255',
+            'sms_from' => 'nullable|string|max:255',
+            'sms_url' => 'nullable|url|max:500',
+            
+            // Email Provider
+            'email_provider_name' => 'nullable|string|max:255',
+            'mail_host' => 'nullable|string|max:255',
+            'mail_port' => 'nullable|integer|min:1|max:65535',
+            'mail_username' => 'nullable|string|max:255',
+            'mail_password' => 'nullable|string|max:255',
+            'mail_encryption' => 'nullable|in:tls,ssl,none',
+            'mail_from_address' => 'nullable|email|max:255',
+            'mail_from_name' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            // Update or create SMS provider
+            if ($request->filled('sms_username') && $request->filled('sms_url')) {
+                $smsProvider = NotificationProvider::updateOrCreate(
+                    ['type' => 'sms', 'is_primary' => true],
+                    [
+                        'name' => $request->sms_provider_name ?: 'Default SMS Provider',
+                        'is_active' => true,
+                        'sms_username' => $request->sms_username,
+                        'sms_password' => $request->sms_password,
+                        'sms_from' => $request->sms_from,
+                        'sms_url' => $request->sms_url,
+                    ]
+                );
+                
+                // Also save to SystemSetting as fallback
+                SystemSetting::setValue('sms_username', $request->sms_username, 'text', 'communication');
+                SystemSetting::setValue('sms_password', $request->sms_password, 'text', 'communication');
+                SystemSetting::setValue('sms_from', $request->sms_from, 'text', 'communication');
+                SystemSetting::setValue('sms_url', $request->sms_url, 'text', 'communication');
+            }
+
+            // Update or create Email provider
+            if ($request->filled('mail_host') && $request->filled('mail_username')) {
+                $emailProvider = NotificationProvider::updateOrCreate(
+                    ['type' => 'email', 'is_primary' => true],
+                    [
+                        'name' => $request->email_provider_name ?: 'Default Email Provider',
+                        'is_active' => true,
+                        'mail_host' => $request->mail_host,
+                        'mail_port' => $request->mail_port ?? 587,
+                        'mail_username' => $request->mail_username,
+                        'mail_password' => $request->mail_password,
+                        'mail_encryption' => $request->mail_encryption ?? 'tls',
+                        'mail_from_address' => $request->mail_from_address,
+                        'mail_from_name' => $request->mail_from_name,
+                    ]
+                );
+                
+                // Also save to SystemSetting as fallback
+                SystemSetting::setValue('mail_host', $request->mail_host, 'text', 'communication');
+                SystemSetting::setValue('mail_port', $request->mail_port ?? 587, 'text', 'communication');
+                SystemSetting::setValue('mail_username', $request->mail_username, 'text', 'communication');
+                SystemSetting::setValue('mail_password', $request->mail_password, 'text', 'communication');
+                SystemSetting::setValue('mail_encryption', $request->mail_encryption ?? 'tls', 'text', 'communication');
+                SystemSetting::setValue('mail_from_address', $request->mail_from_address, 'text', 'communication');
+                SystemSetting::setValue('mail_from_name', $request->mail_from_name, 'text', 'communication');
+            }
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'updated',
+                'model_type' => 'CommunicationSettings',
+                'model_id' => 0,
+                'description' => 'Updated communication settings (SMS & Email)',
+            ]);
+
+            return redirect()->route('admin.communication')->with('success', 'Communication settings updated successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update settings: ' . $e->getMessage())->withInput();
+        }
+    }
+
+    public function testSMSConnection(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string',
+            'message' => 'nullable|string|max:160',
+        ]);
+
+        try {
+            $notificationService = new NotificationService();
+            $message = $request->message ?? 'Test SMS from ICCR Tanzania. If you receive this, your SMS configuration is working correctly!';
+            
+            $result = $notificationService->sendSMS($request->phone, $message);
+            
+            if ($result) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'SMS sent successfully! Please check the phone number.',
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'SMS sending failed. Please check your configuration and logs.',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Test failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function testEmailConnection(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        try {
+            $notificationService = new NotificationService();
+            $subject = 'Test Email from ICCR Tanzania';
+            $message = 'This is a test email. If you receive this, your email configuration is working correctly!';
+            
+            $result = $notificationService->sendEmail($request->email, $subject, $message);
+            
+            if ($result) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Test email sent successfully! Please check your inbox.',
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email sending failed. Please check your configuration and logs.',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Test failed: ' . $e->getMessage(),
             ], 500);
         }
     }

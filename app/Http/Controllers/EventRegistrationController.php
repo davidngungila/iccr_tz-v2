@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,10 +70,18 @@ class EventRegistrationController extends Controller
             'status' => 'pending',
         ]);
 
-        // Send SMS notification
-        $smsSent = $this->sendRegistrationSMS($registration, $event);
-        if ($smsSent) {
-            $registration->update(['sms_sent' => true]);
+        // Send SMS notification using NotificationService
+        try {
+            $notificationService = new NotificationService();
+            $smsMessage = "Hello {$registration->full_name}, you have successfully registered for {$event->title} on {$event->start_date->format('M d, Y')}. We'll send you more details soon. - ICCR Tanzania";
+            
+            $smsSent = $notificationService->sendSMS($registration->phone, $smsMessage);
+            if ($smsSent) {
+                $registration->update(['sms_sent' => true]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to send registration SMS: ' . $e->getMessage());
+            // Continue even if SMS fails
         }
 
         return response()->json([

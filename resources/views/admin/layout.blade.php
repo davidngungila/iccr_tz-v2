@@ -455,7 +455,13 @@
                 <span class="font-medium">Users</span>
             </a>
             
-            <!-- 1️⃣4️⃣ Settings -->
+            <!-- 1️⃣4️⃣ Communication Settings -->
+            <a href="{{ route('admin.communication') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.communication*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                <span class="text-xl">📱</span>
+                <span class="font-medium">Communication Settings</span>
+            </a>
+            
+            <!-- 1️⃣5️⃣ Settings -->
             <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.settings*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">⚙️</span>
                 <span class="font-medium">Settings</span>
