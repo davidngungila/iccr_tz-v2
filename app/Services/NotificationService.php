@@ -291,24 +291,36 @@ class NotificationService
                 curl_close($curl);
                 
                 // Check if SMS was sent successfully
-                if ($httpCode == 200) {
+                if ($httpCode == 200 || $httpCode == 201) {
                     $responseLower = strtolower($response ?? '');
                     $responseData = json_decode($response, true);
                     
-                    if (strpos($responseLower, 'success') !== false || 
-                        strpos($responseLower, '200') !== false ||
-                        strpos($responseLower, 'accepted') !== false ||
-                        strpos($responseLower, 'sent') !== false ||
-                        ($responseData !== null && isset($responseData['success']) && $responseData['success']) ||
-                        ($responseData !== null && !isset($responseData['error']))) {
-                        
+                    // Check for success indicators in response
+                    $isSuccess = false;
+                    if ($responseData !== null) {
+                        // Check if response has success field
+                        if (isset($responseData['success']) && $responseData['success'] === true) {
+                            $isSuccess = true;
+                        } elseif (!isset($responseData['error']) && !isset($responseData['errors'])) {
+                            // No error field means success
+                            $isSuccess = true;
+                        }
+                    } elseif (strpos($responseLower, 'success') !== false || 
+                             strpos($responseLower, 'sent') !== false ||
+                             strpos($responseLower, 'accepted') !== false) {
+                        $isSuccess = true;
+                    }
+                    
+                    if ($isSuccess) {
                         Log::info('SMS sent successfully', [
                             'phone' => $phoneNumber,
+                            'http_code' => $httpCode,
+                            'response' => substr($response ?? '', 0, 200),
                         ]);
                         return true;
                     } else {
-                        $errorMsg = 'SMS API returned 200 but content indicates failure. Response: ' . substr($response ?? '', 0, 200);
-                        Log::warning('SMS API returned 200 but content indicates failure', [
+                        $errorMsg = 'SMS API returned ' . $httpCode . ' but content indicates failure. Response: ' . substr($response ?? '', 0, 200);
+                        Log::warning('SMS API returned ' . $httpCode . ' but content indicates failure', [
                             'phone' => $phoneNumber,
                             'response' => substr($response ?? '', 0, 200),
                         ]);
@@ -334,6 +346,7 @@ class NotificationService
                         'http_code' => $httpCode,
                         'response' => substr($response ?? '', 0, 200),
                         'phone' => $phoneNumber,
+                        'url' => $smsUrl,
                     ]);
                     
                     // Log to ActivityLog
@@ -342,7 +355,7 @@ class NotificationService
                             'user_id' => \Illuminate\Support\Facades\Auth::id(),
                             'action' => 'sms_error',
                             'model_type' => 'SMS',
-                            'description' => $errorMsg . ' - Phone: ' . $phoneNumber,
+                            'description' => $errorMsg . ' - Phone: ' . $phoneNumber . ' - URL: ' . $smsUrl,
                             'ip_address' => request()->ip(),
                         ]);
                     } catch (\Exception $e) {
