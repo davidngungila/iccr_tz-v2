@@ -71,7 +71,11 @@ class NotificationService
                 $smsUrl = $this->smsUrl;
             }
 
-            if (empty($smsUrl) || empty($smsUsername) || empty($smsPassword)) {
+            // For API v2, only URL and password (Bearer token) are required
+            $isV2Api = strpos($smsUrl, '/api/sms/v2') !== false;
+            $requiredFieldsMissing = empty($smsUrl) || empty($smsPassword) || (!$isV2Api && empty($smsUsername));
+            
+            if ($requiredFieldsMissing) {
                 $errorMsg = 'SMS configuration incomplete: Missing required credentials';
                 Log::warning('SMS configuration incomplete', [
                     'has_url' => !empty($smsUrl),
