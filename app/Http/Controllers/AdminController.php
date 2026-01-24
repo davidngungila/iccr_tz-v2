@@ -1238,6 +1238,12 @@ class AdminController extends Controller
         return view('admin.security.logs', compact('logs'));
     }
 
+    public function showActivityLog(ActivityLog $log)
+    {
+        $log->load('user');
+        return view('admin.security.log-detail', compact('log'));
+    }
+
     // ==================== CLOUDINARY ASSETS MANAGEMENT ====================
     
     public function cloudinaryAssets()

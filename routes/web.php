@@ -158,5 +158,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Security
         Route::get('/security', [AdminController::class, 'security'])->name('security');
         Route::get('/security/logs', [AdminController::class, 'activityLogs'])->name('security.logs');
+        Route::get('/security/logs/{log}', [AdminController::class, 'showActivityLog'])->name('security.logs.show');
     });
 });

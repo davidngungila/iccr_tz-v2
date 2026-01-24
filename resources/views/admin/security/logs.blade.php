@@ -32,6 +32,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -42,7 +43,7 @@
                             <div class="text-xs text-gray-500">{{ $log->user->email ?? '' }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 py-1 text-xs rounded-full {{ $log->action === 'login' ? 'bg-green-100 text-green-800' : ($log->action === 'logout' ? 'bg-red-100 text-red-800' : ($log->action === 'created' ? 'bg-blue-100 text-blue-800' : ($log->action === 'updated' ? 'bg-yellow-100 text-yellow-800' : ($log->action === 'deleted' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')))) }}">
+                            <span class="px-2 py-1 text-xs rounded-full {{ $log->action === 'login' ? 'bg-green-100 text-green-800' : ($log->action === 'logout' ? 'bg-red-100 text-red-800' : ($log->action === 'created' ? 'bg-blue-100 text-blue-800' : ($log->action === 'updated' ? 'bg-yellow-100 text-yellow-800' : ($log->action === 'deleted' ? 'bg-red-100 text-red-800' : ($log->action === 'sms_error' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')))) }}">
                                 {{ ucfirst($log->action) }}
                             </span>
                         </td>
@@ -50,7 +51,7 @@
                             {{ $log->model_type ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">{{ $log->description }}</div>
+                            <div class="text-sm text-gray-900">{{ Str::limit($log->description, 100) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             {{ $log->ip_address ?? '-' }}
@@ -58,10 +59,15 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             {{ $log->created_at->format('M d, Y H:i') }}
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <a href="{{ route('admin.security.logs.show', $log->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                                View Details
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-gray-600">No activity logs found</td>
+                        <td colspan="7" class="px-6 py-4 text-center text-gray-600">No activity logs found</td>
                     </tr>
                 @endforelse
             </tbody>

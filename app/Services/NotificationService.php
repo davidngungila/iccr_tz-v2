@@ -64,6 +64,14 @@ class NotificationService
                 $smsPassword = $provider->sms_password;
                 $smsFrom = $provider->sms_from;
                 $smsUrl = $provider->sms_url;
+                
+                // Auto-update old v1 URLs to v2
+                if (strpos($smsUrl, '/link/sms/v1') !== false) {
+                    $smsUrl = str_replace('/link/sms/v1', '/api/sms/v2', $smsUrl);
+                    // Update in database
+                    $provider->update(['sms_url' => $smsUrl]);
+                    Log::info('Auto-updated SMS URL from v1 to v2', ['old_url' => $provider->sms_url, 'new_url' => $smsUrl]);
+                }
             } else {
                 $smsUsername = $this->smsUsername;
                 $smsPassword = $this->smsPassword;
