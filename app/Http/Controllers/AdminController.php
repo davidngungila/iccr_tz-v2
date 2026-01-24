@@ -790,11 +790,14 @@ class AdminController extends Controller
             
             // Use DomPDF if available, otherwise return HTML for browser print
             if (class_exists('\Dompdf\Dompdf')) {
-                $dompdf = new \Dompdf\Dompdf();
+                $options = new \Dompdf\Options();
+                $options->setIsRemoteEnabled(true);
+                $options->setIsHtml5ParserEnabled(true);
+                
+                $dompdf = new \Dompdf\Dompdf($options);
                 $dompdf->loadHtml($html);
                 // Set paper size for receipt printer (80mm width)
                 $dompdf->setPaper([0, 0, 226.77, 841.89], 'portrait'); // 80mm x auto (80mm = 226.77 points)
-                $dompdf->setOption('isRemoteEnabled', true);
                 $dompdf->render();
                 
                 $filename = "ticket-{$event->slug}-{$registration->id}.pdf";
@@ -824,11 +827,14 @@ class AdminController extends Controller
             
             // Use DomPDF if available, otherwise return HTML for browser print
             if (class_exists('\Dompdf\Dompdf')) {
-                $dompdf = new \Dompdf\Dompdf();
+                $options = new \Dompdf\Options();
+                $options->setIsRemoteEnabled(true);
+                $options->setIsHtml5ParserEnabled(true);
+                
+                $dompdf = new \Dompdf\Dompdf($options);
                 $dompdf->loadHtml($html);
                 // Set paper size for receipt printer (80mm width)
                 $dompdf->setPaper([0, 0, 226.77, 841.89], 'portrait'); // 80mm x auto (80mm = 226.77 points)
-                $dompdf->setOption('isRemoteEnabled', true);
                 $dompdf->render();
                 
                 // Include registrant name in filename
