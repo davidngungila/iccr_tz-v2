@@ -45,8 +45,19 @@
         .receipt-header {
             text-align: center;
             padding: 10px 0;
-            border-bottom: 2px dashed #000;
+            border-bottom: 2px dashed #16a34a;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+        }
+        .logo-container {
+            margin-bottom: 8px;
+        }
+        .logo-container img {
+            max-width: 100px;
+            height: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 6px;
         }
         .receipt-header h1 {
             font-size: 14px;
@@ -54,11 +65,12 @@
             margin: 0 0 3px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: #16a34a;
         }
         .receipt-header p {
             font-size: 9px;
             margin: 2px 0;
-            color: #333;
+            color: #2563eb;
         }
         .receipt-title {
             text-align: center;
@@ -67,8 +79,10 @@
             margin: 8px 0;
             text-transform: uppercase;
             padding: 5px 0;
-            border-top: 1px solid #000;
-            border-bottom: 1px solid #000;
+            border-top: 2px solid #16a34a;
+            border-bottom: 2px solid #16a34a;
+            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
+            color: white;
         }
         .receipt-section {
             margin: 8px 0;
@@ -79,8 +93,9 @@
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 4px;
-            border-bottom: 1px dotted #666;
+            border-bottom: 2px solid #16a34a;
             padding-bottom: 2px;
+            color: #16a34a;
         }
         .receipt-line {
             display: flex;
@@ -97,40 +112,45 @@
             flex-shrink: 0;
             width: 35%;
             text-align: left;
+            color: #2563eb;
         }
         .line-value {
             flex: 1;
             text-align: right;
             word-break: break-word;
+            color: #111827;
         }
         .receipt-block {
             margin: 6px 0;
             padding: 5px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            border: 1px solid #16a34a;
+            border-radius: 4px;
         }
         .block-label {
             font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 3px;
-            color: #666;
+            color: #16a34a;
         }
         .block-value {
             font-size: 10px;
             word-break: break-word;
+            color: #111827;
         }
         .registration-id {
             text-align: center;
             padding: 8px;
-            background: #000;
+            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
             color: #fff;
             font-family: 'Courier New', monospace;
             font-size: 12px;
             font-weight: bold;
             letter-spacing: 2px;
             margin: 10px 0;
-            border: 2px solid #000;
+            border: 2px solid #16a34a;
+            border-radius: 6px;
         }
         .status-badge {
             display: inline-block;
@@ -139,33 +159,40 @@
             font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
+            border-radius: 4px;
         }
         .status-confirmed {
-            background: #000;
+            background: #16a34a;
             color: #fff;
+            border-color: #16a34a;
         }
         .status-pending {
-            background: #fff;
+            background: #fbbf24;
             color: #000;
+            border-color: #fbbf24;
         }
         .status-cancelled {
-            background: #666;
+            background: #ef4444;
             color: #fff;
+            border-color: #ef4444;
         }
         .receipt-divider {
             text-align: center;
             margin: 8px 0;
             padding: 5px 0;
-            border-top: 1px dashed #000;
-            border-bottom: 1px dashed #000;
+            border-top: 2px dashed #16a34a;
+            border-bottom: 2px dashed #16a34a;
+            color: #16a34a;
+            font-weight: bold;
         }
         .receipt-footer {
             text-align: center;
             margin-top: 15px;
             padding-top: 10px;
-            border-top: 2px dashed #000;
+            border-top: 2px dashed #16a34a;
             font-size: 8px;
-            color: #666;
+            color: #6b7280;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
         }
         .receipt-footer p {
             margin: 3px 0;
@@ -177,9 +204,12 @@
             font-size: 14px;
             font-weight: bold;
             letter-spacing: 1px;
-            padding: 5px;
+            padding: 8px;
             margin: 8px 0;
-            border: 1px solid #000;
+            border: 2px solid #16a34a;
+            border-radius: 6px;
+            background: white;
+            color: #16a34a;
         }
         .print-button {
             position: fixed;
@@ -210,6 +240,9 @@
     <div class="receipt-container">
         <!-- Header -->
         <div class="receipt-header">
+            <div class="logo-container">
+                <img src="{{ asset('images/logo.png') }}" alt="ICCR Tanzania Logo">
+            </div>
             <h1>ICCR Tanzania</h1>
             <p>Inter-Colleges Catholic Charismatic Renewal</p>
             <p>Registration Receipt</p>

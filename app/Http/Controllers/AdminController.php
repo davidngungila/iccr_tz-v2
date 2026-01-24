@@ -788,7 +788,8 @@ class AdminController extends Controller
             if (class_exists('\Dompdf\Dompdf')) {
                 $dompdf = new \Dompdf\Dompdf();
                 $dompdf->loadHtml($html);
-                $dompdf->setPaper('A4', 'portrait');
+                // Set paper size for receipt printer (80mm width)
+                $dompdf->setPaper([0, 0, 226.77, 841.89], 'portrait'); // 80mm x auto (80mm = 226.77 points)
                 $dompdf->render();
                 
                 $filename = "ticket-{$event->slug}-{$registration->id}.pdf";

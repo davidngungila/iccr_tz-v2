@@ -48,6 +48,16 @@
             text-align: center;
             position: relative;
         }
+        .logo-container {
+            margin-bottom: 10px;
+        }
+        .logo-container img {
+            max-width: 120px;
+            height: auto;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+        }
         .ticket-header h1 {
             margin: 0;
             font-size: 18px;
@@ -142,7 +152,7 @@
             word-break: break-word;
         }
         .ticket-number {
-            background: #111827;
+            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
             color: white;
             padding: 10px;
             text-align: center;
@@ -153,7 +163,7 @@
             font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-bottom: 4px;
         }
         .ticket-number-value {
@@ -169,9 +179,11 @@
             text-align: center;
             padding: 8px;
             background: white;
-            border: 2px solid #111827;
+            border: 2px solid #16a34a;
             border-radius: 6px;
             margin: 12px 0;
+            color: #16a34a;
+            font-weight: bold;
         }
         .ticket-footer {
             background: #f9fafb;
@@ -220,6 +232,9 @@
     <div class="ticket-container">
         <!-- Header -->
         <div class="ticket-header">
+            <div class="logo-container">
+                <img src="{{ asset('images/logo.png') }}" alt="ICCR Tanzania Logo">
+            </div>
             <h1>ICCR Tanzania</h1>
             <p>Event Admission Ticket</p>
         </div>
