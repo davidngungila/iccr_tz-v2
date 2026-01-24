@@ -16,7 +16,8 @@ class AttendanceController extends Controller
         $registrations = EventRegistration::where('event_id', $event->id)
             ->where('status', 'confirmed')
             ->with(['attendances' => function($query) use ($event) {
-                $query->where('event_id', $event->id);
+                $query->where('event_id', $event->id)
+                      ->where('attendance_date', today()->toDateString());
             }])
             ->orderBy('full_name')
             ->get();
