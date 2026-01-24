@@ -345,10 +345,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
-                <div id="homepage-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.homepage*') || request()->routeIs('admin.slides*') ? 'open' : '' }}">
+                <div id="homepage-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.homepage*') || request()->routeIs('admin.slides*') || request()->is('admin/slides*') ? 'open' : '' }}">
                     <div class="pl-4 pt-1 space-y-1">
-                        <a href="{{ route('admin.homepage') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.homepage*') && !request()->routeIs('admin.slides*') ? 'text-white bg-gray-800' : '' }}">Homepage Settings</a>
-                        <a href="{{ route('admin.slides.index') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.slides*') ? 'text-white bg-gray-800' : '' }}">Carousel Slides</a>
+                        <a href="{{ route('admin.homepage') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.homepage*') && !request()->routeIs('admin.slides*') && !request()->is('admin/slides*') ? 'text-white bg-gray-800' : '' }}">Homepage Settings</a>
+                        @php
+                            $slidesRoute = Route::has('admin.slides.index') ? route('admin.slides.index') : url('/admin/slides');
+                            $isSlidesActive = request()->routeIs('admin.slides*') || request()->is('admin/slides*');
+                        @endphp
+                        <a href="{{ $slidesRoute }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ $isSlidesActive ? 'text-white bg-gray-800' : '' }}">Carousel Slides</a>
                     </div>
                 </div>
             </div>
@@ -404,11 +408,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
-                <div id="media-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.media*') || request()->routeIs('admin.cloudinary*') ? 'open' : '' }}">
+                <div id="media-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.media*') || request()->routeIs('admin.cloudinary*') || request()->is('admin/cloudinary*') ? 'open' : '' }}">
                     <div class="pl-4 pt-1 space-y-1">
-                        <a href="{{ route('admin.media') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media') && !request()->routeIs('admin.media.create') && !request()->routeIs('admin.media.edit') && !request()->routeIs('admin.cloudinary*') ? 'text-white bg-gray-800' : '' }}">All Media</a>
+                        <a href="{{ route('admin.media') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media') && !request()->routeIs('admin.media.create') && !request()->routeIs('admin.media.edit') && !request()->routeIs('admin.cloudinary*') && !request()->is('admin/cloudinary*') ? 'text-white bg-gray-800' : '' }}">All Media</a>
                         <a href="{{ route('admin.media.create') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media.create') ? 'text-white bg-gray-800' : '' }}">Add Media</a>
-                        <a href="{{ route('admin.cloudinary.index') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.cloudinary*') ? 'text-white bg-gray-800' : '' }}">Cloudinary Assets</a>
+                        @php
+                            $cloudinaryRoute = Route::has('admin.cloudinary.index') ? route('admin.cloudinary.index') : url('/admin/cloudinary');
+                            $isCloudinaryActive = request()->routeIs('admin.cloudinary*') || request()->is('admin/cloudinary*');
+                        @endphp
+                        <a href="{{ $cloudinaryRoute }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ $isCloudinaryActive ? 'text-white bg-gray-800' : '' }}">Cloudinary Assets</a>
                     </div>
                 </div>
             </div>
