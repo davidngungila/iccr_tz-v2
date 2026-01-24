@@ -193,7 +193,7 @@
             </p>
         </div>
         
-        <div class="space-y-8" id="events-container">
+        <div class="space-y-8 max-w-5xl mx-auto" id="events-container">
             @forelse($upcomingEvents as $event)
             <div class="event-item group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1" data-category="all">
                 <div class="md:flex">

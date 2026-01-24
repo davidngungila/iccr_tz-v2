@@ -170,9 +170,15 @@
 
                     <!-- Register Button -->
                     <div class="mt-8 pt-6 border-t-2 border-gray-100">
-                        <a href="{{ route('get-involved') }}" class="block w-full text-center px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                        @if($event->status === 'upcoming')
+                        <button onclick="openRegistrationModal()" class="block w-full text-center px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
                             Register Now
-                        </a>
+                        </button>
+                        @else
+                        <button disabled class="block w-full text-center px-6 py-4 bg-gray-400 text-white rounded-xl font-bold text-lg cursor-not-allowed">
+                            Registration Closed
+                        </button>
+                        @endif
                         <button onclick="shareEvent()" class="mt-3 block w-full text-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition">
                             <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
