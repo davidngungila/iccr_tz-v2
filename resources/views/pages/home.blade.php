@@ -93,12 +93,12 @@
     </div>
 
     <!-- Carousel Navigation Arrows -->
-    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50">
+    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg" aria-label="Previous slide">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
     </button>
-    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50">
+    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg" aria-label="Next slide">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
@@ -106,9 +106,9 @@
 
     <!-- Carousel Indicators -->
     @if($slides->count() > 0)
-    <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
+    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2 bg-black/20 backdrop-blur-sm rounded-full">
         @foreach($slides as $index => $slide)
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white {{ $index === 0 ? 'opacity-100' : 'opacity-50' }} transition border border-white/50 hover:opacity-75" data-slide="{{ $index }}"></button>
+        <button class="carousel-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white {{ $index === 0 ? 'opacity-100' : 'opacity-50' }} transition-all duration-300 border-2 border-white/70 hover:opacity-100 hover:scale-125 shadow-lg" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}"></button>
         @endforeach
     </div>
     @endif
