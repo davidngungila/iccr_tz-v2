@@ -880,8 +880,9 @@ class AdminController extends Controller
                 $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrCode);
             } catch (\Exception $e) {
                 \Log::error('QR Code generation failed: ' . $e->getMessage());
-                // Fallback: Use a simple text-based QR placeholder
-                $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode('<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#f3f4f6"/><text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="#6b7280">QR Code</text></svg>');
+                // Fallback: Use a simple SVG placeholder
+                $svg = '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#f3f4f6"/><text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="#6b7280">QR Code</text></svg>';
+                $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode($svg);
             }
             
             // Generate HTML for ID card
