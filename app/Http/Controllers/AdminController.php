@@ -1569,7 +1569,7 @@ class AdminController extends Controller
             
             // SMS fields
             'sms_username' => 'nullable|string|max:255',
-            'sms_password' => 'required_if:type,sms|string|max:500',
+            'sms_password' => 'required_if:type,sms|string|max:500|min:1',
             'sms_from' => 'required_if:type,sms|nullable|string|max:255',
             'sms_url' => 'required_if:type,sms|nullable|url|max:500',
             

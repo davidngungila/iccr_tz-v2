@@ -65,11 +65,11 @@
                     </div>
                     <div>
                         <label for="sms_password" class="block text-sm font-semibold text-gray-700 mb-2">API Key / Bearer Token *</label>
-                        <input type="text" id="sms_password" name="sms_password" value="{{ old('sms_password', $provider->sms_password ?? '') }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition font-mono text-sm">
-                        <p class="text-xs text-gray-500 mt-1">Required: Bearer token for API v2 (e.g., cedcce9becad866f59beac1fd5a235bc)</p>
-                        <p class="text-xs text-yellow-600 mt-1">⚠️ Note: Token is visible for easier configuration. Enter your Bearer token here.</p>
+                        <input type="text" id="sms_password" name="sms_password" value="{{ old('sms_password', $provider->sms_password ?? '') }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition font-mono text-sm" placeholder="Enter your Bearer token">
+                        <p class="text-xs text-gray-500 mt-1">Required: Bearer token for API v2. Can be any alphanumeric string or special characters.</p>
+                        <p class="text-xs text-yellow-600 mt-1">⚠️ Note: Token is visible for easier configuration. Enter your exact Bearer token as provided by your SMS service.</p>
                         @error('sms_password')
-                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-600 text-sm mt-1 font-semibold">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
