@@ -51,7 +51,7 @@
                             {{ $log->model_type ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">{{ Str::limit($log->description, 100) }}</div>
+                            <div class="text-sm text-gray-900">{{ \Illuminate\Support\Str::limit($log->description, 100) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             {{ $log->ip_address ?? '-' }}
