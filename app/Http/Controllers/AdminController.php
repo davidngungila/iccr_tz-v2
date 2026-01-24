@@ -93,18 +93,34 @@ class AdminController extends Controller
             'published_posts' => BlogPost::where('status', 'published')->count(),
             'events' => Event::count(),
             'upcoming_events' => Event::where('status', 'upcoming')->count(),
+            'past_events' => Event::where('status', 'past')->count(),
+            'featured_events' => Event::where('is_featured', true)->count(),
             'media' => Media::count(),
             'newsletter_subscriptions' => NewsletterSubscription::count(),
             'contact_messages' => ContactMessage::where('status', 'new')->count(),
+            'total_messages' => ContactMessage::count(),
             'team_members' => TeamMember::where('is_active', true)->count(),
+            'total_team' => TeamMember::count(),
+            'carousel_slides' => \App\Models\CarouselSlide::where('is_active', true)->count(),
+            'total_slides' => \App\Models\CarouselSlide::count(),
+            'event_registrations' => \App\Models\EventRegistration::count(),
+            'pending_registrations' => \App\Models\EventRegistration::where('status', 'pending')->count(),
+            'confirmed_registrations' => \App\Models\EventRegistration::where('status', 'confirmed')->count(),
+            'sms_sent' => \App\Models\EventRegistration::where('sms_sent', true)->count(),
+            'activity_logs_today' => ActivityLog::whereDate('created_at', today())->count(),
+            'activity_logs_week' => ActivityLog::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'notification_providers' => NotificationProvider::where('is_active', true)->count(),
         ];
 
         $recent_pages = Page::latest()->take(5)->get();
         $recent_posts = BlogPost::latest()->take(5)->get();
         $recent_events = Event::latest()->take(5)->get();
         $recent_messages = ContactMessage::latest()->take(5)->get();
+        $recent_registrations = \App\Models\EventRegistration::with('event')->latest()->take(5)->get();
+        $recent_activity = ActivityLog::with('user')->latest()->take(10)->get();
+        $upcoming_events = Event::where('status', 'upcoming')->where('start_date', '>=', now())->orderBy('start_date')->take(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recent_pages', 'recent_posts', 'recent_events', 'recent_messages'));
+        return view('admin.dashboard', compact('stats', 'recent_pages', 'recent_posts', 'recent_events', 'recent_messages', 'recent_registrations', 'recent_activity', 'upcoming_events'));
     }
 
     // ==================== PAGES MANAGEMENT ====================
