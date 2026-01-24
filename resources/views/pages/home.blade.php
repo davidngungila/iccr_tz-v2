@@ -93,22 +93,22 @@
     </div>
 
     <!-- Carousel Navigation Arrows -->
-    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-40 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg pointer-events-auto" aria-label="Previous slide">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    <button id="prevBtn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-50 bg-white/30 hover:bg-white/40 text-white p-3 sm:p-4 rounded-full transition-all duration-300 backdrop-blur-md border-2 border-white/50 hover:border-white/70 shadow-2xl hover:shadow-2xl pointer-events-auto hover:scale-110" aria-label="Previous slide" style="z-index: 50 !important;">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
         </svg>
     </button>
-    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-40 bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition backdrop-blur-sm border-2 border-white/30 hover:border-white/50 shadow-lg pointer-events-auto" aria-label="Next slide">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    <button id="nextBtn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-50 bg-white/30 hover:bg-white/40 text-white p-3 sm:p-4 rounded-full transition-all duration-300 backdrop-blur-md border-2 border-white/50 hover:border-white/70 shadow-2xl hover:shadow-2xl pointer-events-auto hover:scale-110" aria-label="Next slide" style="z-index: 50 !important;">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
         </svg>
     </button>
 
     <!-- Carousel Indicators -->
     @if($slides->count() > 0)
-    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-40 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full pointer-events-auto shadow-2xl">
+    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2.5 bg-black/50 backdrop-blur-md rounded-full pointer-events-auto shadow-2xl" style="z-index: 50 !important;">
         @foreach($slides as $index => $slide)
-        <button class="carousel-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-white transition-all duration-300 border-2 {{ $index === 0 ? 'opacity-100 border-white scale-125 ring-2 ring-white/50' : 'opacity-60 border-white/70' }} hover:opacity-100 hover:scale-125 shadow-lg cursor-pointer" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}" title="Slide {{ $index + 1 }}"></button>
+        <button class="carousel-indicator w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-full bg-white transition-all duration-300 border-2 border-white {{ $index === 0 ? 'opacity-100 scale-125 ring-2 ring-white/70' : 'opacity-70' }} hover:opacity-100 hover:scale-125 shadow-lg cursor-pointer" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}" title="Slide {{ $index + 1 }}" style="min-width: 16px; min-height: 16px; display: block !important; visibility: visible !important;"></button>
         @endforeach
     </div>
     @endif
