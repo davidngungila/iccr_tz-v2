@@ -357,28 +357,76 @@
                 </div>
                 
                 <!-- 2️⃣ Registration Management -->
-                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.registrations*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                    <span class="text-xl">📝</span>
-                    <span class="font-medium">Registration Management</span>
-                </a>
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('registrations')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.registrations*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">📝</span>
+                            <span class="font-medium">Registration Management</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="registrations-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="registrations-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.registrations*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">Select Event</a>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- 3️⃣ Payment & Contributions -->
-                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.payments*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                    <span class="text-xl">💳</span>
-                    <span class="font-medium">Payment & Contributions</span>
-                </a>
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('payments')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.payments*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">💳</span>
+                            <span class="font-medium">Payment & Contributions</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="payments-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="payments-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.payments*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">Select Event</a>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- 4️⃣ Attendance & Check-In -->
-                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.attendance*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                    <span class="text-xl">✅</span>
-                    <span class="font-medium">Attendance & Check-In</span>
-                </a>
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('attendance')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.attendance*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">✅</span>
+                            <span class="font-medium">Attendance & Check-In</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="attendance-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="attendance-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.attendance*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">Select Event</a>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- 5️⃣ Program & Schedule Management -->
-                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.programs*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                    <span class="text-xl">📋</span>
-                    <span class="font-medium">Program & Schedule</span>
-                </a>
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('programs')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.programs*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">📋</span>
+                            <span class="font-medium">Program & Schedule</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="programs-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="programs-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.programs*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">Select Event</a>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- 6️⃣ Communication & Notifications -->
                 <a href="{{ route('admin.communication') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.communication*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
@@ -423,7 +471,7 @@
                     </button>
                     <div id="volunteers-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.volunteers*') ? 'open' : '' }}">
                         <div class="pl-4 pt-1 space-y-1">
-                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">View All Events</a>
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">Select Event</a>
                         </div>
                     </div>
                 </div>
@@ -435,7 +483,7 @@
                 </a>
                 
                 <!-- 1️⃣3️⃣ Multi-Institution Support -->
-                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200">
+                <a href="{{ route('admin.events.management') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200">
                     <span class="text-xl">🌍</span>
                     <span class="font-medium">Multi-Institution Support</span>
                 </a>
