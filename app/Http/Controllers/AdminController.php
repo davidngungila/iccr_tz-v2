@@ -1490,7 +1490,7 @@ class AdminController extends Controller
             
             // SMS fields
             'sms_username' => 'required_if:type,sms|nullable|string|max:255',
-            'sms_password' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_password' => 'nullable|string|max:255',
             'sms_from' => 'required_if:type,sms|nullable|string|max:255',
             'sms_url' => 'required_if:type,sms|nullable|url|max:500',
             
@@ -1498,7 +1498,7 @@ class AdminController extends Controller
             'mail_host' => 'required_if:type,email|nullable|string|max:255',
             'mail_port' => 'required_if:type,email|nullable|integer|min:1|max:65535',
             'mail_username' => 'required_if:type,email|nullable|string|max:255',
-            'mail_password' => 'required_if:type,email|nullable|string|max:255',
+            'mail_password' => 'nullable|string|max:255',
             'mail_encryption' => 'required_if:type,email|nullable|in:tls,ssl,none',
             'mail_from_address' => 'required_if:type,email|nullable|email|max:255',
             'mail_from_name' => 'required_if:type,email|nullable|string|max:255',
@@ -1511,6 +1511,14 @@ class AdminController extends Controller
             NotificationProvider::where('type', $validated['type'])
                 ->where('id', '!=', $provider->id)
                 ->update(['is_primary' => false]);
+        }
+
+        // Only update password if provided (allow blank to keep current)
+        if ($provider->type === 'sms' && empty($validated['sms_password'])) {
+            unset($validated['sms_password']);
+        }
+        if ($provider->type === 'email' && empty($validated['mail_password'])) {
+            unset($validated['mail_password']);
         }
 
         $provider->update($validated);
