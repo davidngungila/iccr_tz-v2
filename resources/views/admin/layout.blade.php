@@ -297,7 +297,7 @@
                             </span>
                         @endif
                     </div>
-                    <p class="text-xs text-gray-400">Dashboard</p>
+                    <p class="text-xs text-gray-400">{{ request()->routeIs('admin.events.management*') || request()->routeIs('admin.events.programs*') || request()->routeIs('admin.events.volunteers*') || request()->routeIs('admin.events.attendance*') || request()->routeIs('admin.events.payments*') || request()->routeIs('admin.events.prayer-requests*') || request()->routeIs('admin.events.testimonies*') || request()->routeIs('admin.events.registrations*') ? 'Event Management' : 'Dashboard' }}</p>
                 </div>
             </div>
             <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white transition">
@@ -308,7 +308,158 @@
         </div>
         
         <!-- Navigation -->
+        @php
+            $isEventManagement = request()->routeIs('admin.events.management*') || 
+                                 request()->routeIs('admin.events.programs*') || 
+                                 request()->routeIs('admin.events.volunteers*') || 
+                                 request()->routeIs('admin.events.attendance*') || 
+                                 request()->routeIs('admin.events.payments*') || 
+                                 request()->routeIs('admin.events.prayer-requests*') || 
+                                 request()->routeIs('admin.events.testimonies*') || 
+                                 request()->routeIs('admin.events.registrations*') ||
+                                 request()->routeIs('admin.prayer-requests*') ||
+                                 request()->routeIs('admin.testimonies*');
+        @endphp
         <nav class="mt-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden" style="height: calc(100vh - 80px); scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.5) transparent;">
+            @if($isEventManagement)
+                <!-- EVENT MANAGEMENT SIDEBAR -->
+                <!-- Back to Main Dashboard -->
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 mb-4 border-b border-gray-700 pb-4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="font-medium">Back to Main Dashboard</span>
+                </a>
+                
+                <!-- 1️⃣ Event Management Dashboard -->
+                <a href="{{ route('admin.events.management') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.management') ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">🔔</span>
+                    <span class="font-medium">Event Management</span>
+                </a>
+                
+                <!-- 1️⃣ Event Creation & Setup -->
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('event-setup')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events') || request()->routeIs('admin.events.create') || request()->routeIs('admin.events.edit') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">📅</span>
+                            <span class="font-medium">Event Creation & Setup</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="event-setup-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="event-setup-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events') || request()->routeIs('admin.events.create') || request()->routeIs('admin.events.edit') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.events') && !request()->routeIs('admin.events.create') && !request()->routeIs('admin.events.edit') ? 'text-white bg-gray-800' : '' }}">All Events</a>
+                            <a href="{{ route('admin.events.create') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.events.create') ? 'text-white bg-gray-800' : '' }}">Create Event</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2️⃣ Registration Management -->
+                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.registrations*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">📝</span>
+                    <span class="font-medium">Registration Management</span>
+                </a>
+                
+                <!-- 3️⃣ Payment & Contributions -->
+                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.payments*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">💳</span>
+                    <span class="font-medium">Payment & Contributions</span>
+                </a>
+                
+                <!-- 4️⃣ Attendance & Check-In -->
+                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.attendance*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">✅</span>
+                    <span class="font-medium">Attendance & Check-In</span>
+                </a>
+                
+                <!-- 5️⃣ Program & Schedule Management -->
+                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.programs*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">📋</span>
+                    <span class="font-medium">Program & Schedule</span>
+                </a>
+                
+                <!-- 6️⃣ Communication & Notifications -->
+                <a href="{{ route('admin.communication') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.communication*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">📱</span>
+                    <span class="font-medium">Communication & Notifications</span>
+                </a>
+                
+                <!-- 7️⃣ Roles & Permissions -->
+                <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.users*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">👥</span>
+                    <span class="font-medium">Roles & Permissions</span>
+                </a>
+                
+                <!-- 8️⃣ Content & Media -->
+                <a href="{{ route('admin.media') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.media*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">🖼️</span>
+                    <span class="font-medium">Content & Media</span>
+                </a>
+                
+                <!-- 9️⃣ Reports & Analytics -->
+                <a href="{{ route('admin.events.management') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200">
+                    <span class="text-xl">📊</span>
+                    <span class="font-medium">Reports & Analytics</span>
+                </a>
+                
+                <!-- 🔐 Security & Data Protection -->
+                <a href="{{ route('admin.security.logs') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.security*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
+                    <span class="text-xl">🔒</span>
+                    <span class="font-medium">Security & Data Protection</span>
+                </a>
+                
+                <!-- 1️⃣1️⃣ Volunteer & Service Teams -->
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('volunteers')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.volunteers*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">🤝</span>
+                            <span class="font-medium">Volunteer & Service Teams</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="volunteers-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="volunteers-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.volunteers*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.events') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition">View All Events</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 1️⃣2️⃣ Issue Management -->
+                <a href="{{ route('admin.events.management') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200">
+                    <span class="text-xl">🔧</span>
+                    <span class="font-medium">Issue Management</span>
+                </a>
+                
+                <!-- 1️⃣3️⃣ Multi-Institution Support -->
+                <a href="{{ route('admin.events') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200">
+                    <span class="text-xl">🌍</span>
+                    <span class="font-medium">Multi-Institution Support</span>
+                </a>
+                
+                <!-- 1️⃣4️⃣ Spiritual Engagement Tools -->
+                <div class="sidebar-dropdown-parent">
+                    <button onclick="toggleDropdown('spiritual')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.events.prayer-requests*') || request()->routeIs('admin.events.testimonies*') || request()->routeIs('admin.prayer-requests*') || request()->routeIs('admin.testimonies*') ? 'bg-gray-800 text-white' : '' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">🕊️</span>
+                            <span class="font-medium">Spiritual Engagement</span>
+                        </div>
+                        <svg class="w-4 h-4 transition-transform" id="spiritual-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="spiritual-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.events.prayer-requests*') || request()->routeIs('admin.events.testimonies*') || request()->routeIs('admin.prayer-requests*') || request()->routeIs('admin.testimonies*') ? 'open' : '' }}">
+                        <div class="pl-4 pt-1 space-y-1">
+                            <a href="{{ route('admin.prayer-requests') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.prayer-requests*') || request()->routeIs('admin.events.prayer-requests*') ? 'text-white bg-gray-800' : '' }}">Prayer Requests</a>
+                            <a href="{{ route('admin.testimonies') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.testimonies*') || request()->routeIs('admin.events.testimonies*') ? 'text-white bg-gray-800' : '' }}">Testimonies</a>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <!-- NORMAL ADMIN SIDEBAR -->
             <!-- 1️⃣ Dashboard -->
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">🧭</span>
