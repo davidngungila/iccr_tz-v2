@@ -81,7 +81,8 @@
                     </div>
                     <div>
                         <label for="sms_url" class="block text-sm font-semibold text-gray-700 mb-2">API URL *</label>
-                        <input type="url" id="sms_url" name="sms_url" value="{{ old('sms_url', $provider->sms_url) }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                        <input type="url" id="sms_url" name="sms_url" value="{{ old('sms_url', $provider->sms_url ?: 'https://messaging-service.co.tz/link/sms/v1/text/single') }}" required readonly class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
+                        <p class="text-xs text-gray-500 mt-1">This URL is fixed and cannot be changed</p>
                         @error('sms_url')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
