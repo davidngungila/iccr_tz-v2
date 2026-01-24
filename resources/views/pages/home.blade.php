@@ -1041,16 +1041,36 @@
     
     .carousel-slide {
         transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        z-index: 1;
     }
     
     .carousel-slide.opacity-0 {
         opacity: 0;
         pointer-events: none;
+        z-index: 1;
     }
     
     .carousel-slide.opacity-100 {
         opacity: 1;
         pointer-events: auto;
+        z-index: 10;
+    }
+    
+    /* Ensure navigation buttons are always visible */
+    #prevBtn, #nextBtn {
+        z-index: 50 !important;
+        position: absolute !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure indicators are always visible */
+    .carousel-indicator {
+        display: block !important;
+        visibility: visible !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
     }
 </style>
 <script>
@@ -1086,20 +1106,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update indicators - ensure all dots are visible
         indicators.forEach((indicator, i) => {
+            // Ensure indicator is visible
+            indicator.style.display = 'block';
+            indicator.style.visibility = 'visible';
+            indicator.style.minWidth = '16px';
+            indicator.style.minHeight = '16px';
+            
             if (i === index) {
                 // Active indicator - fully visible and larger
                 indicator.style.opacity = '1';
                 indicator.style.transform = 'scale(1.25)';
                 indicator.style.borderColor = 'rgba(255, 255, 255, 1)';
-                indicator.classList.add('ring-2', 'ring-white/50');
+                indicator.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+                indicator.classList.add('ring-2', 'ring-white/70', 'active');
                 indicator.classList.remove('border-white/70');
             } else {
                 // Inactive indicators - visible but dimmed
-                indicator.style.opacity = '0.6';
+                indicator.style.opacity = '0.7';
                 indicator.style.transform = 'scale(1)';
-                indicator.style.borderColor = 'rgba(255, 255, 255, 0.7)';
-                indicator.classList.remove('ring-2', 'ring-white/50');
-                indicator.classList.add('border-white/70');
+                indicator.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+                indicator.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                indicator.classList.remove('ring-2', 'ring-white/70', 'active');
             }
         });
 
@@ -1124,8 +1151,12 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(autoSlideInterval);
     }
 
-    // Event listeners
+    // Ensure buttons are always visible
     if (nextBtn) {
+        nextBtn.style.display = 'block';
+        nextBtn.style.visibility = 'visible';
+        nextBtn.style.opacity = '1';
+        nextBtn.style.zIndex = '50';
     nextBtn.addEventListener('click', () => {
         nextSlide();
         stopAutoSlide();
@@ -1134,11 +1165,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (prevBtn) {
+        prevBtn.style.display = 'block';
+        prevBtn.style.visibility = 'visible';
+        prevBtn.style.opacity = '1';
+        prevBtn.style.zIndex = '50';
     prevBtn.addEventListener('click', () => {
         prevSlide();
         stopAutoSlide();
         startAutoSlide();
     });
+    }
+    
+    // Ensure indicators container is visible
+    const indicatorsContainer = document.querySelector('.carousel-indicator')?.parentElement;
+    if (indicatorsContainer) {
+        indicatorsContainer.style.display = 'flex';
+        indicatorsContainer.style.visibility = 'visible';
+        indicatorsContainer.style.zIndex = '50';
     }
 
     indicators.forEach((indicator, index) => {
