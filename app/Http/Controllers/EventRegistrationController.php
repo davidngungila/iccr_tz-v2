@@ -34,10 +34,9 @@ class EventRegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
+            return redirect()->route('event.register', $event->slug)
+                ->withErrors($validator)
+                ->withInput();
         }
 
         // Check if already registered
@@ -46,10 +45,9 @@ class EventRegistrationController extends Controller
             ->first();
 
         if ($existing) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You have already registered for this event.'
-            ], 422);
+            return redirect()->route('event.register', $event->slug)
+                ->with('error', 'You have already registered for this event.')
+                ->withInput();
         }
 
         $registration = EventRegistration::create([
