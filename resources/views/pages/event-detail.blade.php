@@ -37,19 +37,34 @@
     </div>
 </section>
 
+<!-- Success Modal Popup -->
+@if(session('success'))
+<div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all animate-bounce-in">
+        <div class="p-8 text-center">
+            <!-- Success Icon -->
+            <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-green-500 to-green-600 mb-6 animate-pulse">
+                <svg class="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            
+            <!-- Success Message -->
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">Registration Successful!</h3>
+            <p class="text-lg text-gray-700 mb-6">{{ session('success') }}</p>
+            
+            <!-- Close Button -->
+            <button onclick="closeSuccessModal()" class="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-semibold hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                Continue
+            </button>
+        </div>
+    </div>
+</div>
+@endif
+
 <!-- Event Details Section -->
 <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        @if(session('success'))
-        <div class="mb-6 bg-green-50 border-2 border-green-200 rounded-lg p-4 text-green-700">
-            <div class="flex items-center gap-3">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        </div>
-        @endif
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Main Content -->
             <div class="lg:col-span-2">
@@ -279,6 +294,50 @@
 
 @push('scripts')
 <script>
+// Show success modal on page load if success message exists
+document.addEventListener('DOMContentLoaded', function() {
+    @if(session('success'))
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        // Auto-close after 5 seconds
+        setTimeout(function() {
+            closeSuccessModal();
+        }, 5000);
+    }
+    @endif
+});
+
+function closeSuccessModal() {
+    const modal = document.getElementById('successModal');
+    if (modal) {
+        modal.style.opacity = '0';
+        modal.style.transition = 'opacity 0.3s ease-out';
+        setTimeout(function() {
+            modal.style.display = 'none';
+            // Remove success message from URL
+            if (window.history.replaceState) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }, 300);
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('successModal');
+    if (modal && event.target === modal) {
+        closeSuccessModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeSuccessModal();
+    }
+});
+
 function shareEvent() {
     if (navigator.share) {
         navigator.share({
@@ -303,6 +362,27 @@ function shareEvent() {
     }
 }
 </script>
+<style>
+@keyframes bounce-in {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.animate-bounce-in {
+    animation: bounce-in 0.5s ease-out;
+}
+</style>
 @endpush
 @endsection
 
