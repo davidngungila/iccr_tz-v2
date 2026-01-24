@@ -16,6 +16,7 @@ use App\Models\ContactMessage;
 use App\Models\NewsletterSubscription;
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Models\CarouselSlide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -333,6 +334,137 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.homepage')->with('success', 'Homepage updated successfully!');
+    }
+
+    // ==================== CAROUSEL SLIDES MANAGEMENT ====================
+    
+    public function carouselSlides()
+    {
+        $slides = CarouselSlide::orderBy('order')->orderBy('created_at', 'desc')->get();
+        return view('admin.slides.index', compact('slides'));
+    }
+
+    public function createCarouselSlide()
+    {
+        return view('admin.slides.create');
+    }
+
+    public function storeCarouselSlide(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image_url' => 'required|url',
+            'animation_type' => 'required|in:slide-fade,slide-left,slide-right,slide-zoom',
+            'button_1_text' => 'nullable|string|max:255',
+            'button_1_url' => 'nullable|url',
+            'button_2_text' => 'nullable|string|max:255',
+            'button_2_url' => 'nullable|url',
+            'gradient_from' => 'nullable|string|max:50',
+            'gradient_via' => 'nullable|string|max:50',
+            'gradient_to' => 'nullable|string|max:50',
+            'is_urgent' => 'boolean',
+            'urgent_badge_text' => 'nullable|string|max:255',
+            'order' => 'integer|min:0',
+            'is_active' => 'boolean',
+        ]);
+
+        // Extract Cloudinary public ID if URL is from Cloudinary
+        if (str_contains($validated['image_url'], 'cloudinary.com')) {
+            $urlParts = parse_url($validated['image_url']);
+            $pathParts = explode('/', trim($urlParts['path'] ?? '', '/'));
+            if (count($pathParts) >= 2) {
+                $validated['cloudinary_public_id'] = $pathParts[count($pathParts) - 1];
+                // Remove file extension
+                $validated['cloudinary_public_id'] = preg_replace('/\.[^.]+$/', '', $validated['cloudinary_public_id']);
+            }
+        }
+
+        $slide = CarouselSlide::create($validated);
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'created',
+            'model_type' => 'CarouselSlide',
+            'model_id' => $slide->id,
+            'description' => "Created carousel slide: {$slide->title}",
+        ]);
+
+        return redirect()->route('admin.slides.index')->with('success', 'Carousel slide created successfully!');
+    }
+
+    public function editCarouselSlide(CarouselSlide $slide)
+    {
+        return view('admin.slides.edit', compact('slide'));
+    }
+
+    public function updateCarouselSlide(Request $request, CarouselSlide $slide)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image_url' => 'required|url',
+            'animation_type' => 'required|in:slide-fade,slide-left,slide-right,slide-zoom',
+            'button_1_text' => 'nullable|string|max:255',
+            'button_1_url' => 'nullable|url',
+            'button_2_text' => 'nullable|string|max:255',
+            'button_2_url' => 'nullable|url',
+            'gradient_from' => 'nullable|string|max:50',
+            'gradient_via' => 'nullable|string|max:50',
+            'gradient_to' => 'nullable|string|max:50',
+            'is_urgent' => 'boolean',
+            'urgent_badge_text' => 'nullable|string|max:255',
+            'order' => 'integer|min:0',
+            'is_active' => 'boolean',
+        ]);
+
+        // Extract Cloudinary public ID if URL is from Cloudinary
+        if (str_contains($validated['image_url'], 'cloudinary.com')) {
+            $urlParts = parse_url($validated['image_url']);
+            $pathParts = explode('/', trim($urlParts['path'] ?? '', '/'));
+            if (count($pathParts) >= 2) {
+                $validated['cloudinary_public_id'] = $pathParts[count($pathParts) - 1];
+                // Remove file extension
+                $validated['cloudinary_public_id'] = preg_replace('/\.[^.]+$/', '', $validated['cloudinary_public_id']);
+            }
+        }
+
+        $slide->update($validated);
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'CarouselSlide',
+            'model_id' => $slide->id,
+            'description' => "Updated carousel slide: {$slide->title}",
+        ]);
+
+        return redirect()->route('admin.slides.index')->with('success', 'Carousel slide updated successfully!');
+    }
+
+    public function deleteCarouselSlide(CarouselSlide $slide)
+    {
+        // Delete from Cloudinary if public_id exists
+        if ($slide->cloudinary_public_id) {
+            try {
+                Cloudinary::destroy($slide->cloudinary_public_id);
+            } catch (\Exception $e) {
+                // Log error but continue
+            }
+        }
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'deleted',
+            'model_type' => 'CarouselSlide',
+            'model_id' => $slide->id,
+            'description' => "Deleted carousel slide: {$slide->title}",
+        ]);
+
+        $slide->delete();
+        return redirect()->route('admin.slides.index')->with('success', 'Carousel slide deleted successfully!');
     }
 
     // ==================== BLOG / NEWS MANAGEMENT ====================

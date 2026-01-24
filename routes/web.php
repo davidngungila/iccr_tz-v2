@@ -58,6 +58,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/homepage', [AdminController::class, 'homepage'])->name('homepage');
         Route::post('/homepage', [AdminController::class, 'updateHomepage'])->name('homepage.update');
         
+        // Carousel Slides
+        Route::get('/slides', [AdminController::class, 'carouselSlides'])->name('slides.index');
+        Route::get('/slides/create', [AdminController::class, 'createCarouselSlide'])->name('slides.create');
+        Route::post('/slides', [AdminController::class, 'storeCarouselSlide'])->name('slides.store');
+        Route::get('/slides/{slide}/edit', [AdminController::class, 'editCarouselSlide'])->name('slides.edit');
+        Route::put('/slides/{slide}', [AdminController::class, 'updateCarouselSlide'])->name('slides.update');
+        Route::delete('/slides/{slide}', [AdminController::class, 'deleteCarouselSlide'])->name('slides.delete');
+        
         // Blog
         Route::get('/blog', [AdminController::class, 'blogPosts'])->name('blog.index');
         Route::get('/blog/create', [AdminController::class, 'createBlogPost'])->name('blog.create');

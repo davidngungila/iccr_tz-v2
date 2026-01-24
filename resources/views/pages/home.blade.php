@@ -10,209 +10,86 @@
     <div id="heroCarousel" class="relative h-full w-full">
         @php
             use App\Models\Setting;
-            $easterConferenceTitle = Setting::get('easter_conference_title', 'International Easter Conference 2026');
-            $easterConferenceSubtitle = Setting::get('easter_conference_subtitle', 'USIFANYE MISTAKE KABISA KUKOSA KONGAMANO HILI!');
-            $easterConferenceDescription = Setting::get('easter_conference_description', 'Toka nimeuzulia, nakuwa mpya kifikra, kiujuzi, kiuchumi, mtazamo na kimahusiano, kifamilia na natiwa ujasiri wa uthubutu limetumika kuwa daraja kwa ajili ya watu wengi. MAMBO NI MAZURI - TWENDE KWA PAMOJA!');
-            $easterConferenceImage = Setting::get('easter_conference_image', asset('images/01.jpg'));
-            $easterConferenceRegisterUrl = Setting::get('easter_conference_register_url', '#');
-            $easterConferenceEnabled = Setting::get('easter_conference_enabled', true);
+            use App\Models\CarouselSlide;
+            $slides = CarouselSlide::where('is_active', true)->orderBy('order')->orderBy('created_at', 'asc')->get();
         @endphp
         
-        @if($easterConferenceEnabled)
-        <!-- Slide 0 - Easter Conference 2026 (URGENT) -->
-        <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
-            <div class="relative h-full bg-gradient-to-br from-red-600 via-purple-600 to-red-800">
-                <div class="absolute inset-0 bg-black opacity-30"></div>
-                <img src="{{ $easterConferenceImage }}" alt="Easter Conference 2026" class="w-full h-full object-cover object-center">
+        @forelse($slides as $index => $slide)
+        <div class="carousel-slide {{ $slide->animation_type }} absolute inset-0 transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
+            @php
+                // Convert Tailwind color classes to RGB values for inline styles
+                $gradientColors = [
+                    'green-600' => 'rgb(22, 163, 74)',
+                    'blue-600' => 'rgb(37, 99, 235)',
+                    'green-800' => 'rgb(22, 101, 52)',
+                    'red-600' => 'rgb(220, 38, 38)',
+                    'purple-600' => 'rgb(147, 51, 234)',
+                    'red-800' => 'rgb(153, 27, 27)',
+                ];
+                $fromColor = $gradientColors[$slide->gradient_from] ?? $gradientColors['green-600'];
+                $viaColor = $gradientColors[$slide->gradient_via] ?? $gradientColors['blue-600'];
+                $toColor = $gradientColors[$slide->gradient_to] ?? $gradientColors['green-800'];
+            @endphp
+            <div class="relative h-full" style="background: linear-gradient(to bottom right, {{ $fromColor }}, {{ $viaColor }}, {{ $toColor }});">
+                <div class="absolute inset-0 bg-black {{ $slide->is_urgent ? 'opacity-30' : 'opacity-40' }}"></div>
+                <img src="{{ $slide->image_url }}" alt="{{ $slide->title }}" class="w-full h-full object-cover object-center">
                 <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
                     <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
+                        @if($slide->is_urgent && $slide->urgent_badge_text)
                         <div class="inline-block mb-4 px-4 py-2 bg-red-600 rounded-full animate-pulse">
-                            <span class="text-sm md:text-base font-bold">🔥 URGENT</span>
+                            <span class="text-sm md:text-base font-bold">{{ $slide->urgent_badge_text }}</span>
                         </div>
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight">
-                            {{ $easterConferenceTitle }}
+                        @endif
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight {{ $slide->is_urgent ? '' : 'whitespace-nowrap' }}">
+                            {{ $slide->title }}
                         </h1>
-                        <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 md:mb-6 text-yellow-200 drop-shadow-md font-semibold px-4">
-                            {{ $easterConferenceSubtitle }}
+                        @if($slide->subtitle)
+                        <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 md:mb-6 {{ $slide->is_urgent ? 'text-yellow-200' : 'text-blue-100' }} drop-shadow-md font-semibold px-4">
+                            {{ $slide->subtitle }}
                         </p>
+                        @endif
+                        @if($slide->description)
                         <p class="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-white drop-shadow-md px-4 max-w-4xl mx-auto leading-relaxed">
-                            {{ $easterConferenceDescription }}
+                            {{ $slide->description }}
                         </p>
+                        @endif
+                        @if($slide->button_1_text || $slide->button_2_text)
                         <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ $easterConferenceRegisterUrl }}" class="inline-block bg-yellow-500 text-red-900 px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl hover:bg-yellow-400 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-yellow-300 min-w-[180px] text-center">
-                                Register for Conference
+                            @if($slide->button_1_text)
+                            <a href="{{ $slide->button_1_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-yellow-500 text-red-900 hover:bg-yellow-400 border-2 border-yellow-300' : 'bg-white text-green-600 hover:bg-green-50 border-2 border-transparent hover:border-green-200' }} px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 min-w-[180px] text-center">
+                                {{ $slide->button_1_text }}
                             </a>
-                            <a href="#prayer-service" class="inline-block bg-white text-red-600 px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl hover:bg-red-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white min-w-[180px] text-center">
-                                Join Prayer Service
+                            @endif
+                            @if($slide->button_2_text)
+                            <a href="{{ $slide->button_2_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-white text-red-600 hover:bg-red-50 border-2 border-white' : 'bg-green-700 text-white hover:bg-green-800 border-2 border-white hover:border-green-300' }} px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 min-w-[180px] text-center">
+                                {{ $slide->button_2_text }}
                             </a>
+                            @endif
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        @endif
-
-        <!-- Slide 1 - Fade In Animation -->
-        <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out {{ $easterConferenceEnabled ? 'opacity-0' : 'opacity-100' }}">
+        @empty
+        <!-- Default slide if no slides exist -->
+        <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
             <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
                 <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/01.jpg') }}" alt="Worship Gathering" class="w-full h-full object-cover object-center">
                 <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
                     <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Unity in Faith
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight">
+                            Welcome to ICCR Tanzania
                         </h1>
                         <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-blue-100 drop-shadow-md px-4 leading-relaxed">
                             Uniting Catholic students across Tanzania<br>
                             through the Holy Spirit in prayer, worship, and fellowship
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Join Us
-                            </a>
-                            <a href="{{ route('events') }}" class="inline-block bg-green-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-green-300 min-w-[140px] text-center">
-                                View Events
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Slide 2 - Slide from Left Animation -->
-        <div class="carousel-slide slide-left absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
-            <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
-                <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/02.jpg') }}" alt="Prayer Meeting" class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
-                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Growing Together
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-blue-100 drop-shadow-md px-4 leading-relaxed">
-                            Join our vibrant community of Catholic students<br>
-                            across Tanzania in spiritual growth and fellowship
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Join Us
-                            </a>
-                            <a href="{{ route('events') }}" class="inline-block bg-blue-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-blue-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-blue-300 min-w-[140px] text-center">
-                                View Events
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3 - Slide from Right Animation -->
-        <div class="carousel-slide slide-right absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
-            <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
-                <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/03.jpg') }}" alt="Community Service" class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
-                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Serving with Love
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-green-100 drop-shadow-md px-4 leading-relaxed">
-                            Making a difference in our communities<br>
-                            through service and evangelization
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Join Us
-                            </a>
-                            <a href="{{ route('events') }}" class="inline-block bg-green-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-green-300 min-w-[140px] text-center">
-                                View Events
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4 - Zoom In Animation -->
-        <div class="carousel-slide slide-zoom absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
-            <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
-                <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/04.jpg') }}" alt="Spiritual Formation" class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
-                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Spiritual Growth
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-green-100 drop-shadow-md px-4 leading-relaxed">
-                            Deepen your faith through prayer, worship, and community<br>
-                            Join us for retreats, Bible studies, and spiritual formation programs
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Join Us
-                            </a>
-                            <a href="{{ route('events') }}" class="inline-block bg-green-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-green-300 min-w-[140px] text-center">
-                                View Events
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5 - Fade In Animation -->
-        <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
-            <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
-                <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/05.jpg') }}" alt="Leadership Development" class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
-                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Leadership Development
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-blue-100 drop-shadow-md px-4 leading-relaxed">
-                            Empowering the next generation of Catholic leaders<br>
-                            Through training, mentorship, and hands-on ministry experience
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Get Involved
-                            </a>
-                            <a href="{{ route('ministries') }}" class="inline-block bg-blue-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-blue-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-blue-300 min-w-[140px] text-center">
-                                Our Ministries
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6 - Slide from Left Animation -->
-        <div class="carousel-slide slide-left absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
-            <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
-                <div class="absolute inset-0 bg-black opacity-40"></div>
-                <img src="{{ asset('images/06.jpg') }}" alt="Campus Chapters" class="w-full h-full object-cover object-center">
-                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
-                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight whitespace-nowrap">
-                            Campus Chapters
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 text-green-100 drop-shadow-md px-4 leading-relaxed">
-                            Join your local campus chapter<br>
-                            Connect with fellow students in prayer, worship, and community service
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
-                            <a href="{{ route('get-involved') }}" class="inline-block bg-white text-green-600 px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-transparent hover:border-green-200 min-w-[140px] text-center">
-                                Find Chapter
-                            </a>
-                            <a href="{{ route('contact') }}" class="inline-block bg-green-700 text-white px-8 md:px-10 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:bg-green-800 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white hover:border-green-300 min-w-[140px] text-center">
-                                Contact Us
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforelse
     </div>
 
     <!-- Carousel Navigation Arrows -->
@@ -228,17 +105,13 @@
     </button>
 
     <!-- Carousel Indicators -->
+    @if($slides->count() > 0)
     <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
-        @if($easterConferenceEnabled)
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-100 transition border border-white/50" data-slide="0"></button>
-        @endif
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white {{ $easterConferenceEnabled ? 'opacity-50' : 'opacity-100' }} transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '1' : '0' }}"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '2' : '1' }}"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '3' : '2' }}"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '4' : '3' }}"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '5' : '4' }}"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '6' : '5' }}"></button>
+        @foreach($slides as $index => $slide)
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white {{ $index === 0 ? 'opacity-100' : 'opacity-50' }} transition border border-white/50 hover:opacity-75" data-slide="{{ $index }}"></button>
+        @endforeach
     </div>
+    @endif
 </section>
 
 @php

@@ -335,10 +335,23 @@
             </div>
             
             <!-- 3️⃣ Homepage -->
-            <a href="{{ route('admin.homepage') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.homepage*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                <span class="text-xl">🏠</span>
-                <span class="font-medium">Homepage</span>
-            </a>
+            <div class="sidebar-dropdown-parent">
+                <button onclick="toggleDropdown('homepage')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.homepage*') || request()->routeIs('admin.slides*') ? 'bg-gray-800 text-white' : '' }}">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">🏠</span>
+                        <span class="font-medium">Homepage</span>
+                    </div>
+                    <svg class="w-4 h-4 transition-transform" id="homepage-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div id="homepage-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.homepage*') || request()->routeIs('admin.slides*') ? 'open' : '' }}">
+                    <div class="pl-4 pt-1 space-y-1">
+                        <a href="{{ route('admin.homepage') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.homepage*') && !request()->routeIs('admin.slides*') ? 'text-white bg-gray-800' : '' }}">Homepage Settings</a>
+                        <a href="{{ route('admin.slides.index') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.slides*') ? 'text-white bg-gray-800' : '' }}">Carousel Slides</a>
+                    </div>
+                </div>
+            </div>
             
             <!-- 4️⃣ Blog / News -->
             <div class="sidebar-dropdown-parent">
