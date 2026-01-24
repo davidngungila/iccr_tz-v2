@@ -853,6 +853,71 @@ class AdminController extends Controller
             return view('admin.events.registration-pdf', compact('event', 'registration'));
         }
     }
+    
+    public function generateIDCard(Event $event, EventRegistration $registration)
+    {
+        try {
+            // Get absolute path to logo for DomPDF
+            $logoPath = public_path('images/logo.png');
+            $logoExists = file_exists($logoPath);
+            
+            // Generate QR code data
+            $qrData = json_encode([
+                'event_id' => $event->id,
+                'registration_id' => $registration->id,
+                'name' => $registration->full_name,
+                'email' => $registration->email,
+                'phone' => $registration->phone,
+                'ticket_number' => strtoupper(substr($event->slug, 0, 3)) . '-' . str_pad($registration->id, 6, '0', STR_PAD_LEFT),
+            ]);
+            
+            // Generate QR code as base64 image
+            try {
+                $qrCode = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')
+                    ->size(200)
+                    ->errorCorrection('H')
+                    ->generate($qrData);
+                $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrCode);
+            } catch (\Exception $e) {
+                \Log::error('QR Code generation failed: ' . $e->getMessage());
+                // Fallback: Use a simple text-based QR placeholder
+                $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode('<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#f3f4f6"/><text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="#6b7280">QR Code</text></svg>');
+            }
+            
+            // Generate HTML for ID card
+            $html = view('admin.events.id-card', compact('event', 'registration', 'logoPath', 'logoExists', 'qrCodeBase64'))->render();
+            
+            // Use DomPDF if available, otherwise return HTML for browser print
+            if (class_exists('\Dompdf\Dompdf')) {
+                $options = new \Dompdf\Options();
+                $options->setIsRemoteEnabled(true);
+                $options->setIsHtml5ParserEnabled(true);
+                
+                $dompdf = new \Dompdf\Dompdf($options);
+                $dompdf->loadHtml($html);
+                // Set paper size for standard ID card (CR80: 85.6mm x 53.98mm)
+                // Convert mm to points: 1mm = 2.83465 points
+                $width = 85.6 * 2.83465;  // 242.6 points
+                $height = 53.98 * 2.83465; // 153.0 points
+                $dompdf->setPaper([0, 0, $width, $height], 'landscape');
+                $dompdf->render();
+                
+                // Include registrant name in filename
+                $safeName = Str::slug($registration->full_name);
+                $filename = "id-card-{$event->slug}-{$safeName}-{$registration->id}.pdf";
+                return $dompdf->stream($filename, ['Attachment' => true]);
+            } else {
+                // Fallback: Return HTML with proper headers for browser PDF generation
+                return response()->make($html, 200, [
+                    'Content-Type' => 'text/html; charset=utf-8',
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('ID Card generation failed: ' . $e->getMessage());
+            // Fallback to HTML view
+            return view('admin.events.id-card', compact('event', 'registration'));
+        }
+    }
 
     public function createEvent()
     {
