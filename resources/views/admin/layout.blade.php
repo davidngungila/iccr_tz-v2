@@ -395,7 +395,7 @@
             
             <!-- 6️⃣ Media Library -->
             <div class="sidebar-dropdown-parent">
-                <button onclick="toggleDropdown('media')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.media*') ? 'bg-gray-800 text-white' : '' }}">
+                <button onclick="toggleDropdown('media')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.media*') || request()->routeIs('admin.cloudinary*') ? 'bg-gray-800 text-white' : '' }}">
                     <div class="flex items-center gap-3">
                         <span class="text-xl">🖼️</span>
                         <span class="font-medium">Media Library</span>
@@ -404,10 +404,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
-                <div id="media-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.media*') ? 'open' : '' }}">
+                <div id="media-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.media*') || request()->routeIs('admin.cloudinary*') ? 'open' : '' }}">
                     <div class="pl-4 pt-1 space-y-1">
-                        <a href="{{ route('admin.media') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media') && !request()->routeIs('admin.media.create') && !request()->routeIs('admin.media.edit') ? 'text-white bg-gray-800' : '' }}">All Media</a>
+                        <a href="{{ route('admin.media') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media') && !request()->routeIs('admin.media.create') && !request()->routeIs('admin.media.edit') && !request()->routeIs('admin.cloudinary*') ? 'text-white bg-gray-800' : '' }}">All Media</a>
                         <a href="{{ route('admin.media.create') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media.create') ? 'text-white bg-gray-800' : '' }}">Add Media</a>
+                        <a href="{{ route('admin.cloudinary.index') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.cloudinary*') ? 'text-white bg-gray-800' : '' }}">Cloudinary Assets</a>
                     </div>
                 </div>
             </div>

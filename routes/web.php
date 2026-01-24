@@ -95,6 +95,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/media/{media}', [AdminController::class, 'updateMedia'])->name('media.update');
         Route::delete('/media/{media}', [AdminController::class, 'deleteMedia'])->name('media.delete');
         
+        // Cloudinary Assets
+        Route::get('/cloudinary', [AdminController::class, 'cloudinaryAssets'])->name('cloudinary.index');
+        Route::get('/cloudinary/api/assets', [AdminController::class, 'getCloudinaryAssets'])->name('cloudinary.api.assets');
+        Route::post('/cloudinary/upload', [AdminController::class, 'uploadToCloudinary'])->name('cloudinary.upload');
+        Route::delete('/cloudinary/{publicId}', [AdminController::class, 'deleteCloudinaryAsset'])->name('cloudinary.delete');
+        
         // Menus
         Route::get('/menus', [AdminController::class, 'menus'])->name('menus');
         Route::post('/menus', [AdminController::class, 'storeMenuItem'])->name('menus.store');

@@ -1223,4 +1223,136 @@ class AdminController extends Controller
         $logs = ActivityLog::with('user')->orderBy('created_at', 'desc')->paginate(100);
         return view('admin.security.logs', compact('logs'));
     }
+
+    // ==================== CLOUDINARY ASSETS MANAGEMENT ====================
+    
+    public function cloudinaryAssets()
+    {
+        return view('admin.cloudinary.index');
+    }
+
+    public function getCloudinaryAssets(Request $request)
+    {
+        try {
+            $nextCursor = $request->get('next_cursor');
+            $maxResults = $request->get('max_results', 50);
+            $folder = $request->get('folder', 'iccr-tanzania');
+            $resourceType = $request->get('resource_type', 'image');
+            
+            // Use Cloudinary Admin API via the SDK
+            $options = [
+                'resource_type' => $resourceType,
+                'max_results' => $maxResults,
+            ];
+            
+            if ($nextCursor) {
+                $options['next_cursor'] = $nextCursor;
+            }
+            
+            if ($folder) {
+                $options['prefix'] = $folder . '/';
+            }
+            
+            // Access Admin API through Cloudinary facade
+            $result = \Cloudinary\Admin\AdminApi::assets($options);
+            
+            return response()->json([
+                'success' => true,
+                'assets' => $result['resources'] ?? [],
+                'next_cursor' => $result['next_cursor'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch assets: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function uploadToCloudinary(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,pdf|max:10240',
+            'folder' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            $file = $request->file('file');
+            $mimeType = $file->getMimeType();
+            $resourceType = 'auto';
+            
+            if (str_contains($mimeType, 'pdf')) {
+                $resourceType = 'raw';
+            } elseif (str_contains($mimeType, 'video')) {
+                $resourceType = 'video';
+            }
+
+            $uploadOptions = [
+                'folder' => $request->folder ?? 'iccr-tanzania',
+                'resource_type' => $resourceType,
+            ];
+
+            $uploadResult = Cloudinary::upload($file->getRealPath(), $uploadOptions);
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'uploaded',
+                'model_type' => 'CloudinaryAsset',
+                'description' => "Uploaded asset to Cloudinary: {$uploadResult->getPublicId()}",
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'asset' => [
+                    'public_id' => $uploadResult->getPublicId(),
+                    'secure_url' => $uploadResult->getSecurePath(),
+                    'url' => $uploadResult->getSecurePath(),
+                    'width' => $uploadResult->getWidth(),
+                    'height' => $uploadResult->getHeight(),
+                    'format' => $uploadResult->getExtension(),
+                    'bytes' => $uploadResult->getSize(),
+                ],
+                'message' => 'Asset uploaded successfully!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Upload failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function deleteCloudinaryAsset($publicId)
+    {
+        try {
+            // Decode the public ID if it's URL encoded
+            $publicId = urldecode($publicId);
+            
+            $result = Cloudinary::destroy($publicId);
+            
+            if ($result['result'] === 'ok' || $result['result'] === 'not found') {
+                ActivityLog::create([
+                    'user_id' => Auth::id(),
+                    'action' => 'deleted',
+                    'model_type' => 'CloudinaryAsset',
+                    'description' => "Deleted asset from Cloudinary: {$publicId}",
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Asset deleted successfully!',
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to delete asset',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Delete failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
