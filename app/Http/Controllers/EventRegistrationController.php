@@ -97,23 +97,31 @@ class EventRegistrationController extends Controller
 
             $message = "Hello {$registration->full_name}, you have successfully registered for {$event->title} on {$event->start_date->format('M d, Y')}. We'll send you more details soon. - ICCR Tanzania";
 
-            // Example SMS API call (adjust based on your SMS provider)
-            $client = new \GuzzleHttp\Client();
-            $response = $client->post($smsApiUrl, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $smsApiKey,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'to' => $registration->phone,
-                    'message' => $message,
-                    'from' => $smsSenderId,
-                ],
+            // Example SMS API call using cURL (works without external dependencies)
+            // Adjust the API format based on your SMS provider
+            $ch = curl_init($smsApiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . $smsApiKey,
+                'Content-Type: application/json',
             ]);
-
-            if ($response->getStatusCode() === 200) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+                'to' => $registration->phone,
+                'message' => $message,
+                'from' => $smsSenderId,
+            ]));
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $error = curl_error($ch);
+            curl_close($ch);
+            
+            if ($httpCode === 200) {
                 \Log::info('SMS sent successfully to: ' . $registration->phone);
                 return true;
+            } else {
+                \Log::warning('SMS sending failed. HTTP Code: ' . $httpCode . ', Error: ' . $error);
             }
 
             return false;
