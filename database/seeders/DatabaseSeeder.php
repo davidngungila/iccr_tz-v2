@@ -18,11 +18,13 @@ class DatabaseSeeder extends Seeder
         // Seed admin user
         $this->call(AdminUserSeeder::class);
         
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Seed carousel slides
+        $this->call(CarouselSlideSeeder::class);
+        
+        // Seed events
+        $this->call(EventsSeeder::class);
+        
+        // Seed team members (leaders)
+        $this->call(TeamMemberSeeder::class);
     }
 }

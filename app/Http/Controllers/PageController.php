@@ -35,7 +35,12 @@ class PageController extends Controller
 
     public function about()
     {
-        return view('pages.about');
+        $leaders = \App\Models\TeamMember::where('is_active', true)
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
+        
+        return view('pages.about', compact('leaders'));
     }
 
     public function ministries()
