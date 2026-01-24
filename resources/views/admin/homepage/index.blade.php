@@ -121,6 +121,237 @@
             </div>
         </div>
 
+        <!-- Easter Conference Section -->
+        <div class="mb-12 pb-8 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span class="text-2xl">🔥</span>
+                Easter Conference 2026
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="easter_conference_enabled" value="1" {{ old('easter_conference_enabled', $settings['easter_conference_enabled']) ? 'checked' : '' }}
+                           class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    <span class="text-sm font-medium text-gray-700">Enable Easter Conference Slide</span>
+                </label>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Conference Title</label>
+                    <input type="text" name="easter_conference_title" value="{{ old('easter_conference_title', $settings['easter_conference_title']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle (Urgent Message)</label>
+                    <input type="text" name="easter_conference_subtitle" value="{{ old('easter_conference_subtitle', $settings['easter_conference_subtitle']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea name="easter_conference_description" rows="4"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('easter_conference_description', $settings['easter_conference_description']) }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                    <input type="url" name="easter_conference_image" value="{{ old('easter_conference_image', $settings['easter_conference_image']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="https://example.com/image.jpg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Register URL</label>
+                    <input type="url" name="easter_conference_register_url" value="{{ old('easter_conference_register_url', $settings['easter_conference_register_url']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="https://example.com/register">
+                </div>
+            </div>
+        </div>
+
+        <!-- Prayer Service Section -->
+        <div class="mb-12 pb-8 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span class="text-2xl">🙏</span>
+                Prayer Service (HUDUMA YA MAOMBI NA MAOMBEZI)
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="prayer_service_enabled" value="1" {{ old('prayer_service_enabled', $settings['prayer_service_enabled']) ? 'checked' : '' }}
+                           class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    <span class="text-sm font-medium text-gray-700">Enable Prayer Service Section</span>
+                </label>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <input type="text" name="prayer_service_title" value="{{ old('prayer_service_title', $settings['prayer_service_title']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Days</label>
+                    <input type="text" name="prayer_service_days" value="{{ old('prayer_service_days', $settings['prayer_service_days']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                    <input type="text" name="prayer_service_time" value="{{ old('prayer_service_time', $settings['prayer_service_time']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Meet Code</label>
+                    <input type="text" name="prayer_service_meet_code" value="{{ old('prayer_service_meet_code', $settings['prayer_service_meet_code']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Google Meet URL</label>
+                    <input type="url" name="prayer_service_meet_url" value="{{ old('prayer_service_meet_url', $settings['prayer_service_meet_url']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="https://meet.google.com/">
+                </div>
+            </div>
+        </div>
+
+        <!-- Fundraising Event Section -->
+        <div class="mb-12 pb-8 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span class="text-2xl">💰</span>
+                Physical Fundraising Event
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="fundraising_enabled" value="1" {{ old('fundraising_enabled', $settings['fundraising_enabled']) ? 'checked' : '' }}
+                           class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    <span class="text-sm font-medium text-gray-700">Enable Fundraising Section</span>
+                </label>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <input type="text" name="fundraising_title" value="{{ old('fundraising_title', $settings['fundraising_title']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                    <input type="text" name="fundraising_date" value="{{ old('fundraising_date', $settings['fundraising_date']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" name="fundraising_location" value="{{ old('fundraising_location', $settings['fundraising_location']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea name="fundraising_description" rows="3"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('fundraising_description', $settings['fundraising_description']) }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Information Section -->
+        <div class="mb-12 pb-8 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span class="text-2xl">💳</span>
+                Payment Information
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="payment_info_enabled" value="1" {{ old('payment_info_enabled', $settings['payment_info_enabled']) ? 'checked' : '' }}
+                           class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    <span class="text-sm font-medium text-gray-700">Enable Payment Information Section</span>
+                </label>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">VODA</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="text" name="payment_voda_phone" value="{{ old('payment_voda_phone', $settings['payment_voda_phone']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+                            <input type="text" name="payment_voda_name" value="{{ old('payment_voda_name', $settings['payment_voda_name']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Lipa Namba</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Lipa Namba</label>
+                            <input type="text" name="payment_lipa_namba" value="{{ old('payment_lipa_namba', $settings['payment_lipa_namba']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+                            <input type="text" name="payment_lipa_namba_name" value="{{ old('payment_lipa_namba_name', $settings['payment_lipa_namba_name']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Bank Account</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Bank Name</label>
+                            <input type="text" name="payment_bank_name_full" value="{{ old('payment_bank_name_full', $settings['payment_bank_name_full']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Number</label>
+                            <input type="text" name="payment_bank_account" value="{{ old('payment_bank_account', $settings['payment_bank_account']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+                            <input type="text" name="payment_bank_name" value="{{ old('payment_bank_name', $settings['payment_bank_name']) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lent Schedule Section -->
+        <div class="mb-12 pb-8 border-b border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span class="text-2xl">📅</span>
+                Lent Schedule (RATIBA YA KWARESMA)
+            </h2>
+            
+            <div class="mb-4">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" name="lent_schedule_enabled" value="1" {{ old('lent_schedule_enabled', $settings['lent_schedule_enabled']) ? 'checked' : '' }}
+                           class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                    <span class="text-sm font-medium text-gray-700">Enable Lent Schedule Section</span>
+                </label>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <input type="text" name="lent_schedule_title" value="{{ old('lent_schedule_title', $settings['lent_schedule_title']) }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Schedule Items (JSON Format)</label>
+                    <textarea name="lent_schedule_items" rows="15" id="lent_schedule_items"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm">{{ old('lent_schedule_items', $settings['lent_schedule_items']) }}</textarea>
+                    <p class="mt-2 text-xs text-gray-500">Format: [{"name": "Event Name", "date": "Date"}, ...]</p>
+                </div>
+            </div>
+        </div>
+
         <div class="flex items-center gap-4 pt-6 border-t border-gray-200">
             <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,4 +395,5 @@
 </script>
 @endpush
 @endsection
+
 

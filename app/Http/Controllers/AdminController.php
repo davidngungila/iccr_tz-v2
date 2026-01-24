@@ -240,6 +240,51 @@ class AdminController extends Controller
             'vision_content' => Setting::get('homepage_vision_content', ''),
             'mission_title' => Setting::get('homepage_mission_title', ''),
             'mission_content' => Setting::get('homepage_mission_content', ''),
+            // Easter Conference
+            'easter_conference_title' => Setting::get('easter_conference_title', 'International Easter Conference 2026'),
+            'easter_conference_subtitle' => Setting::get('easter_conference_subtitle', 'USIFANYE MISTAKE KABISA KUKOSA KONGAMANO HILI!'),
+            'easter_conference_description' => Setting::get('easter_conference_description', 'Toka nimeuzulia, nakuwa mpya kifikra, kiujuzi, kiuchumi, mtazamo na kimahusiano, kifamilia na natiwa ujasiri wa uthubutu limetumika kuwa daraja kwa ajili ya watu wengi. MAMBO NI MAZURI - TWENDE KWA PAMOJA!'),
+            'easter_conference_image' => Setting::get('easter_conference_image', ''),
+            'easter_conference_register_url' => Setting::get('easter_conference_register_url', '#'),
+            'easter_conference_enabled' => Setting::get('easter_conference_enabled', true),
+            // Prayer Service
+            'prayer_service_title' => Setting::get('prayer_service_title', 'HUDUMA YA MAOMBI NA MAOMBEZI'),
+            'prayer_service_days' => Setting::get('prayer_service_days', 'Jumatano na Alhamisi'),
+            'prayer_service_time' => Setting::get('prayer_service_time', 'Saa 02-03 Usiku'),
+            'prayer_service_meet_code' => Setting::get('prayer_service_meet_code', 'jea-zvpr-ctn'),
+            'prayer_service_meet_url' => Setting::get('prayer_service_meet_url', 'https://meet.google.com/'),
+            'prayer_service_enabled' => Setting::get('prayer_service_enabled', true),
+            // Fundraising
+            'fundraising_title' => Setting::get('fundraising_title', 'Physical Fundraising Event'),
+            'fundraising_date' => Setting::get('fundraising_date', '15 Februari 2026'),
+            'fundraising_location' => Setting::get('fundraising_location', 'Jijini MBEYA'),
+            'fundraising_description' => Setting::get('fundraising_description', 'Tunawakaribisha sana kwenye Physical Fundraising kuwezesha Kongamano la Kimataifa la Pasaka 2026'),
+            'fundraising_enabled' => Setting::get('fundraising_enabled', true),
+            // Payment Info
+            'payment_voda_phone' => Setting::get('payment_voda_phone', '0792 573 433'),
+            'payment_voda_name' => Setting::get('payment_voda_name', 'CCR UMOJA WA VYUO TZ'),
+            'payment_lipa_namba' => Setting::get('payment_lipa_namba', '58286111'),
+            'payment_lipa_namba_name' => Setting::get('payment_lipa_namba_name', 'CCR UMOJA WA VYUO TZ'),
+            'payment_bank_account' => Setting::get('payment_bank_account', '0150027996201'),
+            'payment_bank_name' => Setting::get('payment_bank_name', 'Catholic Charismatic Renewal'),
+            'payment_bank_name_full' => Setting::get('payment_bank_name_full', 'CRDB Bank'),
+            'payment_info_enabled' => Setting::get('payment_info_enabled', true),
+            // Lent Schedule
+            'lent_schedule_title' => Setting::get('lent_schedule_title', 'RATIBA YA KWARESMA 2026'),
+            'lent_schedule_items' => Setting::get('lent_schedule_items', json_encode([
+                ['name' => 'Jumatano ya Majivu', 'date' => 'Februari 18, 2026'],
+                ['name' => 'Dominika ya Kwanza', 'date' => 'Februari 22, 2026'],
+                ['name' => 'Dominika ya Pili', 'date' => 'Machi 1, 2026'],
+                ['name' => 'Dominika ya Tatu', 'date' => 'Machi 8, 2026'],
+                ['name' => 'Dominika ya Nne (Laetare)', 'date' => 'Machi 15, 2026'],
+                ['name' => 'Dominika ya Tano', 'date' => 'Machi 22, 2026'],
+                ['name' => 'Dominika ya Matawi', 'date' => 'Machi 29, 2026'],
+                ['name' => 'Alhamisi Kuu', 'date' => 'Aprili 2, 2026'],
+                ['name' => 'Ijumaa Kuu', 'date' => 'Aprili 3, 2026'],
+                ['name' => 'Jumamosi Kuu (Mkesha wa Pasaka)', 'date' => 'Aprili 4, 2026'],
+                ['name' => 'Jumapili ya Pasaka', 'date' => 'Aprili 5, 2026'],
+            ])),
+            'lent_schedule_enabled' => Setting::get('lent_schedule_enabled', true),
         ];
         
         return view('admin.homepage.index', compact('settings'));
@@ -252,6 +297,19 @@ class AdminController extends Controller
             'homepage_about_title', 'homepage_about_content',
             'homepage_vision_title', 'homepage_vision_content',
             'homepage_mission_title', 'homepage_mission_content',
+            // Easter Conference
+            'easter_conference_title', 'easter_conference_subtitle', 'easter_conference_description',
+            'easter_conference_image', 'easter_conference_register_url',
+            // Prayer Service
+            'prayer_service_title', 'prayer_service_days', 'prayer_service_time',
+            'prayer_service_meet_code', 'prayer_service_meet_url',
+            // Fundraising
+            'fundraising_title', 'fundraising_date', 'fundraising_location', 'fundraising_description',
+            // Payment Info
+            'payment_voda_phone', 'payment_voda_name', 'payment_lipa_namba', 'payment_lipa_namba_name',
+            'payment_bank_account', 'payment_bank_name', 'payment_bank_name_full',
+            // Lent Schedule
+            'lent_schedule_title', 'lent_schedule_items',
         ];
 
         foreach ($fields as $field) {
@@ -259,6 +317,13 @@ class AdminController extends Controller
                 Setting::set($field, $request->input($field), 'text', 'homepage');
             }
         }
+
+        // Handle boolean fields
+        Setting::set('easter_conference_enabled', $request->has('easter_conference_enabled') ? true : false, 'boolean', 'homepage');
+        Setting::set('prayer_service_enabled', $request->has('prayer_service_enabled') ? true : false, 'boolean', 'homepage');
+        Setting::set('fundraising_enabled', $request->has('fundraising_enabled') ? true : false, 'boolean', 'homepage');
+        Setting::set('payment_info_enabled', $request->has('payment_info_enabled') ? true : false, 'boolean', 'homepage');
+        Setting::set('lent_schedule_enabled', $request->has('lent_schedule_enabled') ? true : false, 'boolean', 'homepage');
 
         ActivityLog::create([
             'user_id' => Auth::id(),

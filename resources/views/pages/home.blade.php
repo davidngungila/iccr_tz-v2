@@ -8,8 +8,52 @@
 <section class="relative min-h-[70vh] h-[70vh] max-h-[900px] overflow-hidden">
     <!-- Carousel Container -->
     <div id="heroCarousel" class="relative h-full w-full">
-        <!-- Slide 1 - Fade In Animation -->
+        @php
+            use App\Models\Setting;
+            $easterConferenceTitle = Setting::get('easter_conference_title', 'International Easter Conference 2026');
+            $easterConferenceSubtitle = Setting::get('easter_conference_subtitle', 'USIFANYE MISTAKE KABISA KUKOSA KONGAMANO HILI!');
+            $easterConferenceDescription = Setting::get('easter_conference_description', 'Toka nimeuzulia, nakuwa mpya kifikra, kiujuzi, kiuchumi, mtazamo na kimahusiano, kifamilia na natiwa ujasiri wa uthubutu limetumika kuwa daraja kwa ajili ya watu wengi. MAMBO NI MAZURI - TWENDE KWA PAMOJA!');
+            $easterConferenceImage = Setting::get('easter_conference_image', asset('images/01.jpg'));
+            $easterConferenceRegisterUrl = Setting::get('easter_conference_register_url', '#');
+            $easterConferenceEnabled = Setting::get('easter_conference_enabled', true);
+        @endphp
+        
+        @if($easterConferenceEnabled)
+        <!-- Slide 0 - Easter Conference 2026 (URGENT) -->
         <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
+            <div class="relative h-full bg-gradient-to-br from-red-600 via-purple-600 to-red-800">
+                <div class="absolute inset-0 bg-black opacity-30"></div>
+                <img src="{{ $easterConferenceImage }}" alt="Easter Conference 2026" class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 flex items-center justify-center py-8 md:py-12">
+                    <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
+                        <div class="inline-block mb-4 px-4 py-2 bg-red-600 rounded-full animate-pulse">
+                            <span class="text-sm md:text-base font-bold">🔥 URGENT</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-3 md:mb-4 drop-shadow-lg leading-tight">
+                            {{ $easterConferenceTitle }}
+                        </h1>
+                        <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 md:mb-6 text-yellow-200 drop-shadow-md font-semibold px-4">
+                            {{ $easterConferenceSubtitle }}
+                        </p>
+                        <p class="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-white drop-shadow-md px-4 max-w-4xl mx-auto leading-relaxed">
+                            {{ $easterConferenceDescription }}
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
+                            <a href="{{ $easterConferenceRegisterUrl }}" class="inline-block bg-yellow-500 text-red-900 px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl hover:bg-yellow-400 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-yellow-300 min-w-[180px] text-center">
+                                Register for Conference
+                            </a>
+                            <a href="#prayer-service" class="inline-block bg-white text-red-600 px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl hover:bg-red-50 transition shadow-2xl hover:shadow-3xl transform hover:scale-105 border-2 border-white min-w-[180px] text-center">
+                                Join Prayer Service
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <!-- Slide 1 - Fade In Animation -->
+        <div class="carousel-slide slide-fade absolute inset-0 transition-opacity duration-1000 ease-in-out {{ $easterConferenceEnabled ? 'opacity-0' : 'opacity-100' }}">
             <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
                 <div class="absolute inset-0 bg-black opacity-40"></div>
                 <img src="{{ asset('images/01.jpg') }}" alt="Worship Gathering" class="w-full h-full object-cover object-center">
@@ -185,14 +229,153 @@
 
     <!-- Carousel Indicators -->
     <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
+        @if($easterConferenceEnabled)
         <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-100 transition border border-white/50" data-slide="0"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="1"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="2"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="3"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="4"></button>
-        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="5"></button>
+        @endif
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white {{ $easterConferenceEnabled ? 'opacity-50' : 'opacity-100' }} transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '1' : '0' }}"></button>
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '2' : '1' }}"></button>
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '3' : '2' }}"></button>
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '4' : '3' }}"></button>
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '5' : '4' }}"></button>
+        <button class="carousel-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white opacity-50 transition border border-white/50 hover:opacity-75" data-slide="{{ $easterConferenceEnabled ? '6' : '5' }}"></button>
     </div>
 </section>
+
+@php
+    // Prayer Service Settings
+    $prayerServiceTitle = Setting::get('prayer_service_title', 'HUDUMA YA MAOMBI NA MAOMBEZI');
+    $prayerServiceDays = Setting::get('prayer_service_days', 'Jumatano na Alhamisi');
+    $prayerServiceTime = Setting::get('prayer_service_time', 'Saa 02-03 Usiku');
+    $prayerServiceMeetCode = Setting::get('prayer_service_meet_code', 'jea-zvpr-ctn');
+    $prayerServiceMeetUrl = Setting::get('prayer_service_meet_url', 'https://meet.google.com/');
+    $prayerServiceEnabled = Setting::get('prayer_service_enabled', true);
+    
+    // Fundraising Event Settings
+    $fundraisingTitle = Setting::get('fundraising_title', 'Physical Fundraising Event');
+    $fundraisingDate = Setting::get('fundraising_date', '15 Februari 2026');
+    $fundraisingLocation = Setting::get('fundraising_location', 'Jijini MBEYA');
+    $fundraisingDescription = Setting::get('fundraising_description', 'Tunawakaribisha sana kwenye Physical Fundraising kuwezesha Kongamano la Kimataifa la Pasaka 2026');
+    $fundraisingEnabled = Setting::get('fundraising_enabled', true);
+    
+    // Payment Information Settings
+    $paymentVodaPhone = Setting::get('payment_voda_phone', '0792 573 433');
+    $paymentVodaName = Setting::get('payment_voda_name', 'CCR UMOJA WA VYUO TZ');
+    $paymentLipaNamba = Setting::get('payment_lipa_namba', '58286111');
+    $paymentLipaNambaName = Setting::get('payment_lipa_namba_name', 'CCR UMOJA WA VYUO TZ');
+    $paymentBankAccount = Setting::get('payment_bank_account', '0150027996201');
+    $paymentBankName = Setting::get('payment_bank_name', 'Catholic Charismatic Renewal');
+    $paymentBankNameFull = Setting::get('payment_bank_name_full', 'CRDB Bank');
+    $paymentEnabled = Setting::get('payment_info_enabled', true);
+    
+    // Lent Schedule Settings
+    $lentScheduleEnabled = Setting::get('lent_schedule_enabled', true);
+    $lentScheduleTitle = Setting::get('lent_schedule_title', 'RATIBA YA KWARESMA 2026');
+    $lentScheduleItems = json_decode(Setting::get('lent_schedule_items', json_encode([
+        ['name' => 'Jumatano ya Majivu', 'date' => 'Februari 18, 2026'],
+        ['name' => 'Dominika ya Kwanza', 'date' => 'Februari 22, 2026'],
+        ['name' => 'Dominika ya Pili', 'date' => 'Machi 1, 2026'],
+        ['name' => 'Dominika ya Tatu', 'date' => 'Machi 8, 2026'],
+        ['name' => 'Dominika ya Nne (Laetare)', 'date' => 'Machi 15, 2026'],
+        ['name' => 'Dominika ya Tano', 'date' => 'Machi 22, 2026'],
+        ['name' => 'Dominika ya Matawi', 'date' => 'Machi 29, 2026'],
+        ['name' => 'Alhamisi Kuu', 'date' => 'Aprili 2, 2026'],
+        ['name' => 'Ijumaa Kuu', 'date' => 'Aprili 3, 2026'],
+        ['name' => 'Jumamosi Kuu (Mkesha wa Pasaka)', 'date' => 'Aprili 4, 2026'],
+        ['name' => 'Jumapili ya Pasaka', 'date' => 'Aprili 5, 2026'],
+    ])), true);
+@endphp
+
+<!-- Prayer Service Section -->
+@if($prayerServiceEnabled)
+<section id="prayer-service" class="py-16 bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 border-2 border-blue-200">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ $prayerServiceTitle }}</h2>
+                <div class="space-y-3 text-lg text-gray-700">
+                    <p><strong>Siku za Maombi:</strong> {{ $prayerServiceDays }}</p>
+                    <p><strong>Muda:</strong> {{ $prayerServiceTime }}</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ $prayerServiceMeetUrl }}{{ $prayerServiceMeetCode }}" target="_blank" 
+                   class="inline-block bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                    Join Google Meet
+                </a>
+                <p class="mt-4 text-gray-600"><strong>Code:</strong> <span class="font-mono bg-gray-100 px-3 py-1 rounded">{{ $prayerServiceMeetCode }}</span></p>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- Fundraising Event Section -->
+@if($fundraisingEnabled)
+<section class="py-16 bg-gradient-to-br from-green-600 via-blue-600 to-green-700 text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">{{ $fundraisingTitle }}</h2>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 mb-8">
+                <p class="text-xl mb-4"><strong>Tarehe:</strong> {{ $fundraisingDate }}</p>
+                <p class="text-xl mb-4"><strong>Mahali:</strong> {{ $fundraisingLocation }}</p>
+                <p class="text-lg">{{ $fundraisingDescription }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- Payment Information Section -->
+@if($paymentEnabled)
+<section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">Namba za Malipo - UMOJA WA VYUO TANZANIA</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-lg p-6 border-2 border-green-200">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">VODA</h3>
+                    <p class="text-gray-700 mb-2"><strong>Namba ya Simu:</strong></p>
+                    <p class="text-lg font-semibold text-green-600 mb-4">{{ $paymentVodaPhone }}</p>
+                    <p class="text-sm text-gray-600">{{ $paymentVodaName }}</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Lipa Namba</h3>
+                    <p class="text-gray-700 mb-2"><strong>Namba:</strong></p>
+                    <p class="text-lg font-semibold text-blue-600 mb-4">{{ $paymentLipaNamba }}</p>
+                    <p class="text-sm text-gray-600">{{ $paymentLipaNambaName }}</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-2 border-purple-200">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">{{ $paymentBankNameFull }}</h3>
+                    <p class="text-gray-700 mb-2"><strong>A/c Number:</strong></p>
+                    <p class="text-lg font-semibold text-purple-600 mb-4">{{ $paymentBankAccount }}</p>
+                    <p class="text-sm text-gray-600">{{ $paymentBankName }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- Lent Schedule Section -->
+@if($lentScheduleEnabled)
+<section class="py-16 bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">{{ $lentScheduleTitle }}</h2>
+            <div class="bg-white rounded-xl shadow-xl p-8 border-2 border-purple-200">
+                <div class="space-y-4">
+                    @foreach($lentScheduleItems as $item)
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border-l-4 border-purple-600">
+                        <span class="text-lg font-semibold text-gray-900 mb-2 sm:mb-0">{{ $item['name'] ?? '' }}</span>
+                        <span class="text-lg text-purple-600 font-bold">{{ $item['date'] ?? '' }}</span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 
 <!-- Welcome Section - Advanced Design -->
 <section class="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
