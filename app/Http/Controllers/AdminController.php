@@ -819,7 +819,9 @@ class AdminController extends Controller
                 $dompdf->setPaper('A4', 'portrait');
                 $dompdf->render();
                 
-                $filename = "{$event->slug}-{$registration->id}-registration.pdf";
+                // Include registrant name in filename
+                $safeName = Str::slug($registration->full_name);
+                $filename = "{$event->slug}-{$safeName}-{$registration->id}-registration.pdf";
                 return $dompdf->stream($filename, ['Attachment' => true]);
             } else {
                 // Fallback: Return HTML with proper headers for browser PDF generation

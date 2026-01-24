@@ -9,82 +9,89 @@
             .no-print { display: none !important; }
         }
         @page {
-            margin: 20mm;
+            margin: 15mm;
             size: A4 portrait;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
             background: #ffffff;
             color: #111827;
-            line-height: 1.6;
+            line-height: 1.4;
+            font-size: 11px;
         }
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 4px solid #16a34a;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #16a34a;
         }
         .header h1 {
             color: #16a34a;
             margin: 0;
-            font-size: 32px;
+            font-size: 20px;
             font-weight: bold;
         }
         .header p {
             color: #6b7280;
-            margin: 10px 0 0 0;
-            font-size: 14px;
+            margin: 3px 0 0 0;
+            font-size: 10px;
         }
         .document-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bold;
             color: #111827;
-            margin: 30px 0;
-            padding: 20px;
+            margin: 10px 0;
+            padding: 10px;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
-            border-radius: 12px;
+            border-radius: 8px;
         }
         .section {
-            margin-bottom: 30px;
-            padding: 25px;
+            margin-bottom: 12px;
+            padding: 12px;
             background: #f9fafb;
-            border-radius: 12px;
-            border-left: 4px solid #16a34a;
+            border-radius: 8px;
+            border-left: 3px solid #16a34a;
+            page-break-inside: avoid;
         }
         .section-title {
-            font-size: 18px;
+            font-size: 13px;
             font-weight: bold;
             color: #111827;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
         }
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 8px;
         }
         .info-item {
-            padding: 12px;
+            padding: 8px;
             background: white;
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid #e5e7eb;
         }
         .info-label {
-            font-size: 12px;
+            font-size: 9px;
             color: #6b7280;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
             font-weight: 600;
         }
         .info-value {
-            font-size: 16px;
+            font-size: 11px;
             color: #111827;
             font-weight: 500;
         }
@@ -93,11 +100,11 @@
         }
         .status-badge {
             display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .status-confirmed {
             background-color: #d1fae5;
@@ -112,12 +119,23 @@
             color: #991b1b;
         }
         .footer {
-            margin-top: 50px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 10px;
             border-top: 2px solid #e5e7eb;
             text-align: center;
             color: #6b7280;
-            font-size: 12px;
+            font-size: 9px;
+        }
+        .registration-id {
+            background: #111827;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            letter-spacing: 2px;
         }
         .print-button {
             position: fixed;
@@ -125,28 +143,17 @@
             right: 20px;
             background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 24px;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             border: none;
-            font-size: 16px;
+            font-size: 14px;
         }
         .print-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 20px -3px rgba(0, 0, 0, 0.2);
-        }
-        .registration-id {
-            background: #111827;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 18px;
-            letter-spacing: 3px;
         }
     </style>
 </head>
@@ -330,7 +337,7 @@
             📝 Admin Notes
         </div>
         <div class="info-item full-width">
-            <div class="info-value" style="padding: 15px; background: white; border-radius: 8px;">{{ $registration->admin_notes }}</div>
+            <div class="info-value" style="padding: 8px; background: white; border-radius: 6px;">{{ $registration->admin_notes }}</div>
         </div>
     </div>
     @endif
@@ -341,8 +348,8 @@
         <p>• Please keep this document for your records</p>
         <p>• Bring a copy (digital or printed) to the event for verification</p>
         <p>• For any changes or inquiries, contact us at info@iccrtz.org</p>
-        <p style="margin-top: 20px;">This document was generated on {{ now()->format('F j, Y \a\t g:i A') }}</p>
-        <p style="margin-top: 10px;">© {{ date('Y') }} ICCR Tanzania. All rights reserved.</p>
+        <p style="margin-top: 10px;">This document was generated on {{ now()->format('F j, Y \a\t g:i A') }}</p>
+        <p style="margin-top: 5px;">© {{ date('Y') }} ICCR Tanzania. All rights reserved.</p>
     </div>
     
     <button onclick="window.print()" class="print-button no-print">🖨️ Print Document</button>
@@ -355,4 +362,3 @@
     </script>
 </body>
 </html>
-
