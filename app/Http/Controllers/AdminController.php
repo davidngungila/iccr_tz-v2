@@ -1569,7 +1569,7 @@ class AdminController extends Controller
             
             // SMS fields
             'sms_username' => 'nullable|string|max:255',
-            'sms_password' => 'nullable|string|max:255',
+            'sms_password' => 'required_if:type,sms|string|max:500',
             'sms_from' => 'required_if:type,sms|nullable|string|max:255',
             'sms_url' => 'required_if:type,sms|nullable|url|max:500',
             
@@ -1593,28 +1593,44 @@ class AdminController extends Controller
         }
 
         // Handle password/token updates
-        // For SMS: Always update the Bearer token (required field)
+        // For SMS: Always update the Bearer token from request (even if empty, update it)
         // For Email: Only update if provided and not empty (allow blank to keep current)
+        if ($provider->type === 'sms') {
+            // Always update SMS password/token from request
+            if ($request->has('sms_password')) {
+                $validated['sms_password'] = trim($request->input('sms_password', ''));
+            }
+        }
+        
         if ($provider->type === 'email') {
             // For email, only update if provided and not empty
             if (empty($validated['mail_password'])) {
                 unset($validated['mail_password']);
             }
         }
-        // For SMS, sms_password is required and will always be updated
 
         // Log the update for debugging
-        Log::info('Updating NotificationProvider', [
+        \Illuminate\Support\Facades\Log::info('Updating NotificationProvider', [
             'provider_id' => $provider->id,
             'type' => $provider->type,
             'has_sms_password' => isset($validated['sms_password']),
             'sms_password_length' => isset($validated['sms_password']) ? strlen($validated['sms_password']) : 0,
+            'request_has_sms_password' => $request->has('sms_password'),
+            'request_sms_password_value' => $request->input('sms_password') ? substr($request->input('sms_password'), 0, 10) . '...' : 'empty',
         ]);
 
-        $provider->update($validated);
+        // Update the provider
+        $updateResult = $provider->update($validated);
         
-        // Refresh the model to get updated values
+        // Verify the update
         $provider->refresh();
+        
+        \Illuminate\Support\Facades\Log::info('NotificationProvider update completed', [
+            'provider_id' => $provider->id,
+            'update_result' => $updateResult,
+            'sms_password_updated' => $provider->sms_password ? substr($provider->sms_password, 0, 10) . '...' : 'empty',
+            'sms_password_length' => $provider->sms_password ? strlen($provider->sms_password) : 0,
+        ]);
         
         ActivityLog::create([
             'user_id' => Auth::id(),
