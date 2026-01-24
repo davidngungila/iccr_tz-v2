@@ -95,6 +95,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/events/registrations/{registration}', [AdminController::class, 'updateRegistrationStatus'])->name('events.registrations.update');
         Route::get('/events/{event}/export/pdf', [AdminController::class, 'exportRegistrationsPDF'])->name('events.export.pdf');
         Route::get('/events/{event}/export/excel', [AdminController::class, 'exportRegistrationsExcel'])->name('events.export.excel');
+        Route::get('/events/{event}/ticket/{registration}', [AdminController::class, 'generateTicket'])->name('events.ticket');
+        Route::get('/events/{event}/registration/{registration}/pdf', [AdminController::class, 'generateRegistrationPDF'])->name('events.registration.pdf');
         
         // Media
         Route::get('/media', [AdminController::class, 'media'])->name('media');

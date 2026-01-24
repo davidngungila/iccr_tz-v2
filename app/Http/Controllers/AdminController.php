@@ -777,6 +777,21 @@ class AdminController extends Controller
         
         return response()->stream($callback, 200, $headers);
     }
+    
+    public function generateTicket(Event $event, EventRegistration $registration)
+    {
+        return view('admin.events.ticket', compact('event', 'registration'));
+    }
+    
+    public function generateRegistrationPDF(Event $event, EventRegistration $registration)
+    {
+        $html = view('admin.events.registration-pdf', compact('event', 'registration'))->render();
+        
+        return response()->make($html, 200, [
+            'Content-Type' => 'text/html',
+            'Content-Disposition' => "attachment; filename=\"{$event->slug}-{$registration->id}-registration.pdf\"",
+        ]);
+    }
 
     public function createEvent()
     {
