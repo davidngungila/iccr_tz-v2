@@ -160,8 +160,29 @@ class NotificationService
             if ($usePostMethod) {
                 if ($useBearerToken) {
                     // Use Bearer token authentication (API v2 format)
-                    // API Key is used as Bearer token
-                    $bearerToken = $smsPassword ?: $smsUsername; // Use password as token, or username if password not set
+                    // API Key is used as Bearer token - use password field as token
+                    $bearerToken = trim($smsPassword); // Remove any whitespace
+                    
+                    if (empty($bearerToken)) {
+                        $errorMsg = 'SMS Bearer token is empty. Please configure the API Key / Bearer Token in communication settings.';
+                        Log::error('SMS Bearer token is empty');
+                        
+                        // Log to ActivityLog
+                        try {
+                            \App\Models\ActivityLog::create([
+                                'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                                'action' => 'sms_error',
+                                'model_type' => 'SMS',
+                                'description' => $errorMsg,
+                                'ip_address' => request()->ip(),
+                            ]);
+                        } catch (\Exception $e) {
+                            // Fail silently if ActivityLog fails
+                        }
+                        
+                        curl_close($curl);
+                        return false;
+                    }
                     
                     $body = json_encode([
                         'from' => $smsFrom,
@@ -176,6 +197,8 @@ class NotificationService
                         'method' => 'POST',
                         'from' => $smsFrom,
                         'to' => $phoneNumber,
+                        'token_length' => strlen($bearerToken),
+                        'token_preview' => substr($bearerToken, 0, 10) . '...' . substr($bearerToken, -4),
                     ]);
                     
                     curl_setopt_array($curl, array(
@@ -350,11 +373,18 @@ class NotificationService
                     }
                 } else {
                     $errorMsg = "SMS failed with HTTP code {$httpCode}. Response: " . substr($response ?? '', 0, 200);
+                    
+                    // Special handling for 401 errors
+                    if ($httpCode == 401) {
+                        $errorMsg = "SMS authentication failed (401). Please check your Bearer token in communication settings. Response: " . substr($response ?? '', 0, 200);
+                    }
+                    
                     Log::error('SMS failed with HTTP code', [
                         'http_code' => $httpCode,
                         'response' => substr($response ?? '', 0, 200),
                         'phone' => $phoneNumber,
                         'url' => $smsUrl,
+                        'is_bearer_auth' => $useBearerToken ?? false,
                     ]);
                     
                     // Log to ActivityLog

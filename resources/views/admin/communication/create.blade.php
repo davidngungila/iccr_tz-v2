@@ -56,8 +56,8 @@
                     </div>
                     <div>
                         <label for="sms_password" class="block text-sm font-semibold text-gray-700 mb-2">API Key / Bearer Token *</label>
-                        <input type="password" id="sms_password" name="sms_password" value="{{ old('sms_password') }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                        <p class="text-xs text-gray-500 mt-1">Required: Bearer token for API v2 authentication</p>
+                        <input type="text" id="sms_password" name="sms_password" value="{{ old('sms_password') }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition font-mono text-sm">
+                        <p class="text-xs text-gray-500 mt-1">Required: Bearer token for API v2 (e.g., cedcce9becad866f59beac1fd5a235bc)</p>
                         @error('sms_password')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
