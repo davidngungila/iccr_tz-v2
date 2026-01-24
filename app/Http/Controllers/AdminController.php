@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use App\Models\BlogCategory;
 use App\Models\BlogTag;
 use App\Models\Event;
+use App\Models\EventRegistration;
 use App\Models\Media;
 use App\Models\MenuItem;
 use App\Models\Popup;
@@ -650,10 +651,131 @@ class AdminController extends Controller
 
     // ==================== EVENTS MANAGEMENT ====================
     
-    public function events()
+    public function events(Request $request)
     {
-        $events = Event::orderBy('start_date', 'desc')->paginate(20);
+        $query = Event::query();
+        
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+        
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        $events = $query->orderBy('start_date', 'desc')->paginate(20);
         return view('admin.events.index', compact('events'));
+    }
+    
+    public function eventRegistrations(Event $event)
+    {
+        $registrations = EventRegistration::where('event_id', $event->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(50);
+        
+        $stats = [
+            'total' => EventRegistration::where('event_id', $event->id)->count(),
+            'pending' => EventRegistration::where('event_id', $event->id)->where('status', 'pending')->count(),
+            'confirmed' => EventRegistration::where('event_id', $event->id)->where('status', 'confirmed')->count(),
+            'cancelled' => EventRegistration::where('event_id', $event->id)->where('status', 'cancelled')->count(),
+            'sms_sent' => EventRegistration::where('event_id', $event->id)->where('sms_sent', true)->count(),
+        ];
+        
+        return view('admin.events.registrations', compact('event', 'registrations', 'stats'));
+    }
+    
+    public function updateRegistrationStatus(Request $request, EventRegistration $registration)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,confirmed,cancelled',
+            'admin_notes' => 'nullable|string|max:1000',
+        ]);
+        
+        $registration->update($validated);
+        
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated',
+            'model_type' => 'EventRegistration',
+            'model_id' => $registration->id,
+            'description' => "Updated registration status to {$validated['status']} for {$registration->full_name}",
+        ]);
+        
+        return back()->with('success', 'Registration status updated successfully!');
+    }
+    
+    public function exportRegistrationsPDF(Event $event)
+    {
+        $registrations = EventRegistration::where('event_id', $event->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        // Generate HTML for PDF
+        $html = view('admin.events.export-pdf', compact('event', 'registrations'))->render();
+        
+        // Return as downloadable HTML (can be printed to PDF by browser)
+        return response()->make($html, 200, [
+            'Content-Type' => 'text/html',
+            'Content-Disposition' => "attachment; filename=\"{$event->slug}-registrations.html\"",
+        ]);
+    }
+    
+    public function exportRegistrationsExcel(Event $event)
+    {
+        $registrations = EventRegistration::where('event_id', $event->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        $data = [];
+        $data[] = [
+            'ID', 'Full Name', 'Email', 'Phone', 'Campus', 'Institution', 
+            'Year of Study', 'Course', 'Accommodation', 'Transportation',
+            'Emergency Contact', 'Emergency Phone', 'Status', 'SMS Sent', 'Registered At'
+        ];
+        
+        foreach ($registrations as $reg) {
+            $data[] = [
+                $reg->id,
+                $reg->full_name,
+                $reg->email,
+                $reg->phone,
+                $reg->campus ?? '-',
+                $reg->institution ?? '-',
+                $reg->year_of_study ?? '-',
+                $reg->course ?? '-',
+                $reg->accommodation_needed === 'yes' ? 'Yes' : 'No',
+                $reg->transportation_needed === 'yes' ? 'Yes' : 'No',
+                $reg->emergency_contact_name ?? '-',
+                $reg->emergency_contact_phone ?? '-',
+                ucfirst($reg->status),
+                $reg->sms_sent ? 'Yes' : 'No',
+                $reg->created_at->format('Y-m-d H:i:s'),
+            ];
+        }
+        
+        $filename = "{$event->slug}-registrations-" . now()->format('Y-m-d') . ".csv";
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+        
+        $callback = function() use ($data) {
+            $file = fopen('php://output', 'w');
+            foreach ($data as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+        
+        return response()->stream($callback, 200, $headers);
     }
 
     public function createEvent()

@@ -90,6 +90,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/events/{event}', [AdminController::class, 'updateEvent'])->name('events.update');
         Route::delete('/events/{event}', [AdminController::class, 'deleteEvent'])->name('events.delete');
         
+        // Event Registrations
+        Route::get('/events/{event}/registrations', [AdminController::class, 'eventRegistrations'])->name('events.registrations');
+        Route::put('/events/registrations/{registration}', [AdminController::class, 'updateRegistrationStatus'])->name('events.registrations.update');
+        Route::get('/events/{event}/export/pdf', [AdminController::class, 'exportRegistrationsPDF'])->name('events.export.pdf');
+        Route::get('/events/{event}/export/excel', [AdminController::class, 'exportRegistrationsExcel'])->name('events.export.excel');
+        
         // Media
         Route::get('/media', [AdminController::class, 'media'])->name('media');
         Route::get('/media/create', [AdminController::class, 'createMedia'])->name('media.create');
