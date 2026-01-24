@@ -318,7 +318,7 @@
                     </svg>
                     Upcoming Events
                 </h3>
-                <a href="{{ route('admin.events.index') }}" class="text-sm text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
+                <a href="{{ route('admin.events') }}" class="text-sm text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
             </div>
         </div>
         <div class="p-6">
