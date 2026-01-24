@@ -54,14 +54,14 @@
                         </p>
                         @endif
                         @if($slide->button_1_text || $slide->button_2_text)
-                        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-8 sm:mb-12 md:mb-16 relative z-10">
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center mb-8 sm:mb-12 md:mb-16 relative z-10">
                             @if($slide->button_1_text)
-                            <a href="{{ $slide->button_1_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-yellow-500 text-red-900 hover:bg-yellow-400 border-2 border-yellow-300' : 'bg-white text-green-600 hover:bg-green-50 border-2 border-transparent hover:border-green-200' }} px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 min-w-[180px] text-center">
+                            <a href="{{ $slide->button_1_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-yellow-500 text-red-900 hover:bg-yellow-400 border-2 border-yellow-300' : 'bg-white text-green-600 hover:bg-green-50 border-2 border-transparent hover:border-green-200' }} px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold text-sm md:text-base transition shadow-lg hover:shadow-xl transform hover:scale-105 min-w-[140px] text-center">
                                 {{ $slide->button_1_text }}
                             </a>
                             @endif
                             @if($slide->button_2_text)
-                            <a href="{{ $slide->button_2_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-white text-red-600 hover:bg-red-50 border-2 border-white' : 'bg-green-700 text-white hover:bg-green-800 border-2 border-white hover:border-green-300' }} px-8 md:px-12 py-4 md:py-5 rounded-lg font-bold text-base md:text-xl transition shadow-2xl hover:shadow-3xl transform hover:scale-105 min-w-[180px] text-center">
+                            <a href="{{ $slide->button_2_url ?? '#' }}" class="inline-block {{ $slide->is_urgent ? 'bg-white text-red-600 hover:bg-red-50 border-2 border-white' : 'bg-green-700 text-white hover:bg-green-800 border-2 border-white hover:border-green-300' }} px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold text-sm md:text-base transition shadow-lg hover:shadow-xl transform hover:scale-105 min-w-[140px] text-center">
                                 {{ $slide->button_2_text }}
                             </a>
                             @endif
