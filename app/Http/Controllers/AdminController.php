@@ -673,6 +673,53 @@ class AdminController extends Controller
         $events = $query->orderBy('start_date', 'desc')->paginate(20);
         return view('admin.events.index', compact('events'));
     }
+
+    public function eventManagementDashboard()
+    {
+        $upcomingEvents = Event::where('status', 'upcoming')
+            ->where('start_date', '>', now())
+            ->orderBy('start_date', 'asc')
+            ->limit(10)
+            ->get();
+        
+        $activeEvents = Event::where('status', 'upcoming')
+            ->where('start_date', '<=', now())
+            ->where('end_date', '>=', now())
+            ->orderBy('start_date', 'asc')
+            ->limit(5)
+            ->get();
+        
+        $stats = [
+            'total_events' => Event::count(),
+            'upcoming_events' => Event::where('status', 'upcoming')->where('start_date', '>', now())->count(),
+            'active_events' => Event::where('status', 'upcoming')
+                ->where('start_date', '<=', now())
+                ->where('end_date', '>=', now())
+                ->count(),
+            'total_registrations' => \App\Models\EventRegistration::count(),
+            'pending_registrations' => \App\Models\EventRegistration::where('status', 'pending')->count(),
+            'confirmed_registrations' => \App\Models\EventRegistration::where('status', 'confirmed')->count(),
+            'total_payments' => \App\Models\EventPayment::where('status', 'completed')->count(),
+            'total_payment_amount' => \App\Models\EventPayment::where('status', 'completed')->sum('amount'),
+            'total_volunteers' => \App\Models\Volunteer::count(),
+            'active_volunteers' => \App\Models\Volunteer::where('status', 'active')->count(),
+            'total_attendances' => \App\Models\Attendance::whereDate('attendance_date', today())->count(),
+            'prayer_requests_pending' => \App\Models\PrayerRequest::where('status', 'pending')->count(),
+            'testimonies_pending' => \App\Models\Testimony::where('status', 'pending')->count(),
+        ];
+        
+        $recentRegistrations = \App\Models\EventRegistration::with('event')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+        
+        $recentPayments = \App\Models\EventPayment::with(['event', 'registration'])
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+        
+        return view('admin.events.dashboard', compact('upcomingEvents', 'activeEvents', 'stats', 'recentRegistrations', 'recentPayments'));
+    }
     
     public function eventRegistrations(Event $event)
     {

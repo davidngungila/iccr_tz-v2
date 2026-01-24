@@ -84,6 +84,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Events
         Route::get('/events', [AdminController::class, 'events'])->name('events');
+        Route::get('/events/management', [AdminController::class, 'eventManagementDashboard'])->name('events.management');
         Route::get('/events/create', [AdminController::class, 'createEvent'])->name('events.create');
         Route::post('/events', [AdminController::class, 'storeEvent'])->name('events.store');
         Route::get('/events/{event}/edit', [AdminController::class, 'editEvent'])->name('events.edit');
