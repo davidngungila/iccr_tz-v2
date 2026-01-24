@@ -9,7 +9,8 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/ministries', [PageController::class, 'ministries'])->name('ministries');
 Route::get('/events', [PageController::class, 'events'])->name('events');
 Route::get('/events/{slug}', [PageController::class, 'showEvent'])->name('event.show');
-Route::post('/events/{event}/register', [\App\Http\Controllers\EventRegistrationController::class, 'store'])->name('event.register');
+Route::get('/events/{slug}/register', [PageController::class, 'eventRegister'])->name('event.register');
+Route::post('/events/{event}/register', [\App\Http\Controllers\EventRegistrationController::class, 'store'])->name('event.register.store');
 Route::get('/media', [PageController::class, 'media'])->name('media');
 // Redirect old /resources to new /resource-library to avoid server conflicts
 Route::get('/resources', function () {

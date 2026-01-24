@@ -14,9 +14,9 @@
     <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-800">
         <div class="absolute inset-0 bg-black opacity-50"></div>
     @endif
-        <div class="absolute inset-0 flex items-end pb-12 md:pb-16">
+        <div class="absolute inset-0 flex items-center justify-center pb-12 md:pb-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-                <div class="max-w-4xl">
+                <div class="max-w-4xl mx-auto text-center">
                     <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold text-white mb-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -27,7 +27,7 @@
                         {{ $event->title }}
                     </h1>
                     @if($event->description)
-                    <p class="text-lg sm:text-xl md:text-2xl text-blue-100 mb-6 leading-relaxed drop-shadow-lg max-w-3xl">
+                    <p class="text-lg sm:text-xl md:text-2xl text-blue-100 mb-6 leading-relaxed drop-shadow-lg max-w-3xl mx-auto">
                         {{ $event->description }}
                     </p>
                     @endif
@@ -171,9 +171,9 @@
                     <!-- Register Button -->
                     <div class="mt-8 pt-6 border-t-2 border-gray-100">
                         @if($event->status === 'upcoming')
-                        <button onclick="openRegistrationModal()" class="block w-full text-center px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <a href="{{ route('event.register', $event->slug) }}" class="block w-full text-center px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
                             Register Now
-                        </button>
+                        </a>
                         @else
                         <button disabled class="block w-full text-center px-6 py-4 bg-gray-400 text-white rounded-xl font-bold text-lg cursor-not-allowed">
                             Registration Closed
@@ -267,122 +267,6 @@
 </section>
 @endif
 
-<!-- Registration Modal -->
-<div id="registrationModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4" style="display: none;">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div class="sticky top-0 bg-gradient-to-r from-green-600 to-blue-600 text-white p-6 rounded-t-2xl flex items-center justify-between">
-            <h2 class="text-2xl font-bold">Register for {{ $event->title }}</h2>
-            <button onclick="closeRegistrationModal()" class="text-white hover:text-gray-200 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        
-        <form id="registrationForm" class="p-6 md:p-8 space-y-6">
-            @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="full_name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                    <input type="text" id="full_name" name="full_name" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
-                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="+255 123 456 789" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                </div>
-                <div>
-                    <label for="campus" class="block text-sm font-semibold text-gray-700 mb-2">Campus/Institution</label>
-                    <input type="text" id="campus" name="campus" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="institution" class="block text-sm font-semibold text-gray-700 mb-2">Institution Name</label>
-                    <input type="text" id="institution" name="institution" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                </div>
-                <div>
-                    <label for="year_of_study" class="block text-sm font-semibold text-gray-700 mb-2">Year of Study</label>
-                    <select id="year_of_study" name="year_of_study" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                        <option value="">Select Year</option>
-                        <option value="1st Year">1st Year</option>
-                        <option value="2nd Year">2nd Year</option>
-                        <option value="3rd Year">3rd Year</option>
-                        <option value="4th Year">4th Year</option>
-                        <option value="5th Year+">5th Year+</option>
-                        <option value="Graduate">Graduate</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div>
-                <label for="course" class="block text-sm font-semibold text-gray-700 mb-2">Course/Program</label>
-                <input type="text" id="course" name="course" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="accommodation_needed" class="block text-sm font-semibold text-gray-700 mb-2">Need Accommodation?</label>
-                    <select id="accommodation_needed" name="accommodation_needed" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="transportation_needed" class="block text-sm font-semibold text-gray-700 mb-2">Need Transportation?</label>
-                    <select id="transportation_needed" name="transportation_needed" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div>
-                <label for="dietary_restrictions" class="block text-sm font-semibold text-gray-700 mb-2">Dietary Restrictions</label>
-                <textarea id="dietary_restrictions" name="dietary_restrictions" rows="2" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="Any dietary restrictions or allergies?"></textarea>
-            </div>
-            
-            <div>
-                <label for="special_requirements" class="block text-sm font-semibold text-gray-700 mb-2">Special Requirements</label>
-                <textarea id="special_requirements" name="special_requirements" rows="3" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="Any special requirements or accessibility needs?"></textarea>
-            </div>
-            
-            <div class="border-t-2 border-gray-200 pt-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-4">Emergency Contact</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="emergency_contact_name" class="block text-sm font-semibold text-gray-700 mb-2">Contact Name</label>
-                        <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label for="emergency_contact_phone" class="block text-sm font-semibold text-gray-700 mb-2">Contact Phone</label>
-                        <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                    </div>
-                </div>
-            </div>
-            
-            <div id="formErrors" class="hidden bg-red-50 border-2 border-red-200 rounded-lg p-4 text-red-700"></div>
-            <div id="formSuccess" class="hidden bg-green-50 border-2 border-green-200 rounded-lg p-4 text-green-700"></div>
-            
-            <div class="flex gap-4 pt-4">
-                <button type="submit" class="flex-1 px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
-                    Submit Registration
-                </button>
-                <button type="button" onclick="closeRegistrationModal()" class="px-6 py-4 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition">
-                    Cancel
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
 @push('scripts')
 <script>
 function shareEvent() {
@@ -408,79 +292,6 @@ function shareEvent() {
         });
     }
 }
-
-function openRegistrationModal() {
-    const modal = document.getElementById('registrationModal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closeRegistrationModal() {
-    const modal = document.getElementById('registrationModal');
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-    // Reset form
-    document.getElementById('registrationForm').reset();
-    document.getElementById('formErrors').classList.add('hidden');
-    document.getElementById('formSuccess').classList.add('hidden');
-}
-
-// Close modal on outside click
-document.getElementById('registrationModal')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeRegistrationModal();
-    }
-});
-
-// Handle form submission
-document.getElementById('registrationForm')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const form = this;
-    const formData = new FormData(form);
-    const errorsDiv = document.getElementById('formErrors');
-    const successDiv = document.getElementById('formSuccess');
-    
-    errorsDiv.classList.add('hidden');
-    successDiv.classList.add('hidden');
-    
-    try {
-        const response = await fetch('{{ route("event.register", $event->id) }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            successDiv.textContent = data.message;
-            successDiv.classList.remove('hidden');
-            form.reset();
-            
-            setTimeout(() => {
-                closeRegistrationModal();
-            }, 2000);
-        } else {
-            let errorHtml = '<ul class="list-disc list-inside">';
-            if (data.errors) {
-                Object.values(data.errors).forEach(error => {
-                    errorHtml += '<li>' + error[0] + '</li>';
-                });
-            } else {
-                errorHtml += '<li>' + (data.message || 'Registration failed. Please try again.') + '</li>';
-            }
-            errorHtml += '</ul>';
-            errorsDiv.innerHTML = errorHtml;
-            errorsDiv.classList.remove('hidden');
-        }
-    } catch (error) {
-        errorsDiv.innerHTML = '<p>An error occurred. Please try again later.</p>';
-        errorsDiv.classList.remove('hidden');
-    }
-});
 </script>
 @endpush
 @endsection

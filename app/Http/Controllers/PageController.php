@@ -81,6 +81,17 @@ class PageController extends Controller
         return view('pages.event-detail', compact('event', 'relatedEvents'));
     }
 
+    public function eventRegister($slug)
+    {
+        $event = Event::where('slug', $slug)->firstOrFail();
+        
+        if ($event->status !== 'upcoming') {
+            return redirect()->route('event.show', $event->slug)->with('error', 'Registration is closed for this event.');
+        }
+        
+        return view('pages.event-register', compact('event'));
+    }
+
     public function media()
     {
         // Fetch videos from YouTube channels

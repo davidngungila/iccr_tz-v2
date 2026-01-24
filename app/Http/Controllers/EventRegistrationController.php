@@ -84,11 +84,9 @@ class EventRegistrationController extends Controller
             // Continue even if SMS fails
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Registration successful! You will receive a confirmation SMS shortly.',
-            'registration_id' => $registration->id
-        ]);
+        // Redirect to success page or back with success message
+        return redirect()->route('event.show', $event->slug)
+            ->with('success', 'Registration successful! You will receive a confirmation SMS shortly.');
     }
 
 }
