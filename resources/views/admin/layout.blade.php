@@ -315,25 +315,6 @@
                 <span class="font-medium">Dashboard</span>
             </a>
             
-            <!-- 2️⃣ Pages -->
-            <div class="sidebar-dropdown-parent">
-                <button onclick="toggleDropdown('pages')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.pages*') ? 'bg-gray-800 text-white' : '' }}">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl">📄</span>
-                        <span class="font-medium">Pages</span>
-                    </div>
-                    <svg class="w-4 h-4 transition-transform" id="pages-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div id="pages-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.pages*') ? 'open' : '' }}">
-                    <div class="pl-4 pt-1 space-y-1">
-                        <a href="{{ route('admin.pages') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.pages') && !request()->routeIs('admin.pages.create') && !request()->routeIs('admin.pages.edit') ? 'text-white bg-gray-800' : '' }}">All Pages</a>
-                        <a href="{{ route('admin.pages.create') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.pages.create') ? 'text-white bg-gray-800' : '' }}">Add New Page</a>
-                    </div>
-                </div>
-            </div>
-            
             <!-- 3️⃣ Homepage -->
             <div class="sidebar-dropdown-parent">
                 <button onclick="toggleDropdown('homepage')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.homepage*') || request()->routeIs('admin.slides*') ? 'bg-gray-800 text-white' : '' }}">
@@ -424,12 +405,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- 7️⃣ Menus & Navigation -->
-            <a href="{{ route('admin.menus') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.menus*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
-                <span class="text-xl">🧭</span>
-                <span class="font-medium">Menus & Navigation</span>
-            </a>
             
             <!-- 8️⃣ Popups & Announcements -->
             <a href="{{ route('admin.popups') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.popups*') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">

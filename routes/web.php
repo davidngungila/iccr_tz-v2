@@ -103,12 +103,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/cloudinary/upload', [AdminController::class, 'uploadToCloudinary'])->name('cloudinary.upload');
         Route::delete('/cloudinary/{publicId}', [AdminController::class, 'deleteCloudinaryAsset'])->name('cloudinary.delete');
         
-        // Menus
-        Route::get('/menus', [AdminController::class, 'menus'])->name('menus');
-        Route::post('/menus', [AdminController::class, 'storeMenuItem'])->name('menus.store');
-        Route::put('/menus/{menuItem}', [AdminController::class, 'updateMenuItem'])->name('menus.update');
-        Route::delete('/menus/{menuItem}', [AdminController::class, 'deleteMenuItem'])->name('menus.delete');
-        
         // Popups
         Route::get('/popups', [AdminController::class, 'popups'])->name('popups');
         Route::post('/popups', [AdminController::class, 'storePopup'])->name('popups.store');
