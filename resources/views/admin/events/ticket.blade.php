@@ -44,6 +44,18 @@
             margin-bottom: 10px;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
         }
+        .logo-container {
+            margin-bottom: 5px;
+        }
+        .logo-container img {
+            max-width: 50px;
+            height: auto;
+            background: white;
+            padding: 3px;
+            border-radius: 4px;
+            display: block;
+            margin: 0 auto;
+        }
         .receipt-header h1 {
             font-size: 14px;
             font-weight: bold;
@@ -230,6 +242,11 @@
     <div class="receipt-container">
         <!-- Header -->
         <div class="receipt-header">
+            @if(isset($logoExists) && $logoExists)
+            <div class="logo-container">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="ICCR Tanzania">
+            </div>
+            @endif
             <h1>ICCR Tanzania</h1>
             <p>Inter-Colleges Catholic Charismatic Renewal</p>
             <p>Event Admission Ticket</p>
