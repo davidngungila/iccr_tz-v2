@@ -785,8 +785,32 @@ class AdminController extends Controller
             $logoPath = public_path('images/logo.png');
             $logoExists = file_exists($logoPath);
             
+            // Generate QR code data
+            $qrData = json_encode([
+                'event_id' => $event->id,
+                'registration_id' => $registration->id,
+                'name' => $registration->full_name,
+                'email' => $registration->email,
+                'phone' => $registration->phone,
+                'ticket_number' => strtoupper(substr($event->slug, 0, 3)) . '-' . str_pad($registration->id, 6, '0', STR_PAD_LEFT),
+            ]);
+            
+            // Generate QR code as base64 image
+            try {
+                $qrCode = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')
+                    ->size(200)
+                    ->errorCorrection('H')
+                    ->generate($qrData);
+                $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrCode);
+            } catch (\Exception $e) {
+                \Log::error('QR Code generation failed: ' . $e->getMessage());
+                // Fallback: Use a simple SVG placeholder
+                $svg = '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#f3f4f6"/><text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="#6b7280">QR Code</text></svg>';
+                $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode($svg);
+            }
+            
             // Generate PDF using DomPDF
-            $html = view('admin.events.ticket', compact('event', 'registration', 'logoPath', 'logoExists'))->render();
+            $html = view('admin.events.ticket', compact('event', 'registration', 'logoPath', 'logoExists', 'qrCodeBase64'))->render();
             
             // Use DomPDF if available, otherwise return HTML for browser print
             if (class_exists('\Dompdf\Dompdf')) {

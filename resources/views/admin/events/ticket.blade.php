@@ -7,7 +7,6 @@
         @media print {
             body { margin: 0; padding: 0; }
             .no-print { display: none !important; }
-            .ticket-container { box-shadow: none; border: none; max-width: 100%; }
             @page {
                 margin: 0;
                 size: 80mm auto; /* Receipt printer width (80mm = ~3.15 inches) */
@@ -23,179 +22,187 @@
             padding: 0;
         }
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Arial', 'Courier New', monospace;
             margin: 0;
             padding: 10px;
             background: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .ticket-container {
-            max-width: 300px; /* Receipt printer width */
-            width: 100%;
-            background: white;
-            border: 2px solid #16a34a;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .ticket-header {
-            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            position: relative;
-        }
-        .logo-container {
-            margin-bottom: 10px;
-        }
-        .logo-container img {
-            max-width: 120px;
-            height: auto;
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            display: block;
+            color: #000000;
+            line-height: 1.3;
+            font-size: 11px;
+            max-width: 80mm;
             margin: 0 auto;
         }
-        .ticket-header h1 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .receipt-container {
+            width: 100%;
+            max-width: 80mm;
+            background: white;
         }
-        .ticket-header p {
-            margin: 5px 0 0 0;
-            font-size: 10px;
-            opacity: 0.9;
-        }
-        .ticket-body {
-            padding: 15px;
-        }
-        .event-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #111827;
-            margin-bottom: 12px;
+        .receipt-header {
             text-align: center;
-            line-height: 1.3;
-        }
-        .ticket-info {
-            background: #f9fafb;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: 1px solid #e5e7eb;
-        }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px dotted #d1d5db;
-            font-size: 10px;
-        }
-        .info-row:last-child {
-            border-bottom: none;
-        }
-        .info-label {
-            font-weight: 600;
-            color: #6b7280;
-            flex-shrink: 0;
-            width: 60px;
-        }
-        .info-value {
-            color: #111827;
-            text-align: right;
-            font-weight: 500;
-            flex: 1;
-        }
-        .registrant-info {
+            padding: 10px 0;
+            border-bottom: 2px dashed #16a34a;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 2px solid #16a34a;
         }
-        .registrant-name {
+        .receipt-header h1 {
             font-size: 14px;
             font-weight: bold;
-            color: #111827;
-            margin-bottom: 10px;
-            text-align: center;
+            margin: 0 0 3px 0;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            color: #16a34a;
         }
-        .registrant-details {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-        }
-        .detail-item {
-            text-align: center;
-            padding: 6px;
-            background: white;
-            border-radius: 4px;
-        }
-        .detail-label {
+        .receipt-header p {
             font-size: 9px;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 3px;
-            font-weight: 600;
+            margin: 2px 0;
+            color: #2563eb;
         }
-        .detail-value {
-            font-size: 11px;
+        .receipt-title {
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 8px 0;
+            text-transform: uppercase;
+            padding: 5px 0;
+            border-top: 2px solid #16a34a;
+            border-bottom: 2px solid #16a34a;
+            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
+            color: white;
+        }
+        .receipt-section {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+        .section-label {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            border-bottom: 2px solid #16a34a;
+            padding-bottom: 2px;
+            color: #16a34a;
+        }
+        .receipt-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            font-size: 10px;
+            border-bottom: 1px dotted #ddd;
+        }
+        .receipt-line:last-child {
+            border-bottom: none;
+        }
+        .line-label {
             font-weight: 600;
-            color: #111827;
+            flex-shrink: 0;
+            width: 35%;
+            text-align: left;
+            color: #2563eb;
+        }
+        .line-value {
+            flex: 1;
+            text-align: right;
             word-break: break-word;
+            color: #111827;
         }
         .ticket-number {
-            background: #16a34a;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-        .ticket-number-label {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-            margin-bottom: 4px;
-        }
-        .ticket-number-value {
-            font-size: 16px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-        .barcode {
-            font-family: 'Courier New', monospace;
-            font-size: 18px;
-            letter-spacing: 1px;
             text-align: center;
             padding: 8px;
-            background: white;
+            background: #16a34a;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 10px 0;
             border: 2px solid #16a34a;
             border-radius: 6px;
-            margin: 12px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border: 1px solid #000;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        .status-confirmed {
+            background: #16a34a;
+            color: #fff;
+            border-color: #16a34a;
+        }
+        .status-pending {
+            background: #fbbf24;
+            color: #000;
+            border-color: #fbbf24;
+        }
+        .status-cancelled {
+            background: #ef4444;
+            color: #fff;
+            border-color: #ef4444;
+        }
+        .receipt-divider {
+            text-align: center;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-top: 2px dashed #16a34a;
+            border-bottom: 2px dashed #16a34a;
             color: #16a34a;
             font-weight: bold;
         }
-        .ticket-footer {
-            background: #f9fafb;
-            padding: 10px;
+        .barcode {
             text-align: center;
-            border-top: 2px dashed #e5e7eb;
-            font-size: 9px;
-            color: #6b7280;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 8px;
+            margin: 8px 0;
+            border: 2px solid #16a34a;
+            border-radius: 6px;
+            background: white;
+            color: #16a34a;
         }
-        .ticket-footer p {
+        .qr-code-section {
+            text-align: center;
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border: 2px solid #16a34a;
+            border-radius: 6px;
+        }
+        .qr-code-label {
+            font-size: 8px;
+            font-weight: bold;
+            color: #16a34a;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .qr-code {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #16a34a;
+            border-radius: 4px;
+            padding: 3px;
+            background: white;
+        }
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .receipt-footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px dashed #16a34a;
+            font-size: 8px;
+            color: #6b7280;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+        }
+        .receipt-footer p {
             margin: 3px 0;
             line-height: 1.4;
         }
@@ -217,100 +224,108 @@
             transform: translateY(-2px);
             box-shadow: 0 15px 20px -3px rgba(0, 0, 0, 0.2);
         }
-        /* Receipt printer specific styles */
-        @media print {
-            .ticket-container {
-                max-width: 80mm;
-                width: 80mm;
-                margin: 0 auto;
-            }
-            body {
-                padding: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="ticket-container">
+    <div class="receipt-container">
         <!-- Header -->
-        <div class="ticket-header">
-            @if(isset($logoExists) && $logoExists)
-            <div class="logo-container">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents($logoPath)) }}" alt="ICCR Tanzania">
-            </div>
-            @endif
+        <div class="receipt-header">
             <h1>ICCR Tanzania</h1>
+            <p>Inter-Colleges Catholic Charismatic Renewal</p>
             <p>Event Admission Ticket</p>
         </div>
         
-        <!-- Body -->
-        <div class="ticket-body">
-            <div class="event-title">{{ $event->title }}</div>
-            
-            <!-- Event Info -->
-            <div class="ticket-info">
-                <div class="info-row">
-                    <span class="info-label">Date:</span>
-                    <span class="info-value">{{ $event->start_date->format('M j, Y') }}@if($event->end_date && $event->end_date->format('Y-m-d') !== $event->start_date->format('Y-m-d')) - {{ $event->end_date->format('M j, Y') }}@endif</span>
-                </div>
-                @if($event->start_date->format('H:i') !== '00:00')
-                <div class="info-row">
-                    <span class="info-label">Time:</span>
-                    <span class="info-value">{{ $event->start_date->format('g:i A') }}@if($event->end_date) - {{ $event->end_date->format('g:i A') }}@endif</span>
-                </div>
-                @endif
-                @if($event->location)
-                <div class="info-row">
-                    <span class="info-label">Location:</span>
-                    <span class="info-value">{{ $event->location }}</span>
-                </div>
-                @endif
+        <!-- Ticket Number -->
+        <div class="ticket-number">
+            TICKET: {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
+        </div>
+        
+        <!-- Event Information -->
+        <div class="receipt-section">
+            <div class="section-label">EVENT DETAILS</div>
+            <div class="receipt-line">
+                <span class="line-label">Event:</span>
+                <span class="line-value">{{ Str::limit($event->title, 25) }}</span>
             </div>
-            
-            <!-- Registrant Info -->
-            <div class="registrant-info">
-                <div class="registrant-name">{{ $registration->full_name }}</div>
-                <div class="registrant-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Email</div>
-                        <div class="detail-value">{{ $registration->email }}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Phone</div>
-                        <div class="detail-value">{{ $registration->phone }}</div>
-                    </div>
-                    @if($registration->institution)
-                    <div class="detail-item">
-                        <div class="detail-label">Institution</div>
-                        <div class="detail-value">{{ $registration->institution }}</div>
-                    </div>
-                    @endif
-                    @if($registration->course)
-                    <div class="detail-item">
-                        <div class="detail-label">Course</div>
-                        <div class="detail-value">{{ $registration->course }}</div>
-                    </div>
-                    @endif
-                </div>
+            <div class="receipt-line">
+                <span class="line-label">Date:</span>
+                <span class="line-value">{{ $event->start_date->format('M j, Y') }}@if($event->end_date && $event->end_date->format('Y-m-d') !== $event->start_date->format('Y-m-d')) - {{ $event->end_date->format('M j, Y') }}@endif</span>
             </div>
-            
-            <!-- Ticket Number -->
-            <div class="ticket-number">
-                <div class="ticket-number-label">Ticket Number</div>
-                <div class="ticket-number-value">{{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}</div>
+            @if($event->start_date->format('H:i') !== '00:00')
+            <div class="receipt-line">
+                <span class="line-label">Time:</span>
+                <span class="line-value">{{ $event->start_date->format('g:i A') }}@if($event->end_date) - {{ $event->end_date->format('g:i A') }}@endif</span>
             </div>
-            
-            <!-- Barcode -->
-            <div class="barcode">
-                {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
+            @endif
+            @if($event->location)
+            <div class="receipt-line">
+                <span class="line-label">Location:</span>
+                <span class="line-value">{{ Str::limit($event->location, 20) }}</span>
+            </div>
+            @endif
+        </div>
+        
+        <div class="receipt-divider">--------------------------------</div>
+        
+        <!-- Registrant Information -->
+        <div class="receipt-section">
+            <div class="section-label">PARTICIPANT INFO</div>
+            <div class="receipt-line">
+                <span class="line-label">Name:</span>
+                <span class="line-value">{{ Str::limit($registration->full_name, 22) }}</span>
+            </div>
+            <div class="receipt-line">
+                <span class="line-label">Email:</span>
+                <span class="line-value">{{ Str::limit($registration->email, 20) }}</span>
+            </div>
+            <div class="receipt-line">
+                <span class="line-label">Phone:</span>
+                <span class="line-value">{{ $registration->phone }}</span>
+            </div>
+            @if($registration->institution)
+            <div class="receipt-line">
+                <span class="line-label">Institution:</span>
+                <span class="line-value">{{ Str::limit($registration->institution, 18) }}</span>
+            </div>
+            @endif
+            @if($registration->course)
+            <div class="receipt-line">
+                <span class="line-label">Course:</span>
+                <span class="line-value">{{ Str::limit($registration->course, 18) }}</span>
+            </div>
+            @endif
+            <div class="receipt-line">
+                <span class="line-label">Status:</span>
+                <span class="line-value">
+                    <span class="status-badge status-{{ $registration->status }}">{{ ucfirst($registration->status) }}</span>
+                </span>
             </div>
         </div>
         
+        <!-- Barcode -->
+        <div class="barcode">
+            {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
+        </div>
+        
+        <!-- QR Code -->
+        @if(isset($qrCodeBase64))
+        <div class="qr-code-section">
+            <div class="qr-code-label">Scan QR Code for Verification</div>
+            <div class="qr-code">
+                <img src="{{ $qrCodeBase64 }}" alt="QR Code">
+            </div>
+        </div>
+        @endif
+        
         <!-- Footer -->
-        <div class="ticket-footer">
-            <p><strong>Important:</strong> Please bring this ticket to the event</p>
+        <div class="receipt-footer">
+            <p>--------------------------------</p>
+            <p><strong>KEEP THIS TICKET</strong></p>
+            <p>Bring to event for admission</p>
             <p>For inquiries: info@iccrtz.org</p>
-            <p style="margin-top: 5px; font-size: 8px; opacity: 0.7;">Generated: {{ now()->format('M j, Y g:i A') }}</p>
+            <p>Generated: {{ now()->format('M j, Y g:i A') }}</p>
+            <p>Copyright {{ date('Y') }} ICCR Tanzania</p>
+            <p>--------------------------------</p>
         </div>
     </div>
     
