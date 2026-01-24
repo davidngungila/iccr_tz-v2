@@ -72,11 +72,26 @@ class NotificationService
             }
 
             if (empty($smsUrl) || empty($smsUsername) || empty($smsPassword)) {
+                $errorMsg = 'SMS configuration incomplete: Missing required credentials';
                 Log::warning('SMS configuration incomplete', [
                     'has_url' => !empty($smsUrl),
                     'has_username' => !empty($smsUsername),
                     'has_password' => !empty($smsPassword),
                 ]);
+                
+                // Log to ActivityLog
+                try {
+                    \App\Models\ActivityLog::create([
+                        'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                        'action' => 'sms_error',
+                        'model_type' => 'SMS',
+                        'description' => $errorMsg . ' - URL: ' . ($smsUrl ?: 'missing') . ', Username: ' . ($smsUsername ?: 'missing'),
+                        'ip_address' => request()->ip(),
+                    ]);
+                } catch (\Exception $e) {
+                    // Fail silently if ActivityLog fails
+                }
+                
                 return false;
             }
 
@@ -91,10 +106,25 @@ class NotificationService
                 
                 // Validate again after formatting
                 if (!preg_match('/^255[0-9]{9}$/', $phoneNumber)) {
+                    $errorMsg = "SMS sending failed: Invalid phone number format. Expected: 255XXXXXXXXX, Got: {$phoneNumber}";
                     Log::error('SMS sending failed: Invalid phone number format', [
                         'phone' => $phoneNumber,
                         'expected_format' => '255XXXXXXXXX'
                     ]);
+                    
+                    // Log to ActivityLog
+                    try {
+                        \App\Models\ActivityLog::create([
+                            'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                            'action' => 'sms_error',
+                            'model_type' => 'SMS',
+                            'description' => $errorMsg,
+                            'ip_address' => request()->ip(),
+                        ]);
+                    } catch (\Exception $e) {
+                        // Fail silently if ActivityLog fails
+                    }
+                    
                     return false;
                 }
             }
@@ -106,44 +136,87 @@ class NotificationService
                 'from' => $smsFrom
             ]);
 
-            // Check if URL contains '/api/sms/v1' or '/api/' - use POST with JSON
-            $usePostMethod = strpos($smsUrl, '/api/sms/v1') !== false || strpos($smsUrl, '/api/') !== false;
+            // Check if URL contains '/api/sms/v2' or '/api/sms/v1' - use Bearer token auth
+            // Otherwise check for '/link/sms/v1' or '/api/' - use Basic Auth
+            $useBearerToken = strpos($smsUrl, '/api/sms/v2') !== false || strpos($smsUrl, '/api/sms/v1') !== false;
+            $usePostMethod = $useBearerToken || 
+                           strpos($smsUrl, '/link/sms/v1') !== false || 
+                           strpos($smsUrl, '/api/') !== false;
             
             $curl = curl_init();
             
             if ($usePostMethod) {
-                // Use POST method with JSON body and Basic Auth
-                $auth = base64_encode($smsUsername . ':' . $smsPassword);
-                
-                $body = json_encode([
-                    'from' => $smsFrom,
-                    'to' => $phoneNumber,
-                    'text' => $message,
-                    'reference' => 'iccr_tz_' . time()
-                ]);
-                
-                Log::debug('SMS API Request (POST)', [
-                    'url' => $smsUrl,
-                    'method' => 'POST',
-                    'from' => $smsFrom,
-                    'to' => $phoneNumber,
-                ]);
-                
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => $smsUrl,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => $body,
-                    CURLOPT_HTTPHEADER => [
-                        'Authorization: Basic ' . $auth,
-                        'Content-Type: application/json',
-                        'Accept: application/json'
-                    ],
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_TIMEOUT => 30,
-                    CURLOPT_USERAGENT => 'ICCR-TZ-SMS-Client/1.0'
-                ));
+                if ($useBearerToken) {
+                    // Use Bearer token authentication (API v2 format)
+                    // API Key is used as Bearer token
+                    $bearerToken = $smsPassword ?: $smsUsername; // Use password as token, or username if password not set
+                    
+                    $body = json_encode([
+                        'from' => $smsFrom,
+                        'to' => $phoneNumber,
+                        'text' => $message,
+                        'flash' => 0,
+                        'reference' => 'iccr_tz_' . time()
+                    ]);
+                    
+                    Log::debug('SMS API Request (POST with Bearer Token)', [
+                        'url' => $smsUrl,
+                        'method' => 'POST',
+                        'from' => $smsFrom,
+                        'to' => $phoneNumber,
+                    ]);
+                    
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $smsUrl,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POST => true,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_HTTPHEADER => [
+                            'Authorization: Bearer ' . $bearerToken,
+                            'Content-Type: application/json',
+                            'Accept: application/json'
+                        ],
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_SSL_VERIFYHOST => 0,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_USERAGENT => 'ICCR-TZ-SMS-Client/1.0'
+                    ));
+                } else {
+                    // Use POST method with JSON body and Basic Auth (legacy v1)
+                    $auth = base64_encode($smsUsername . ':' . $smsPassword);
+                    
+                    $body = json_encode([
+                        'from' => $smsFrom,
+                        'to' => $phoneNumber,
+                        'text' => $message,
+                        'reference' => 'iccr_tz_' . time()
+                    ]);
+                    
+                    Log::debug('SMS API Request (POST with Basic Auth)', [
+                        'url' => $smsUrl,
+                        'method' => 'POST',
+                        'from' => $smsFrom,
+                        'to' => $phoneNumber,
+                    ]);
+                    
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $smsUrl,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POST => true,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_HTTPHEADER => [
+                            'Authorization: Basic ' . $auth,
+                            'Content-Type: application/json',
+                            'Accept: application/json'
+                        ],
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_SSL_VERIFYHOST => 0,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_USERAGENT => 'ICCR-TZ-SMS-Client/1.0'
+                    ));
+                }
             } else {
                 // Use GET method with URL parameters (legacy support)
                 $text = urlencode($message);
@@ -188,12 +261,26 @@ class NotificationService
             ]);
 
             if ($curlErrno) {
-                $errorMsg = "cURL Error ({$curlErrno}): {$curlError}";
+                $errorMsg = "SMS cURL Error ({$curlErrno}): {$curlError}";
                 Log::error('SMS cURL Error', [
                     'error_code' => $curlErrno,
                     'error_message' => $curlError,
                     'phone' => $phoneNumber,
                 ]);
+                
+                // Log to ActivityLog
+                try {
+                    \App\Models\ActivityLog::create([
+                        'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                        'action' => 'sms_error',
+                        'model_type' => 'SMS',
+                        'description' => $errorMsg . ' - Phone: ' . $phoneNumber,
+                        'ip_address' => request()->ip(),
+                    ]);
+                } catch (\Exception $e) {
+                    // Fail silently if ActivityLog fails
+                }
+                
                 curl_close($curl);
                 return false;
             } else {
@@ -216,27 +303,73 @@ class NotificationService
                         ]);
                         return true;
                     } else {
+                        $errorMsg = 'SMS API returned 200 but content indicates failure. Response: ' . substr($response ?? '', 0, 200);
                         Log::warning('SMS API returned 200 but content indicates failure', [
                             'phone' => $phoneNumber,
                             'response' => substr($response ?? '', 0, 200),
                         ]);
+                        
+                        // Log to ActivityLog
+                        try {
+                            \App\Models\ActivityLog::create([
+                                'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                                'action' => 'sms_error',
+                                'model_type' => 'SMS',
+                                'description' => $errorMsg . ' - Phone: ' . $phoneNumber,
+                                'ip_address' => request()->ip(),
+                            ]);
+                        } catch (\Exception $e) {
+                            // Fail silently if ActivityLog fails
+                        }
+                        
                         return false;
                     }
                 } else {
+                    $errorMsg = "SMS failed with HTTP code {$httpCode}. Response: " . substr($response ?? '', 0, 200);
                     Log::error('SMS failed with HTTP code', [
                         'http_code' => $httpCode,
                         'response' => substr($response ?? '', 0, 200),
                         'phone' => $phoneNumber,
                     ]);
+                    
+                    // Log to ActivityLog
+                    try {
+                        \App\Models\ActivityLog::create([
+                            'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                            'action' => 'sms_error',
+                            'model_type' => 'SMS',
+                            'description' => $errorMsg . ' - Phone: ' . $phoneNumber,
+                            'ip_address' => request()->ip(),
+                        ]);
+                    } catch (\Exception $e) {
+                        // Fail silently if ActivityLog fails
+                    }
+                    
                     return false;
                 }
             }
         } catch (\Exception $e) {
+            $errorMsg = "SMS sending exception: " . get_class($e) . " - " . $e->getMessage();
             Log::error('SMS sending exception', [
                 'exception' => get_class($e),
                 'message' => $e->getMessage(),
                 'phone' => $phoneNumber ?? 'unknown',
+                'trace' => $e->getTraceAsString(),
             ]);
+            
+            // Log to ActivityLog
+            try {
+                \App\Models\ActivityLog::create([
+                    'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                    'action' => 'sms_error',
+                    'model_type' => 'SMS',
+                    'description' => $errorMsg . ' - Phone: ' . ($phoneNumber ?? 'unknown'),
+                    'ip_address' => request()->ip(),
+                ]);
+            } catch (\Exception $logException) {
+                // Fail silently if ActivityLog fails
+            }
+            
             return false;
         }
     }

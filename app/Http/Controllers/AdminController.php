@@ -1516,7 +1516,7 @@ class AdminController extends Controller
             'is_active' => 'boolean',
             
             // SMS fields
-            'sms_username' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_username' => 'nullable|string|max:255',
             'sms_password' => 'required_if:type,sms|nullable|string|max:255',
             'sms_from' => 'required_if:type,sms|nullable|string|max:255',
             'sms_url' => 'required_if:type,sms|nullable|url|max:500',
@@ -1562,7 +1562,7 @@ class AdminController extends Controller
             'is_active' => 'boolean',
             
             // SMS fields
-            'sms_username' => 'required_if:type,sms|nullable|string|max:255',
+            'sms_username' => 'nullable|string|max:255',
             'sms_password' => 'nullable|string|max:255',
             'sms_from' => 'required_if:type,sms|nullable|string|max:255',
             'sms_url' => 'required_if:type,sms|nullable|url|max:500',

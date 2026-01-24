@@ -56,16 +56,17 @@
                 <h2 class="text-xl font-bold text-gray-900 mb-4">SMS Configuration</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="sms_username" class="block text-sm font-semibold text-gray-700 mb-2">API Username *</label>
-                        <input type="text" id="sms_username" name="sms_username" value="{{ old('sms_username', $provider->sms_username) }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                        <label for="sms_username" class="block text-sm font-semibold text-gray-700 mb-2">API Username (Optional)</label>
+                        <input type="text" id="sms_username" name="sms_username" value="{{ old('sms_username', $provider->sms_username) }}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                        <p class="text-xs text-gray-500 mt-1">Optional: Used for Basic Auth (legacy API)</p>
                         @error('sms_username')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label for="sms_password" class="block text-sm font-semibold text-gray-700 mb-2">API Password *</label>
+                        <label for="sms_password" class="block text-sm font-semibold text-gray-700 mb-2">API Key / Bearer Token *</label>
                         <input type="password" id="sms_password" name="sms_password" value="{{ old('sms_password', $provider->sms_password) }}" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
-                        <p class="text-xs text-gray-500 mt-1">Leave blank to keep current password</p>
+                        <p class="text-xs text-gray-500 mt-1">Required: Bearer token for API v2. Leave blank to keep current token</p>
                         @error('sms_password')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -81,7 +82,7 @@
                     </div>
                     <div>
                         <label for="sms_url" class="block text-sm font-semibold text-gray-700 mb-2">API URL *</label>
-                        <input type="url" id="sms_url" name="sms_url" value="{{ old('sms_url', $provider->sms_url ?: 'https://messaging-service.co.tz/link/sms/v1/text/single') }}" required readonly class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
+                        <input type="url" id="sms_url" name="sms_url" value="{{ old('sms_url', $provider->sms_url ?: 'https://messaging-service.co.tz/api/sms/v2/text/single') }}" required readonly class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
                         <p class="text-xs text-gray-500 mt-1">This URL is fixed and cannot be changed</p>
                         @error('sms_url')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
