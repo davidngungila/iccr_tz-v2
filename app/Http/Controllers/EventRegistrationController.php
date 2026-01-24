@@ -71,15 +71,65 @@ class EventRegistrationController extends Controller
         // Send SMS notification using NotificationService
         try {
             $notificationService = new NotificationService();
-            $smsMessage = "Hello {$registration->full_name}, you have successfully registered for {$event->title} on {$event->start_date->format('M d, Y')}. We'll send you more details soon. - ICCR Tanzania";
             
+            // Format event date
+            $eventDate = $event->start_date ? $event->start_date->format('M d, Y') : 'TBA';
+            $eventTime = $event->start_time ? $event->start_time->format('h:i A') : '';
+            
+            // Create personalized SMS message
+            $smsMessage = "Habari {$registration->full_name}! Umesajiliwa kikamilifu kwa {$event->title} tarehe {$eventDate}" . 
+                         ($eventTime ? " saa {$eventTime}" : "") . 
+                         ". Tutakutumia maelezo zaidi hivi karibuni. - ICCR Tanzania";
+            
+            // Send SMS
             $smsSent = $notificationService->sendSMS($registration->phone, $smsMessage);
+            
             if ($smsSent) {
                 $registration->update(['sms_sent' => true]);
+                
+                // Log successful SMS
+                \App\Models\ActivityLog::create([
+                    'user_id' => null, // System action
+                    'action' => 'sms_sent',
+                    'model_type' => 'EventRegistration',
+                    'model_id' => $registration->id,
+                    'description' => "SMS confirmation sent to {$registration->full_name} ({$registration->phone}) for event: {$event->title}",
+                    'ip_address' => $request->ip(),
+                ]);
+            } else {
+                // Log failed SMS
+                \App\Models\ActivityLog::create([
+                    'user_id' => null,
+                    'action' => 'sms_error',
+                    'model_type' => 'EventRegistration',
+                    'model_id' => $registration->id,
+                    'description' => "Failed to send SMS confirmation to {$registration->full_name} ({$registration->phone}) for event: {$event->title}",
+                    'ip_address' => $request->ip(),
+                ]);
             }
         } catch (\Exception $e) {
-            \Log::error('Failed to send registration SMS: ' . $e->getMessage());
-            // Continue even if SMS fails
+            \Illuminate\Support\Facades\Log::error('Failed to send registration SMS', [
+                'registration_id' => $registration->id,
+                'phone' => $registration->phone,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
+            // Log to ActivityLog
+            try {
+                \App\Models\ActivityLog::create([
+                    'user_id' => null,
+                    'action' => 'sms_error',
+                    'model_type' => 'EventRegistration',
+                    'model_id' => $registration->id,
+                    'description' => "Exception sending SMS to {$registration->full_name} ({$registration->phone}): " . $e->getMessage(),
+                    'ip_address' => $request->ip(),
+                ]);
+            } catch (\Exception $logException) {
+                // Fail silently if ActivityLog fails
+            }
+            
+            // Continue even if SMS fails - registration is still successful
         }
 
         // Redirect to success page or back with success message
