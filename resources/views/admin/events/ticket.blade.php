@@ -314,7 +314,7 @@
         </div>
     </div>
     
-    <button onclick="window.print()" class="print-button no-print">🖨️ Print Ticket</button>
+    <button onclick="window.print()" class="print-button no-print">Print Ticket</button>
     
     <script>
         // Auto-print option (can be enabled)

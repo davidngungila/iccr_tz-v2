@@ -282,7 +282,7 @@
             @endif
         </div>
         
-        <div class="receipt-divider">━━━━━━━━━━━━━━━━━━</div>
+        <div class="receipt-divider">--------------------------------</div>
         
         <!-- Registrant Information -->
         <div class="receipt-section">
@@ -413,17 +413,17 @@
         
         <!-- Footer -->
         <div class="receipt-footer">
-            <p>━━━━━━━━━━━━━━━━━━</p>
+            <p>--------------------------------</p>
             <p><strong>KEEP THIS RECEIPT</strong></p>
             <p>Bring to event for verification</p>
             <p>For inquiries: info@iccrtz.org</p>
             <p>Generated: {{ now()->format('M j, Y g:i A') }}</p>
-            <p>© {{ date('Y') }} ICCR Tanzania</p>
-            <p>━━━━━━━━━━━━━━━━━━</p>
+            <p>Copyright {{ date('Y') }} ICCR Tanzania</p>
+            <p>--------------------------------</p>
         </div>
     </div>
     
-    <button onclick="window.print()" class="print-button no-print">🖨️ Print Receipt</button>
+    <button onclick="window.print()" class="print-button no-print">Print Receipt</button>
     
     <script>
         // Auto-print option (can be enabled)
