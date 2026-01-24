@@ -259,7 +259,7 @@
         
         <!-- Event Information -->
         <div class="receipt-section">
-            <div class="section-label">Event Details</div>
+            <div class="section-label">EVENT DETAILS</div>
             <div class="receipt-line">
                 <span class="line-label">Event:</span>
                 <span class="line-value">{{ $event->title }}</span>
@@ -286,7 +286,7 @@
         
         <!-- Registrant Information -->
         <div class="receipt-section">
-            <div class="section-label">Registrant Info</div>
+            <div class="section-label">REGISTRANT INFO</div>
             <div class="receipt-line">
                 <span class="line-label">Name:</span>
                 <span class="line-value">{{ $registration->full_name }}</span>
@@ -318,7 +318,7 @@
         <!-- Academic Information -->
         @if($registration->institution || $registration->campus || $registration->course || $registration->year_of_study)
         <div class="receipt-section">
-            <div class="section-label">Academic Info</div>
+            <div class="section-label">ACADEMIC INFO</div>
             @if($registration->institution)
             <div class="receipt-line">
                 <span class="line-label">Institution:</span>
@@ -349,7 +349,7 @@
         <!-- Special Requirements -->
         @if($registration->accommodation_needed === 'yes' || $registration->transportation_needed === 'yes' || $registration->dietary_restrictions || $registration->special_requirements)
         <div class="receipt-section">
-            <div class="section-label">Special Requirements</div>
+            <div class="section-label">SPECIAL REQUIREMENTS</div>
             @if($registration->accommodation_needed === 'yes')
             <div class="receipt-line">
                 <span class="line-label">Accommodation:</span>
@@ -380,7 +380,7 @@
         <!-- Emergency Contact -->
         @if($registration->emergency_contact_name || $registration->emergency_contact_phone)
         <div class="receipt-section">
-            <div class="section-label">Emergency Contact</div>
+            <div class="section-label">EMERGENCY CONTACT</div>
             @if($registration->emergency_contact_name)
             <div class="receipt-line">
                 <span class="line-label">Name:</span>
@@ -399,7 +399,7 @@
         <!-- Admin Notes -->
         @if($registration->admin_notes)
         <div class="receipt-section">
-            <div class="section-label">Admin Notes</div>
+            <div class="section-label">ADMIN NOTES</div>
             <div class="receipt-block">
                 <div class="block-value">{{ $registration->admin_notes }}</div>
             </div>
