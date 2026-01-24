@@ -74,14 +74,12 @@ class EventRegistrationController extends Controller
         try {
             $notificationService = new NotificationService();
             
-            // Format event date
-            $eventDate = $event->start_date ? $event->start_date->format('M d, Y') : 'TBA';
-            $eventTime = $event->start_time ? $event->start_time->format('h:i A') : '';
+            // Format event date and location
+            $eventDate = $event->start_date ? $event->start_date->format('d M Y') : 'TBA';
+            $eventLocation = $event->location ? " mahali: {$event->location}" : "";
             
-            // Create personalized SMS message
-            $smsMessage = "Habari {$registration->full_name}! Umesajiliwa kikamilifu kwa {$event->title} tarehe {$eventDate}" . 
-                         ($eventTime ? " saa {$eventTime}" : "") . 
-                         ". Tutakutumia maelezo zaidi hivi karibuni. - ICCR Tanzania";
+            // Create personalized SMS message in Swahili
+            $smsMessage = "Habari {$registration->full_name}! Umesajiliwa kikamilifu kwa {$event->title} tarehe {$eventDate}{$eventLocation}. Tutakutumia maelezo zaidi hivi karibuni. - ICCR Tanzania";
             
             // Send SMS
             $smsSent = $notificationService->sendSMS($registration->phone, $smsMessage);
