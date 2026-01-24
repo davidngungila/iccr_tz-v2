@@ -1593,12 +1593,17 @@ class AdminController extends Controller
         }
 
         // Handle password/token updates
-        // For SMS: Always update the Bearer token from request (even if empty, update it)
+        // For SMS: Always update the Bearer token from request
         // For Email: Only update if provided and not empty (allow blank to keep current)
         if ($provider->type === 'sms') {
-            // Always update SMS password/token from request
-            if ($request->has('sms_password')) {
-                $validated['sms_password'] = trim($request->input('sms_password', ''));
+            // Always update SMS password/token from request - get directly from request
+            $tokenValue = $request->input('sms_password');
+            if ($tokenValue !== null) {
+                // Token was provided in form, update it (even if empty string)
+                $validated['sms_password'] = trim($tokenValue);
+            } else {
+                // Token not in request, keep current value
+                unset($validated['sms_password']);
             }
         }
         
