@@ -83,10 +83,11 @@
             padding-right: 4px;
         }
         .right-section {
-            width: 35px;
+            width: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             border-left: 2px solid #e5e7eb;
             padding-left: 4px;
         }
@@ -143,8 +144,8 @@
             margin-bottom: 3px;
         }
         .qr-code {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: 2px solid #16a34a;
             border-radius: 4px;
             padding: 2px;
@@ -152,6 +153,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 4px 0;
         }
         .qr-code img {
             width: 100%;
@@ -276,7 +278,7 @@
                 
                 <!-- Right Section (ID & QR Code) -->
                 <div class="right-section">
-                    <div class="registration-id">
+                    <div class="registration-id" style="margin-bottom: 5px;">
                         {{ strtoupper(substr($event->slug, 0, 3)) }}-{{ str_pad($registration->id, 6, '0', STR_PAD_LEFT) }}
                     </div>
                     
@@ -284,7 +286,7 @@
                         <img src="{{ $qrCodeBase64 }}" alt="QR Code">
                     </div>
                     
-                    <div style="margin-top: 3px; text-align: center;">
+                    <div style="margin-top: 4px; text-align: center;">
                         <span class="status-badge status-{{ $registration->status }}">{{ ucfirst($registration->status) }}</span>
                     </div>
                 </div>
