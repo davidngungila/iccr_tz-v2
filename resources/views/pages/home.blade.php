@@ -257,79 +257,66 @@
             <!-- Slider Wrapper -->
             <div class="events-slider-container overflow-hidden relative">
                 <div id="events-slider-track" class="flex transition-transform duration-500 ease-in-out">
-                    <!-- Event 1: OPEN GATE CAMP -->
+                    @forelse($featuredEvents as $index => $event)
+                    @php
+                        $colors = [
+                            ['from-green-500', 'via-green-600', 'to-blue-600', 'text-green-600', 'bg-green-600', 'hover:bg-green-700', 'border-green-300'],
+                            ['from-blue-500', 'via-blue-600', 'to-indigo-600', 'text-blue-600', 'bg-blue-600', 'hover:bg-blue-700', 'border-blue-300'],
+                            ['from-yellow-500', 'via-orange-600', 'to-yellow-600', 'text-yellow-600', 'bg-yellow-600', 'hover:bg-yellow-700', 'border-yellow-300'],
+                            ['from-teal-500', 'via-cyan-600', 'to-teal-600', 'text-teal-600', 'bg-teal-600', 'hover:bg-teal-700', 'border-teal-300'],
+                            ['from-purple-500', 'via-pink-600', 'to-purple-600', 'text-purple-600', 'bg-purple-600', 'hover:bg-purple-700', 'border-purple-300'],
+                            ['from-orange-500', 'via-red-600', 'to-orange-600', 'text-orange-600', 'bg-orange-600', 'hover:bg-orange-700', 'border-orange-300'],
+                        ];
+                        $colorSet = $colors[$index % count($colors)];
+                    @endphp
                     <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-green-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-green-500 via-green-600 to-blue-600 overflow-hidden">
-                                <img src="{{ asset('images/07.jpg') }}" alt="Open Gate Camp" class="w-full h-full object-cover object-center">
+                        @php
+                            $gradientColors = [
+                                ['from' => '#10b981', 'to' => '#3b82f6'],
+                                ['from' => '#3b82f6', 'to' => '#6366f1'],
+                                ['from' => '#f59e0b', 'to' => '#f97316'],
+                                ['from' => '#14b8a6', 'to' => '#06b6d4'],
+                                ['from' => '#a855f7', 'to' => '#ec4899'],
+                                ['from' => '#f97316', 'to' => '#ef4444'],
+                            ];
+                            $gradient = $gradientColors[$index % count($gradientColors)];
+                            $textColor = $index % 2 == 0 ? '#10b981' : '#3b82f6';
+                            $bgColor = $index % 2 == 0 ? '#10b981' : '#3b82f6';
+                        @endphp
+                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full">
+                            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(to bottom right, {{ $gradient['from'] }}, {{ $gradient['to'] }});">
+                                @if($event->banner_image)
+                                    <img src="{{ $event->banner_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover object-center">
+                                @endif
                                 <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">15</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">March 2026</div>
-                        </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-green-600/70 to-transparent"></div>
-                    </div>
+                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">{{ ucfirst($event->status) }}</div>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">{{ $event->start_date->format('d') }}</div>
+                                    <div class="text-lg font-semibold drop-shadow-md">{{ $event->start_date->format('F Y') }}</div>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);"></div>
+                            </div>
                             <div class="p-5">
                                 <div class="flex items-center justify-between mb-2">
+                                    @if($event->location)
                                     <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4" style="color: {{ $textColor }};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Moshi & Arusha</span>
+                                        <span class="text-xs text-gray-500 font-medium">{{ $event->location }}</span>
                                     </div>
-                                    <div class="flex items-center gap-1 text-green-600">
+                                    @endif
+                                    <div class="flex items-center gap-1" style="color: {{ $textColor }};">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                         </svg>
-                                        <span class="text-xs font-semibold">Mar 15</span>
+                                        <span class="text-xs font-semibold">{{ $event->start_date->format('M d') }}</span>
                                     </div>
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-green-600 transition leading-tight">OPEN GATE CAMP</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A transformative spiritual camp bringing together students from Moshi and Arusha regions.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg text-xs font-semibold hover:bg-green-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                </div>
-                
-                    <!-- Event 2: PERFECT VISION -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 overflow-hidden">
-                                <img src="{{ asset('images/08.jpg') }}" alt="Perfect Vision" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">5</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">April 2026</div>
-                                </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-blue-600/70 to-transparent"></div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Mbeya</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-blue-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">Apr 5</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition leading-tight">PERFECT VISION</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A powerful conference focused on gaining clarity in your spiritual journey and life purpose.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition shadow-md hover:shadow-lg w-full justify-center">
+                                <h3 class="text-lg font-bold text-gray-900 mb-2 transition leading-tight">{{ $event->title }}</h3>
+                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">{{ $event->description ?: \Illuminate\Support\Str::limit(strip_tags($event->content ?? ''), 100) }}</p>
+                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 text-white rounded-lg text-xs font-semibold transition shadow-md hover:shadow-lg w-full justify-center" style="background-color: {{ $bgColor }};">
                                     <span>Learn More</span>
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -338,212 +325,11 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Event 3: USIKU WA SIFA - Dar es Salaam -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-yellow-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-yellow-500 via-orange-600 to-yellow-600 overflow-hidden">
-                                <img src="{{ asset('images/09.jpg') }}" alt="Usiku wa Sifa" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">20</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">May 2026</div>
-                                </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-yellow-600/70 to-transparent"></div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Dar es Salaam</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-yellow-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">May 20</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition leading-tight">USIKU WA SIFA</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">An unforgettable night of praise and worship in Dar es Salaam with powerful music and prophetic declarations.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-yellow-600 text-white rounded-lg text-xs font-semibold hover:bg-yellow-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
+                    @empty
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-600 text-lg">No featured events at the moment. Check back soon!</p>
                     </div>
-
-                    <!-- Event 4: NEXGEN CAMP -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-teal-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-teal-500 via-cyan-600 to-teal-600 overflow-hidden">
-                                <img src="{{ asset('images/10.jpg') }}" alt="NexGen Camp" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">10</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">June 2026</div>
-                                </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-teal-600/70 to-transparent"></div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Dar es Salaam</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-teal-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">Jun 10</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-teal-600 transition leading-tight">NEXGEN CAMP</h3>
-                                <p class="text-xs text-gray-500 mb-1 leading-tight">Retreat & Leadership School</p>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">Comprehensive leadership development program with spiritual formation and practical training.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-teal-600 text-white rounded-lg text-xs font-semibold hover:bg-teal-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Event 5: TAMASHA LA SIFA - Morogoro -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-purple-500 via-pink-600 to-purple-600 overflow-hidden">
-                                <img src="{{ asset('images/11.jpg') }}" alt="Tamasha la Sifa" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">25</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">July 2026</div>
-                                </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-purple-600/70 to-transparent"></div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Morogoro</span>
-                        </div>
-                                    <div class="flex items-center gap-1 text-purple-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">Jul 25</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition leading-tight">TAMASHA LA SIFA</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A spectacular celebration of praise and worship in Morogoro featuring anointed music and powerful ministry.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-                    <!-- Event 6: Regional Prayer Retreat -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-indigo-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-indigo-500 via-blue-600 to-indigo-600 overflow-hidden">
-                                <img src="{{ asset('images/01.jpg') }}" alt="Regional Prayer Retreat" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">8</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">August 2026</div>
-                        </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-indigo-600/70 to-transparent"></div>
-                    </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Mwanza</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-indigo-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">Aug 8</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition leading-tight">Regional Prayer Retreat</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A day-long prayer retreat focused on reflection, meditation, and spiritual growth in Mwanza region.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                </div>
-                
-                    <!-- Event 7: National Youth Conference -->
-                    <div class="events-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
-                        <div class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden hover:shadow-2xl hover:border-orange-300 transition-all duration-300 transform hover:-translate-y-2 h-full">
-                            <div class="relative h-48 bg-gradient-to-br from-orange-500 via-red-600 to-orange-600 overflow-hidden">
-                                <img src="{{ asset('images/02.jpg') }}" alt="National Youth Conference" class="w-full h-full object-cover object-center">
-                                <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-30 transition"></div>
-                                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">Upcoming</div>
-                                <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
-                                    <div class="text-5xl font-bold mb-1 drop-shadow-lg">12</div>
-                                    <div class="text-lg font-semibold drop-shadow-md">September 2026</div>
-                                </div>
-                                <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-orange-600/70 to-transparent"></div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                                        <span class="text-xs text-gray-500 font-medium">Dodoma</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-orange-600">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="text-xs font-semibold">Sep 12</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition leading-tight">National Youth Conference</h3>
-                                <p class="text-xs text-gray-600 mb-3 leading-relaxed line-clamp-2">A major national gathering uniting youth from all regions for worship, teaching, and fellowship.</p>
-                                <a href="{{ route('events') }}" class="inline-flex items-center gap-1 px-3 py-2 bg-orange-600 text-white rounded-lg text-xs font-semibold hover:bg-orange-700 transition shadow-md hover:shadow-lg w-full justify-center">
-                                    <span>Learn More</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
                     </div>
                     

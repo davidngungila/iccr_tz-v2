@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+
 class PageController extends Controller
 {
     public function home()
@@ -16,8 +18,18 @@ class PageController extends Controller
         // Take first 9 videos for slider
         $homeVideos = array_slice($allVideos, 0, 9);
         
+        // Get featured events (upcoming, featured, ordered by start_date)
+        $featuredEvents = Event::where('is_featured', true)
+            ->where('status', 'upcoming')
+            ->where('start_date', '>=', now())
+            ->orderBy('start_date', 'asc')
+            ->orderBy('order', 'asc')
+            ->limit(6)
+            ->get();
+        
         return view('pages.home', [
-            'home_videos' => $homeVideos
+            'home_videos' => $homeVideos,
+            'featuredEvents' => $featuredEvents
         ]);
     }
 

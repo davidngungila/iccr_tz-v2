@@ -1357,4 +1357,52 @@ class AdminController extends Controller
             ], 500);
         }
     }
+
+    // ==================== CLOUDINARY SETTINGS ====================
+    
+    public function cloudinarySettings()
+    {
+        $cloudName = config('cloudinary.cloud_name');
+        $apiKey = config('cloudinary.api_key');
+        $apiSecret = config('cloudinary.api_secret');
+        $uploadPreset = config('cloudinary.upload_preset');
+        
+        // Test connection
+        $connectionStatus = 'disconnected';
+        $connectionMessage = '';
+        
+        try {
+            if ($cloudName && $apiKey && $apiSecret) {
+                $adminApi = new \Cloudinary\Api\Admin\AdminApi();
+                $result = $adminApi->ping();
+                $connectionStatus = 'connected';
+                $connectionMessage = 'Successfully connected to Cloudinary!';
+            } else {
+                $connectionMessage = 'Cloudinary credentials are not configured. Please add them to your .env file.';
+            }
+        } catch (\Exception $e) {
+            $connectionMessage = 'Connection failed: ' . $e->getMessage();
+        }
+        
+        return view('admin.cloudinary.settings', compact('cloudName', 'apiKey', 'apiSecret', 'uploadPreset', 'connectionStatus', 'connectionMessage'));
+    }
+
+    public function testCloudinaryConnection(Request $request)
+    {
+        try {
+            $adminApi = new \Cloudinary\Api\Admin\AdminApi();
+            $result = $adminApi->ping();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully connected to Cloudinary!',
+                'cloud_name' => config('cloudinary.cloud_name'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Connection failed: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

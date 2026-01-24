@@ -416,7 +416,11 @@
                             $cloudinaryRoute = Route::has('admin.cloudinary.index') ? route('admin.cloudinary.index') : url('/admin/cloudinary');
                             $isCloudinaryActive = request()->routeIs('admin.cloudinary*') || request()->is('admin/cloudinary*');
                         @endphp
-                        <a href="{{ $cloudinaryRoute }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ $isCloudinaryActive ? 'text-white bg-gray-800' : '' }}">Cloudinary Assets</a>
+                        <a href="{{ $cloudinaryRoute }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ $isCloudinaryActive && !request()->is('admin/cloudinary/settings') ? 'text-white bg-gray-800' : '' }}">Cloudinary Assets</a>
+                        @php
+                            $cloudinarySettingsRoute = Route::has('admin.cloudinary.settings') ? route('admin.cloudinary.settings') : url('/admin/cloudinary/settings');
+                        @endphp
+                        <a href="{{ $cloudinarySettingsRoute }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->is('admin/cloudinary/settings') ? 'text-white bg-gray-800' : '' }}">Cloudinary Settings</a>
                     </div>
                 </div>
             </div>
