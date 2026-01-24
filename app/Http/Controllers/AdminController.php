@@ -971,6 +971,16 @@ class AdminController extends Controller
         return view('admin.team.index', compact('members'));
     }
 
+    public function createTeamMember()
+    {
+        return view('admin.team.create');
+    }
+
+    public function editTeamMember(TeamMember $teamMember)
+    {
+        return view('admin.team.edit', compact('teamMember'));
+    }
+
     public function storeTeamMember(Request $request)
     {
         $validated = $request->validate([
@@ -1365,10 +1375,11 @@ class AdminController extends Controller
     
     public function cloudinarySettings()
     {
-        $cloudName = config('cloudinary.cloud_name');
-        $apiKey = config('cloudinary.api_key');
-        $apiSecret = config('cloudinary.api_secret');
-        $uploadPreset = config('cloudinary.upload_preset');
+        // Get from database, fallback to env
+        $cloudName = SystemSetting::getValue('cloudinary_cloud_name') ?: env('CLOUDINARY_CLOUD_NAME', config('cloudinary.cloud_name'));
+        $apiKey = SystemSetting::getValue('cloudinary_key') ?: env('CLOUDINARY_KEY', config('cloudinary.api_key'));
+        $apiSecret = SystemSetting::getValue('cloudinary_secret') ?: env('CLOUDINARY_SECRET', config('cloudinary.api_secret'));
+        $uploadPreset = SystemSetting::getValue('cloudinary_upload_preset') ?: env('CLOUDINARY_UPLOAD_PRESET', config('cloudinary.upload_preset'));
         
         // Test connection
         $connectionStatus = 'disconnected';
@@ -1376,12 +1387,17 @@ class AdminController extends Controller
         
         try {
             if ($cloudName && $apiKey && $apiSecret) {
+                // Temporarily set config for testing
+                config(['cloudinary.cloud_name' => $cloudName]);
+                config(['cloudinary.api_key' => $apiKey]);
+                config(['cloudinary.api_secret' => $apiSecret]);
+                
                 $adminApi = new \Cloudinary\Api\Admin\AdminApi();
                 $result = $adminApi->ping();
                 $connectionStatus = 'connected';
                 $connectionMessage = 'Successfully connected to Cloudinary!';
             } else {
-                $connectionMessage = 'Cloudinary credentials are not configured. Please add them to your .env file.';
+                $connectionMessage = 'Cloudinary credentials are not configured. Please configure them below.';
             }
         } catch (\Exception $e) {
             $connectionMessage = 'Connection failed: ' . $e->getMessage();
@@ -1390,16 +1406,73 @@ class AdminController extends Controller
         return view('admin.cloudinary.settings', compact('cloudName', 'apiKey', 'apiSecret', 'uploadPreset', 'connectionStatus', 'connectionMessage'));
     }
 
+    public function updateCloudinarySettings(Request $request)
+    {
+        $validated = $request->validate([
+            'cloudinary_cloud_name' => 'required|string|max:255',
+            'cloudinary_key' => 'required|string|max:255',
+            'cloudinary_secret' => 'required|string|max:255',
+            'cloudinary_upload_preset' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            // Save to database
+            SystemSetting::setValue('cloudinary_cloud_name', $validated['cloudinary_cloud_name'], 'text', 'cloudinary', 'Cloudinary Cloud Name');
+            SystemSetting::setValue('cloudinary_key', $validated['cloudinary_key'], 'text', 'cloudinary', 'Cloudinary API Key');
+            SystemSetting::setValue('cloudinary_secret', $validated['cloudinary_secret'], 'text', 'cloudinary', 'Cloudinary API Secret');
+            if ($request->filled('cloudinary_upload_preset')) {
+                SystemSetting::setValue('cloudinary_upload_preset', $validated['cloudinary_upload_preset'], 'text', 'cloudinary', 'Cloudinary Upload Preset');
+            }
+
+            // Update config cache
+            config(['cloudinary.cloud_name' => $validated['cloudinary_cloud_name']]);
+            config(['cloudinary.api_key' => $validated['cloudinary_key']]);
+            config(['cloudinary.api_secret' => $validated['cloudinary_secret']]);
+            if ($request->filled('cloudinary_upload_preset')) {
+                config(['cloudinary.upload_preset' => $validated['cloudinary_upload_preset']]);
+            }
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'updated',
+                'model_type' => 'CloudinarySettings',
+                'model_id' => 0,
+                'description' => 'Updated Cloudinary configuration',
+            ]);
+
+            return redirect()->route('admin.cloudinary.settings')->with('success', 'Cloudinary settings updated successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update settings: ' . $e->getMessage())->withInput();
+        }
+    }
+
     public function testCloudinaryConnection(Request $request)
     {
         try {
+            // Get from database, fallback to env
+            $cloudName = SystemSetting::getValue('cloudinary_cloud_name') ?: env('CLOUDINARY_CLOUD_NAME', config('cloudinary.cloud_name'));
+            $apiKey = SystemSetting::getValue('cloudinary_key') ?: env('CLOUDINARY_KEY', config('cloudinary.api_key'));
+            $apiSecret = SystemSetting::getValue('cloudinary_secret') ?: env('CLOUDINARY_SECRET', config('cloudinary.api_secret'));
+            
+            if (!$cloudName || !$apiKey || !$apiSecret) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cloudinary credentials are not configured. Please configure them first.',
+                ], 400);
+            }
+
+            // Temporarily set config for testing
+            config(['cloudinary.cloud_name' => $cloudName]);
+            config(['cloudinary.api_key' => $apiKey]);
+            config(['cloudinary.api_secret' => $apiSecret]);
+            
             $adminApi = new \Cloudinary\Api\Admin\AdminApi();
             $result = $adminApi->ping();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully connected to Cloudinary!',
-                'cloud_name' => config('cloudinary.cloud_name'),
+                'cloud_name' => $cloudName,
             ]);
         } catch (\Exception $e) {
             return response()->json([

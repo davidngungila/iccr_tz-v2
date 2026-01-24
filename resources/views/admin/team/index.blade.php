@@ -9,9 +9,9 @@
         <h1 class="text-3xl font-bold text-gray-900">Team & Leadership</h1>
         <p class="text-gray-600 mt-2">Manage leadership profiles and team members</p>
     </div>
-    <button onclick="showAddTeamForm()" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-blue-700 transition font-semibold">
+    <a href="{{ route('admin.team.create') }}" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-blue-700 transition font-semibold">
         + Add Member
-    </button>
+    </a>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,9 +34,9 @@
                     <p class="text-sm text-gray-700 line-clamp-3 mb-4">{{ $member->bio }}</p>
                 @endif
                 <div class="flex items-center gap-2">
-                    <button onclick="editMember({{ $member->id }})" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-semibold">
+                    <a href="{{ route('admin.team.edit', $member->id) }}" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-semibold text-center">
                         Edit
-                    </button>
+                    </a>
                     <form action="{{ route('admin.team.delete', $member) }}" method="POST" class="inline" onsubmit="return confirm('Delete this member?')">
                         @csrf
                         @method('DELETE')
@@ -54,17 +54,6 @@
     @endforelse
 </div>
 
-@push('scripts')
-<script>
-    function showAddTeamForm() {
-        alert('Add team member form - to be implemented');
-    }
-    
-    function editMember(id) {
-        alert('Edit member form - to be implemented');
-    }
-</script>
-@endpush
 @endsection
 
 

@@ -9,6 +9,18 @@
     <p class="text-gray-600 mt-2">Configure and test your Cloudinary connection</p>
 </div>
 
+@if(session('success'))
+<div class="mb-6 bg-green-50 border-2 border-green-200 rounded-lg p-4 text-green-700">
+    {{ session('success') }}
+</div>
+@endif
+
+@if(session('error'))
+<div class="mb-6 bg-red-50 border-2 border-red-200 rounded-lg p-4 text-red-700">
+    {{ session('error') }}
+</div>
+@endif
+
 <!-- Connection Status Card -->
 <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
     <div class="flex items-center justify-between mb-6">
@@ -48,63 +60,66 @@
 <div class="bg-white rounded-xl shadow-lg p-8">
     <h2 class="text-2xl font-bold text-gray-900 mb-6">Configuration</h2>
     
-    <div class="space-y-6">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cloud Name</label>
-            <div class="flex items-center gap-2">
-                <input type="text" value="{{ $cloudName ?: 'Not configured' }}" readonly
-                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
-                @if($cloudName)
-                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">✓ Set</span>
-                @else
-                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">✗ Missing</span>
-                @endif
+    <form action="{{ route('admin.cloudinary.settings.update') }}" method="POST">
+        @csrf
+        <div class="space-y-6">
+            <div>
+                <label for="cloudinary_cloud_name" class="block text-sm font-semibold text-gray-700 mb-2">Cloud Name *</label>
+                <input type="text" id="cloudinary_cloud_name" name="cloudinary_cloud_name" value="{{ old('cloudinary_cloud_name', $cloudName) }}" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                @error('cloudinary_cloud_name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="cloudinary_key" class="block text-sm font-semibold text-gray-700 mb-2">API Key *</label>
+                <input type="text" id="cloudinary_key" name="cloudinary_key" value="{{ old('cloudinary_key', $apiKey) }}" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                @error('cloudinary_key')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="cloudinary_secret" class="block text-sm font-semibold text-gray-700 mb-2">API Secret *</label>
+                <input type="password" id="cloudinary_secret" name="cloudinary_secret" value="{{ old('cloudinary_secret', $apiSecret) }}" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                <p class="text-xs text-gray-500 mt-1">Leave blank to keep current password</p>
+                @error('cloudinary_secret')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="cloudinary_upload_preset" class="block text-sm font-semibold text-gray-700 mb-2">Upload Preset (Optional)</label>
+                <input type="text" id="cloudinary_upload_preset" name="cloudinary_upload_preset" value="{{ old('cloudinary_upload_preset', $uploadPreset) }}"
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition">
+                @error('cloudinary_upload_preset')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
         </div>
         
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
-            <div class="flex items-center gap-2">
-                <input type="text" value="{{ $apiKey ? '••••••••••••' . substr($apiKey, -4) : 'Not configured' }}" readonly
-                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
-                @if($apiKey)
-                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">✓ Set</span>
-                @else
-                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">✗ Missing</span>
-                @endif
-            </div>
+        <div class="mt-8 flex justify-end gap-4">
+            <a href="{{ route('admin.dashboard') }}" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition">
+                Cancel
+            </a>
+            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-blue-700 transition shadow-lg hover:shadow-xl">
+                Save Settings
+            </button>
         </div>
-        
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">API Secret</label>
-            <div class="flex items-center gap-2">
-                <input type="text" value="{{ $apiSecret ? '••••••••••••' . substr($apiSecret, -4) : 'Not configured' }}" readonly
-                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
-                @if($apiSecret)
-                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">✓ Set</span>
-                @else
-                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">✗ Missing</span>
-                @endif
-            </div>
-        </div>
-        
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Preset</label>
-            <div class="flex items-center gap-2">
-                <input type="text" value="{{ $uploadPreset ?: 'Not configured (optional)' }}" readonly
-                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
-            </div>
-        </div>
-    </div>
+    </form>
     
     <div class="mt-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
         <h3 class="font-semibold text-blue-900 mb-2">How to Configure</h3>
-        <p class="text-sm text-blue-800 mb-2">Add these variables to your <code class="bg-blue-100 px-2 py-1 rounded">.env</code> file:</p>
+        <p class="text-sm text-blue-800 mb-2">Configure Cloudinary settings directly in the database through this form. Settings are stored in the <code class="bg-blue-100 px-2 py-1 rounded">system_settings</code> table.</p>
+        <p class="text-sm text-blue-800 mb-2">Alternatively, you can add these variables to your <code class="bg-blue-100 px-2 py-1 rounded">.env</code> file (as fallback):</p>
         <pre class="bg-blue-100 p-3 rounded text-xs text-blue-900 overflow-x-auto"><code>CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_KEY=your_api_key
 CLOUDINARY_SECRET=your_api_secret
 CLOUDINARY_UPLOAD_PRESET=your_upload_preset</code></pre>
-        <p class="text-sm text-blue-800 mt-2">After adding these, run <code class="bg-blue-100 px-2 py-1 rounded">php artisan config:clear</code> and refresh this page.</p>
+        <p class="text-sm text-blue-800 mt-2">After updating settings here, the configuration will be used immediately. No need to run <code class="bg-blue-100 px-2 py-1 rounded">php artisan config:clear</code>.</p>
     </div>
 </div>
 
@@ -168,4 +183,3 @@ CLOUDINARY_UPLOAD_PRESET=your_upload_preset</code></pre>
 </script>
 @endpush
 @endsection
-

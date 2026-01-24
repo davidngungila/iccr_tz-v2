@@ -101,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Cloudinary Assets
         Route::get('/cloudinary', [AdminController::class, 'cloudinaryAssets'])->name('cloudinary.index');
         Route::get('/cloudinary/settings', [AdminController::class, 'cloudinarySettings'])->name('cloudinary.settings');
+        Route::post('/cloudinary/settings', [AdminController::class, 'updateCloudinarySettings'])->name('cloudinary.settings.update');
         Route::post('/cloudinary/test-connection', [AdminController::class, 'testCloudinaryConnection'])->name('cloudinary.test');
         Route::get('/cloudinary/api/assets', [AdminController::class, 'getCloudinaryAssets'])->name('cloudinary.api.assets');
         
@@ -124,7 +125,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Team
         Route::get('/team', [AdminController::class, 'team'])->name('team');
+        Route::get('/team/create', [AdminController::class, 'createTeamMember'])->name('team.create');
         Route::post('/team', [AdminController::class, 'storeTeamMember'])->name('team.store');
+        Route::get('/team/{teamMember}/edit', [AdminController::class, 'editTeamMember'])->name('team.edit');
         Route::put('/team/{teamMember}', [AdminController::class, 'updateTeamMember'])->name('team.update');
         Route::delete('/team/{teamMember}', [AdminController::class, 'deleteTeamMember'])->name('team.delete');
         
