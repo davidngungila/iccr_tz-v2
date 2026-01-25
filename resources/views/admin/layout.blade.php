@@ -590,8 +590,6 @@
                 </button>
                 <div id="media-dropdown" class="sidebar-dropdown {{ request()->routeIs('admin.media*') || request()->routeIs('admin.cloudinary*') || request()->is('admin/cloudinary*') ? 'open' : '' }}">
                     <div class="pl-4 pt-1 space-y-1">
-                        <a href="{{ route('admin.media') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media') && !request()->routeIs('admin.media.create') && !request()->routeIs('admin.media.edit') && !request()->routeIs('admin.cloudinary*') && !request()->is('admin/cloudinary*') ? 'text-white bg-gray-800' : '' }}">All Media</a>
-                        <a href="{{ route('admin.media.create') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition {{ request()->routeIs('admin.media.create') ? 'text-white bg-gray-800' : '' }}">Add Media</a>
                         @php
                             $cloudinaryRoute = Route::has('admin.cloudinary.index') ? route('admin.cloudinary.index') : url('/admin/cloudinary');
                             $isCloudinaryActive = request()->routeIs('admin.cloudinary*') || request()->is('admin/cloudinary*');

@@ -4,17 +4,9 @@
 @section('subtitle', 'Manage images, videos, and documents')
 
 @section('content')
-<div class="mb-8 flex items-center justify-between">
-    <div>
-        <h1 class="text-3xl font-bold text-gray-900">Media Library</h1>
-        <p class="text-gray-600 mt-2">Manage all media files (images, videos, documents)</p>
-    </div>
-    <a href="{{ route('admin.media.create') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-        </svg>
-        Add Media
-    </a>
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Media Library</h1>
+    <p class="text-gray-600 mt-2">Manage all media files (images, videos, documents)</p>
 </div>
 
 <!-- Upload Section -->
