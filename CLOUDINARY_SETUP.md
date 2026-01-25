@@ -34,3 +34,4 @@ CLOUDINARY_URL=cloudinary://491598152185211:7hmGUDGTHDsBwwyDb1xfIC4DJZI@dpyppzvz
 3. Upload new assets directly
 4. Select images when creating slides or other content
 
+

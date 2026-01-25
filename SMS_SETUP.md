@@ -80,3 +80,4 @@ To test SMS functionality:
 - **API errors**: Check Laravel logs for detailed error messages
 - **Phone format**: Ensure phone numbers are in international format (e.g., +255123456789)
 
+

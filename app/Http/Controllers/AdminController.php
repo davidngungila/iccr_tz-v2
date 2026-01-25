@@ -1874,10 +1874,14 @@ class AdminController extends Controller
         
         try {
             if ($cloudName && $apiKey && $apiSecret) {
-                // Temporarily set config for testing
-                config(['cloudinary.cloud_name' => $cloudName]);
-                config(['cloudinary.api_key' => $apiKey]);
-                config(['cloudinary.api_secret' => $apiSecret]);
+                // Configure Cloudinary SDK
+                \Cloudinary\Configuration\Configuration::instance([
+                    'cloud' => [
+                        'cloud_name' => $cloudName,
+                        'api_key' => $apiKey,
+                        'api_secret' => $apiSecret,
+                    ]
+                ]);
                 
                 $adminApi = new \Cloudinary\Api\Admin\AdminApi();
                 $result = $adminApi->ping();
@@ -1948,10 +1952,14 @@ class AdminController extends Controller
                 ], 400);
             }
 
-            // Temporarily set config for testing
-            config(['cloudinary.cloud_name' => $cloudName]);
-            config(['cloudinary.api_key' => $apiKey]);
-            config(['cloudinary.api_secret' => $apiSecret]);
+            // Configure Cloudinary SDK
+            \Cloudinary\Configuration\Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => $cloudName,
+                    'api_key' => $apiKey,
+                    'api_secret' => $apiSecret,
+                ]
+            ]);
             
             $adminApi = new \Cloudinary\Api\Admin\AdminApi();
             $result = $adminApi->ping();

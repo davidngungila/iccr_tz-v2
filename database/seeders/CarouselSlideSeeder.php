@@ -238,3 +238,4 @@ class CarouselSlideSeeder extends Seeder
     }
 }
 
+

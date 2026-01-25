@@ -36,3 +36,4 @@ After installation, test the PDF generation:
 - Click "Ticket" or "PDF" button for any registration
 - The PDF should download automatically
 
+

@@ -55,3 +55,4 @@ You should see:
 - `admin.slides.update`
 - `admin.slides.delete`
 
+
