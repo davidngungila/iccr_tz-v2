@@ -1961,112 +1961,115 @@ class AdminController extends Controller
     
     public function cloudinarySettings()
     {
-        // Get from database, fallback to env
-        $cloudName = SystemSetting::getValue('cloudinary_cloud_name') ?: env('CLOUDINARY_CLOUD_NAME', config('cloudinary.cloud_name'));
-        $apiKey = SystemSetting::getValue('cloudinary_key') ?: env('CLOUDINARY_KEY', config('cloudinary.api_key'));
-        $apiSecret = SystemSetting::getValue('cloudinary_secret') ?: env('CLOUDINARY_SECRET', config('cloudinary.api_secret'));
-        $uploadPreset = SystemSetting::getValue('cloudinary_upload_preset') ?: env('CLOUDINARY_UPLOAD_PRESET', config('cloudinary.upload_preset'));
+        $configurations = \App\Models\CloudinaryConfiguration::orderBy('is_default', 'desc')
+            ->orderBy('name')
+            ->get();
         
-        // Test connection
-        $connectionStatus = 'disconnected';
-        $connectionMessage = '';
-        
-        try {
-            if ($cloudName && $apiKey && $apiSecret) {
-                // Configure Cloudinary SDK
-                \Cloudinary\Configuration\Configuration::instance([
-                    'cloud' => [
-                        'cloud_name' => $cloudName,
-                        'api_key' => $apiKey,
-                        'api_secret' => $apiSecret,
-                    ]
-                ]);
-                
-                $adminApi = new \Cloudinary\Api\Admin\AdminApi();
-                $result = $adminApi->ping();
-                $connectionStatus = 'connected';
-                $connectionMessage = 'Successfully connected to Cloudinary!';
-            } else {
-                $connectionMessage = 'Cloudinary credentials are not configured. Please configure them below.';
-            }
-        } catch (\Exception $e) {
-            $connectionMessage = 'Connection failed: ' . $e->getMessage();
-        }
-        
-        return view('admin.cloudinary.settings', compact('cloudName', 'apiKey', 'apiSecret', 'uploadPreset', 'connectionStatus', 'connectionMessage'));
+        return view('admin.cloudinary.settings', compact('configurations'));
     }
 
-    public function updateCloudinarySettings(Request $request)
+    public function storeCloudinaryConfiguration(Request $request)
     {
         $validated = $request->validate([
-            'cloudinary_cloud_name' => 'required|string|max:255',
-            'cloudinary_key' => 'required|string|max:255',
-            'cloudinary_secret' => 'required|string|max:255',
-            'cloudinary_upload_preset' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'cloud_name' => 'required|string|max:255',
+            'api_key' => 'required|string|max:255',
+            'api_secret' => 'required|string|max:255',
+            'upload_preset' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'is_default' => 'boolean',
+            'is_active' => 'boolean',
         ]);
 
         try {
-            // Save to database
-            SystemSetting::setValue('cloudinary_cloud_name', $validated['cloudinary_cloud_name'], 'text', 'cloudinary', 'Cloudinary Cloud Name');
-            SystemSetting::setValue('cloudinary_key', $validated['cloudinary_key'], 'text', 'cloudinary', 'Cloudinary API Key');
-            SystemSetting::setValue('cloudinary_secret', $validated['cloudinary_secret'], 'text', 'cloudinary', 'Cloudinary API Secret');
-            if ($request->filled('cloudinary_upload_preset')) {
-                SystemSetting::setValue('cloudinary_upload_preset', $validated['cloudinary_upload_preset'], 'text', 'cloudinary', 'Cloudinary Upload Preset');
+            // If this is set as default, unset other defaults
+            if ($request->has('is_default') && $request->is_default) {
+                \App\Models\CloudinaryConfiguration::where('is_default', true)->update(['is_default' => false]);
             }
 
-            // Update config cache
-            config(['cloudinary.cloud_name' => $validated['cloudinary_cloud_name']]);
-            config(['cloudinary.api_key' => $validated['cloudinary_key']]);
-            config(['cloudinary.api_secret' => $validated['cloudinary_secret']]);
-            if ($request->filled('cloudinary_upload_preset')) {
-                config(['cloudinary.upload_preset' => $validated['cloudinary_upload_preset']]);
+            $config = \App\Models\CloudinaryConfiguration::create($validated);
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'created',
+                'model_type' => 'CloudinaryConfiguration',
+                'model_id' => $config->id,
+                'description' => "Created Cloudinary configuration: {$config->name}",
+            ]);
+
+            return redirect()->route('admin.cloudinary.settings')->with('success', 'Cloudinary configuration created successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to create configuration: ' . $e->getMessage())->withInput();
+        }
+    }
+
+    public function updateCloudinaryConfiguration(Request $request, \App\Models\CloudinaryConfiguration $configuration)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'cloud_name' => 'required|string|max:255',
+            'api_key' => 'required|string|max:255',
+            'api_secret' => 'required|string|max:255',
+            'upload_preset' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'is_default' => 'boolean',
+            'is_active' => 'boolean',
+        ]);
+
+        try {
+            // If this is set as default, unset other defaults
+            if ($request->has('is_default') && $request->is_default) {
+                \App\Models\CloudinaryConfiguration::where('is_default', true)
+                    ->where('id', '!=', $configuration->id)
+                    ->update(['is_default' => false]);
             }
+
+            $configuration->update($validated);
 
             ActivityLog::create([
                 'user_id' => Auth::id(),
                 'action' => 'updated',
-                'model_type' => 'CloudinarySettings',
-                'model_id' => 0,
-                'description' => 'Updated Cloudinary configuration',
+                'model_type' => 'CloudinaryConfiguration',
+                'model_id' => $configuration->id,
+                'description' => "Updated Cloudinary configuration: {$configuration->name}",
             ]);
 
-            return redirect()->route('admin.cloudinary.settings')->with('success', 'Cloudinary settings updated successfully!');
+            return redirect()->route('admin.cloudinary.settings')->with('success', 'Cloudinary configuration updated successfully!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update settings: ' . $e->getMessage())->withInput();
+            return back()->with('error', 'Failed to update configuration: ' . $e->getMessage())->withInput();
         }
     }
 
-    public function testCloudinaryConnection(Request $request)
+    public function deleteCloudinaryConfiguration(\App\Models\CloudinaryConfiguration $configuration)
     {
         try {
-            // Get from database, fallback to env
-            $cloudName = SystemSetting::getValue('cloudinary_cloud_name') ?: env('CLOUDINARY_CLOUD_NAME', config('cloudinary.cloud_name'));
-            $apiKey = SystemSetting::getValue('cloudinary_key') ?: env('CLOUDINARY_KEY', config('cloudinary.api_key'));
-            $apiSecret = SystemSetting::getValue('cloudinary_secret') ?: env('CLOUDINARY_SECRET', config('cloudinary.api_secret'));
-            
-            if (!$cloudName || !$apiKey || !$apiSecret) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cloudinary credentials are not configured. Please configure them first.',
-                ], 400);
-            }
+            $name = $configuration->name;
+            $id = $configuration->id;
+            $configuration->delete();
 
-            // Configure Cloudinary SDK
-            \Cloudinary\Configuration\Configuration::instance([
-                'cloud' => [
-                    'cloud_name' => $cloudName,
-                    'api_key' => $apiKey,
-                    'api_secret' => $apiSecret,
-                ]
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'deleted',
+                'model_type' => 'CloudinaryConfiguration',
+                'model_id' => $id,
+                'description' => "Deleted Cloudinary configuration: {$name}",
             ]);
-            
-            $adminApi = new \Cloudinary\Api\Admin\AdminApi();
-            $result = $adminApi->ping();
+
+            return redirect()->route('admin.cloudinary.settings')->with('success', 'Cloudinary configuration deleted successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete configuration: ' . $e->getMessage());
+        }
+    }
+
+    public function testCloudinaryConnection(Request $request, \App\Models\CloudinaryConfiguration $configuration)
+    {
+        try {
+            $result = $configuration->testConnection();
             
             return response()->json([
-                'success' => true,
-                'message' => 'Successfully connected to Cloudinary!',
-                'cloud_name' => $cloudName,
+                'success' => $result['success'],
+                'message' => $result['message'],
+                'cloud_name' => $configuration->cloud_name,
             ]);
         } catch (\Exception $e) {
             return response()->json([

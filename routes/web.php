@@ -152,8 +152,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Cloudinary Assets
         Route::get('/cloudinary', [AdminController::class, 'cloudinaryAssets'])->name('cloudinary.index');
         Route::get('/cloudinary/settings', [AdminController::class, 'cloudinarySettings'])->name('cloudinary.settings');
-        Route::post('/cloudinary/settings', [AdminController::class, 'updateCloudinarySettings'])->name('cloudinary.settings.update');
-        Route::post('/cloudinary/test-connection', [AdminController::class, 'testCloudinaryConnection'])->name('cloudinary.test');
+        Route::post('/cloudinary/configurations', [AdminController::class, 'storeCloudinaryConfiguration'])->name('cloudinary.configurations.store');
+        Route::put('/cloudinary/configurations/{configuration}', [AdminController::class, 'updateCloudinaryConfiguration'])->name('cloudinary.configurations.update');
+        Route::delete('/cloudinary/configurations/{configuration}', [AdminController::class, 'deleteCloudinaryConfiguration'])->name('cloudinary.configurations.delete');
+        Route::post('/cloudinary/configurations/{configuration}/test', [AdminController::class, 'testCloudinaryConnection'])->name('cloudinary.configurations.test');
         Route::get('/cloudinary/api/assets', [AdminController::class, 'getCloudinaryAssets'])->name('cloudinary.api.assets');
         
         // Communication Settings
