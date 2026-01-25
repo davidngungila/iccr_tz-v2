@@ -1797,21 +1797,74 @@ class AdminController extends Controller
 
     public function uploadToCloudinary(Request $request)
     {
-        $request->validate([
-            'files' => 'required|array',
-            'files.*' => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,pdf|max:10240',
-            'folder' => 'nullable|string|max:255',
-        ]);
-
         try {
+            // Handle both single file and multiple files
             $files = $request->file('files');
+            
+            // If files is null or not an array, check for single file upload
+            if (empty($files) || !is_array($files)) {
+                $singleFile = $request->file('file');
+                if ($singleFile) {
+                    $files = [$singleFile];
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No files provided. Please select at least one file.',
+                        'assets' => [],
+                        'errors' => [],
+                    ], 400);
+                }
+            }
+            
+            // Filter out null values
+            $files = array_filter($files, function($file) {
+                return $file !== null;
+            });
+            
+            if (empty($files)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No valid files provided.',
+                    'assets' => [],
+                    'errors' => [],
+                ], 400);
+            }
+            
             $folder = $request->folder ?? 'iccr-tanzania';
             $uploadedAssets = [];
             $errors = [];
 
             foreach ($files as $file) {
+                if (!$file || !$file->isValid()) {
+                    $errors[] = [
+                        'filename' => $file ? $file->getClientOriginalName() : 'Unknown',
+                        'error' => 'Invalid file',
+                    ];
+                    continue;
+                }
+                
+                // Validate file type and size
+                $allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime', 'video/x-msvideo', 'application/pdf'];
+                $mimeType = $file->getMimeType();
+                $maxSize = 10240; // 10MB in KB
+                
+                if (!in_array($mimeType, $allowedMimes)) {
+                    $errors[] = [
+                        'filename' => $file->getClientOriginalName(),
+                        'error' => 'File type not allowed. Allowed types: images, videos, PDF',
+                    ];
+                    continue;
+                }
+                
+                if ($file->getSize() > ($maxSize * 1024)) {
+                    $errors[] = [
+                        'filename' => $file->getClientOriginalName(),
+                        'error' => 'File size exceeds maximum allowed size of ' . $maxSize . 'MB',
+                    ];
+                    continue;
+                }
+                
                 try {
-                    $mimeType = $file->getMimeType();
                     $resourceType = 'auto';
                     
                     if (str_contains($mimeType, 'pdf')) {
