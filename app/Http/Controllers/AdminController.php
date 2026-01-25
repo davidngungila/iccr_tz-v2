@@ -1735,9 +1735,31 @@ class AdminController extends Controller
     public function getCloudinaryAssets(Request $request)
     {
         try {
+            // Get Cloudinary credentials
+            $cloudName = SystemSetting::getValue('cloudinary_cloud_name') ?: env('CLOUDINARY_CLOUD_NAME', config('cloudinary.cloud_name'));
+            $apiKey = SystemSetting::getValue('cloudinary_key') ?: env('CLOUDINARY_KEY', config('cloudinary.api_key'));
+            $apiSecret = SystemSetting::getValue('cloudinary_secret') ?: env('CLOUDINARY_SECRET', config('cloudinary.api_secret'));
+            
+            if (!$cloudName || !$apiKey || !$apiSecret) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cloudinary credentials are not configured. Please configure them in Cloudinary Settings.',
+                    'assets' => [],
+                ], 400);
+            }
+            
+            // Configure Cloudinary SDK
+            \Cloudinary\Configuration\Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => $cloudName,
+                    'api_key' => $apiKey,
+                    'api_secret' => $apiSecret,
+                ]
+            ]);
+            
             $nextCursor = $request->get('next_cursor');
             $maxResults = $request->get('max_results', 50);
-            $folder = $request->get('folder', 'iccr-tanzania');
+            $folder = $request->get('folder', '');
             $resourceType = $request->get('resource_type', 'image');
             
             // Use Cloudinary Admin API
@@ -1750,8 +1772,9 @@ class AdminController extends Controller
                 $options['next_cursor'] = $nextCursor;
             }
             
-            if ($folder) {
-                $options['prefix'] = $folder . '/';
+            // Only add prefix if folder is specified
+            if (!empty($folder) && trim($folder) !== '') {
+                $options['prefix'] = rtrim($folder, '/') . '/';
             }
             
             // Get Admin API instance
@@ -1767,6 +1790,7 @@ class AdminController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch assets: ' . $e->getMessage(),
+                'assets' => [],
             ], 500);
         }
     }

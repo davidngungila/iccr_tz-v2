@@ -29,8 +29,8 @@
             </select>
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Folder</label>
-            <input type="text" id="folderFilter" value="iccr-tanzania" placeholder="iccr-tanzania" onchange="loadAssets()"
+            <label class="block text-sm font-medium text-gray-700 mb-2">Folder (Leave empty for all assets)</label>
+            <input type="text" id="folderFilter" value="" placeholder="Leave empty to show all assets" onchange="loadAssets()"
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
         </div>
         <div>
