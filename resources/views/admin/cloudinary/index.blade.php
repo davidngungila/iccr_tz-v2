@@ -80,9 +80,16 @@
             @csrf
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">File *</label>
-                    <input type="file" id="uploadFile" name="file" required accept="image/*,video/*,.pdf"
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Files * (Select multiple files)</label>
+                    <input type="file" id="uploadFile" name="files[]" required accept="image/*,video/*,.pdf" multiple
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <p class="text-xs text-gray-500 mt-1">You can select multiple files at once</p>
+                </div>
+                <div id="selectedFiles" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Selected Files:</label>
+                    <div id="selectedFilesList" class="max-h-32 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-1">
+                        <!-- Selected files will be listed here -->
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Folder</label>
@@ -90,10 +97,15 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                 </div>
                 <div id="uploadProgress" class="hidden">
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div id="uploadProgressBar" class="bg-green-600 h-2.5 rounded-full transition-all" style="width: 0%"></div>
+                    <div class="space-y-2">
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="uploadProgressBar" class="bg-green-600 h-2.5 rounded-full transition-all" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600">Uploading files...</p>
+                        <div id="uploadStatus" class="text-xs text-gray-500 space-y-1">
+                            <!-- Individual file upload status will appear here -->
+                        </div>
                     </div>
-                    <p class="text-sm text-gray-600 mt-2">Uploading...</p>
                 </div>
             </div>
             <div class="flex items-center gap-4 mt-6">
@@ -286,17 +298,55 @@ function closeUploadModal() {
     document.getElementById('uploadModal').classList.add('hidden');
     document.getElementById('uploadForm').reset();
     document.getElementById('uploadProgress').classList.add('hidden');
+    document.getElementById('selectedFiles').classList.add('hidden');
+    document.getElementById('selectedFilesList').innerHTML = '';
+    document.getElementById('uploadStatus').innerHTML = '';
 }
+
+// Show selected files
+document.getElementById('uploadFile').addEventListener('change', function(e) {
+    const files = e.target.files;
+    const selectedFilesDiv = document.getElementById('selectedFiles');
+    const selectedFilesList = document.getElementById('selectedFilesList');
+    
+    if (files.length > 0) {
+        selectedFilesDiv.classList.remove('hidden');
+        selectedFilesList.innerHTML = '';
+        
+        Array.from(files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'text-xs text-gray-600 flex items-center justify-between';
+            fileItem.innerHTML = `
+                <span class="truncate flex-1">${index + 1}. ${file.name}</span>
+                <span class="text-gray-400 ml-2">${formatBytes(file.size)}</span>
+            `;
+            selectedFilesList.appendChild(fileItem);
+        });
+    } else {
+        selectedFilesDiv.classList.add('hidden');
+    }
+});
 
 document.getElementById('uploadForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    const files = document.getElementById('uploadFile').files;
+    if (files.length === 0) {
+        alert('Please select at least one file to upload.');
+        return;
+    }
+    
     const formData = new FormData();
-    formData.append('file', document.getElementById('uploadFile').files[0]);
+    Array.from(files).forEach(file => {
+        formData.append('files[]', file);
+    });
     formData.append('folder', document.getElementById('uploadFolder').value);
     formData.append('_token', '{{ csrf_token() }}');
     
-    document.getElementById('uploadProgress').classList.remove('hidden');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const uploadStatus = document.getElementById('uploadStatus');
+    uploadProgress.classList.remove('hidden');
+    uploadStatus.innerHTML = `<p class="text-gray-600">Preparing to upload ${files.length} file(s)...</p>`;
     
     fetch('{{ route("admin.cloudinary.upload") }}', {
         method: 'POST',
@@ -304,19 +354,34 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('uploadProgress').classList.add('hidden');
-        if (data.success) {
+        uploadProgress.classList.add('hidden');
+        
+        if (data.success && data.assets && data.assets.length > 0) {
+            let message = `Successfully uploaded ${data.assets.length} file(s)!`;
+            if (data.errors && data.errors.length > 0) {
+                message += `\n\n${data.errors.length} file(s) failed:\n`;
+                data.errors.forEach(err => {
+                    message += `- ${err.filename}: ${err.error}\n`;
+                });
+            }
+            alert(message);
             closeUploadModal();
             loadAssets(true);
-            alert('Asset uploaded successfully!');
         } else {
-            alert('Upload failed: ' + data.message);
+            let errorMsg = data.message || 'Upload failed';
+            if (data.errors && data.errors.length > 0) {
+                errorMsg += '\n\nFailed files:\n';
+                data.errors.forEach(err => {
+                    errorMsg += `- ${err.filename}: ${err.error}\n`;
+                });
+            }
+            alert(errorMsg);
         }
     })
     .catch(error => {
         console.error('Error uploading:', error);
-        document.getElementById('uploadProgress').classList.add('hidden');
-        alert('Upload failed');
+        uploadProgress.classList.add('hidden');
+        alert('Upload failed: ' + error.message);
     });
 });
 

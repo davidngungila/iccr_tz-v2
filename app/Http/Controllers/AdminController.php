@@ -1798,52 +1798,74 @@ class AdminController extends Controller
     public function uploadToCloudinary(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,pdf|max:10240',
+            'files' => 'required|array',
+            'files.*' => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,pdf|max:10240',
             'folder' => 'nullable|string|max:255',
         ]);
 
         try {
-            $file = $request->file('file');
-            $mimeType = $file->getMimeType();
-            $resourceType = 'auto';
-            
-            if (str_contains($mimeType, 'pdf')) {
-                $resourceType = 'raw';
-            } elseif (str_contains($mimeType, 'video')) {
-                $resourceType = 'video';
+            $files = $request->file('files');
+            $folder = $request->folder ?? 'iccr-tanzania';
+            $uploadedAssets = [];
+            $errors = [];
+
+            foreach ($files as $file) {
+                try {
+                    $mimeType = $file->getMimeType();
+                    $resourceType = 'auto';
+                    
+                    if (str_contains($mimeType, 'pdf')) {
+                        $resourceType = 'raw';
+                    } elseif (str_contains($mimeType, 'video')) {
+                        $resourceType = 'video';
+                    }
+
+                    $uploadOptions = [
+                        'folder' => $folder,
+                        'resource_type' => $resourceType,
+                    ];
+
+                    $uploadResult = Cloudinary::upload($file->getRealPath(), $uploadOptions);
+
+                    $uploadedAssets[] = [
+                        'public_id' => $uploadResult->getPublicId(),
+                        'secure_url' => $uploadResult->getSecurePath(),
+                        'url' => $uploadResult->getSecurePath(),
+                        'width' => $uploadResult->getWidth(),
+                        'height' => $uploadResult->getHeight(),
+                        'format' => $uploadResult->getExtension(),
+                        'bytes' => $uploadResult->getSize(),
+                        'filename' => $file->getClientOriginalName(),
+                    ];
+
+                    ActivityLog::create([
+                        'user_id' => Auth::id(),
+                        'action' => 'uploaded',
+                        'model_type' => 'CloudinaryAsset',
+                        'description' => "Uploaded asset to Cloudinary: {$uploadResult->getPublicId()}",
+                    ]);
+                } catch (\Exception $e) {
+                    $errors[] = [
+                        'filename' => $file->getClientOriginalName(),
+                        'error' => $e->getMessage(),
+                    ];
+                }
             }
 
-            $uploadOptions = [
-                'folder' => $request->folder ?? 'iccr-tanzania',
-                'resource_type' => $resourceType,
-            ];
-
-            $uploadResult = Cloudinary::upload($file->getRealPath(), $uploadOptions);
-
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                'action' => 'uploaded',
-                'model_type' => 'CloudinaryAsset',
-                'description' => "Uploaded asset to Cloudinary: {$uploadResult->getPublicId()}",
-            ]);
-
             return response()->json([
-                'success' => true,
-                'asset' => [
-                    'public_id' => $uploadResult->getPublicId(),
-                    'secure_url' => $uploadResult->getSecurePath(),
-                    'url' => $uploadResult->getSecurePath(),
-                    'width' => $uploadResult->getWidth(),
-                    'height' => $uploadResult->getHeight(),
-                    'format' => $uploadResult->getExtension(),
-                    'bytes' => $uploadResult->getSize(),
-                ],
-                'message' => 'Asset uploaded successfully!',
+                'success' => count($uploadedAssets) > 0,
+                'assets' => $uploadedAssets,
+                'errors' => $errors,
+                'message' => count($uploadedAssets) > 0 
+                    ? count($uploadedAssets) . ' file(s) uploaded successfully!' . (count($errors) > 0 ? ' ' . count($errors) . ' file(s) failed.' : '')
+                    : 'All uploads failed.',
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Upload failed: ' . $e->getMessage(),
+                'assets' => [],
+                'errors' => [],
             ], 500);
         }
     }
