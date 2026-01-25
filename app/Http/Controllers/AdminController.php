@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\CarouselSlide;
 use App\Models\NotificationProvider;
 use App\Models\SystemSetting;
+use App\Models\CloudinaryConfiguration;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -1961,7 +1962,33 @@ class AdminController extends Controller
     
     public function cloudinarySettings()
     {
-        $configurations = \App\Models\CloudinaryConfiguration::orderBy('is_default', 'desc')
+        // Check if there are existing settings in system_settings but no configurations in the new table
+        $existingConfigs = CloudinaryConfiguration::count();
+        $hasOldSettings = SystemSetting::where('key', 'cloudinary_cloud_name')->exists() ||
+                          SystemSetting::where('key', 'cloudinary_key')->exists();
+        
+        // Auto-migrate old settings to new table if they exist
+        if ($existingConfigs === 0 && $hasOldSettings) {
+            $cloudName = SystemSetting::getValue('cloudinary_cloud_name');
+            $apiKey = SystemSetting::getValue('cloudinary_key');
+            $apiSecret = SystemSetting::getValue('cloudinary_secret');
+            $uploadPreset = SystemSetting::getValue('cloudinary_upload_preset');
+            
+            if ($cloudName && $apiKey && $apiSecret) {
+                CloudinaryConfiguration::create([
+                    'name' => 'Default Configuration',
+                    'cloud_name' => $cloudName,
+                    'api_key' => $apiKey,
+                    'api_secret' => $apiSecret,
+                    'upload_preset' => $uploadPreset,
+                    'is_default' => true,
+                    'is_active' => true,
+                    'description' => 'Migrated from system settings',
+                ]);
+            }
+        }
+        
+        $configurations = CloudinaryConfiguration::orderBy('is_default', 'desc')
             ->orderBy('name')
             ->get();
         
@@ -1984,10 +2011,10 @@ class AdminController extends Controller
         try {
             // If this is set as default, unset other defaults
             if ($request->has('is_default') && $request->is_default) {
-                \App\Models\CloudinaryConfiguration::where('is_default', true)->update(['is_default' => false]);
+                CloudinaryConfiguration::where('is_default', true)->update(['is_default' => false]);
             }
 
-            $config = \App\Models\CloudinaryConfiguration::create($validated);
+            $config = CloudinaryConfiguration::create($validated);
 
             ActivityLog::create([
                 'user_id' => Auth::id(),
@@ -2003,7 +2030,7 @@ class AdminController extends Controller
         }
     }
 
-    public function updateCloudinaryConfiguration(Request $request, \App\Models\CloudinaryConfiguration $configuration)
+    public function updateCloudinaryConfiguration(Request $request, CloudinaryConfiguration $configuration)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -2019,7 +2046,7 @@ class AdminController extends Controller
         try {
             // If this is set as default, unset other defaults
             if ($request->has('is_default') && $request->is_default) {
-                \App\Models\CloudinaryConfiguration::where('is_default', true)
+                CloudinaryConfiguration::where('is_default', true)
                     ->where('id', '!=', $configuration->id)
                     ->update(['is_default' => false]);
             }
@@ -2040,7 +2067,7 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteCloudinaryConfiguration(\App\Models\CloudinaryConfiguration $configuration)
+    public function deleteCloudinaryConfiguration(CloudinaryConfiguration $configuration)
     {
         try {
             $name = $configuration->name;
@@ -2061,7 +2088,7 @@ class AdminController extends Controller
         }
     }
 
-    public function testCloudinaryConnection(Request $request, \App\Models\CloudinaryConfiguration $configuration)
+    public function testCloudinaryConnection(Request $request, CloudinaryConfiguration $configuration)
     {
         try {
             $result = $configuration->testConnection();
