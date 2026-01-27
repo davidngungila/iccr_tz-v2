@@ -1417,7 +1417,7 @@ document.addEventListener('DOMContentLoaded', function() {
 @endpush
 
 <!-- News Modal -->
-<div id="news-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div id="news-modal" class="fixed inset-0 z-50 hidden" style="z-index: 100;" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity opacity-0" id="news-modal-backdrop"></div>
 
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
