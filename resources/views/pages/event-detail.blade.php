@@ -17,25 +17,107 @@
         <div class="absolute inset-0 flex items-center justify-center pb-12 md:pb-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
                 <div class="max-w-4xl mx-auto text-center">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold text-white mb-4">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold text-white mb-4 animate-fade-in-up">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                         <span>{{ ucfirst($event->status) }} Event</span>
                     </div>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-2xl leading-tight">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 drop-shadow-2xl leading-tight animate-fade-in-up" style="animation-delay: 0.1s">
                         {{ $event->title }}
                     </h1>
                     @if($event->description)
-                    <p class="text-lg sm:text-xl md:text-2xl text-blue-100 mb-6 leading-relaxed drop-shadow-lg max-w-3xl mx-auto">
+                    <p class="text-xl sm:text-2xl text-blue-100 mb-8 leading-relaxed drop-shadow-lg max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">
                         {{ $event->description }}
                     </p>
                     @endif
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s">
+                        @if($event->status === 'upcoming')
+                        <a href="{{ route('event.register', $event->slug) }}" class="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-green-600 hover:to-blue-700 transition shadow-lg hover:shadow-2xl transform hover:scale-105">
+                            Register Now
+                        </a>
+                        @endif
+                        <button onclick="document.getElementById('event-details').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 bg-white/10 backdrop-blur-md border md:border-2 border-white/30 text-white rounded-xl font-bold text-lg hover:bg-white/20 transition shadow-lg">
+                            Event Details
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Countdown Timer Section (Only for Upcoming Events) -->
+@if($event->status === 'upcoming')
+<section class="relative -mt-20 z-20 px-4 mb-12">
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-10">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-center md:text-left">
+                <h3 class="text-lg font-semibold text-gray-500 uppercase tracking-wider mb-1">Event Starts In</h3>
+                <div class="flex items-center gap-2 text-gray-900 font-bold text-xl">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ $event->start_date->format('F j, Y • g:i A') }}
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-4 md:gap-8 text-center w-full md:w-auto">
+                <div class="flex flex-col">
+                    <span class="text-3xl md:text-4xl font-bold text-blue-600 countdown-days">00</span>
+                    <span class="text-xs text-gray-500 font-semibold uppercase">Days</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl md:text-4xl font-bold text-blue-600 countdown-hours">00</span>
+                    <span class="text-xs text-gray-500 font-semibold uppercase">Hours</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl md:text-4xl font-bold text-blue-600 countdown-minutes">00</span>
+                    <span class="text-xs text-gray-500 font-semibold uppercase">Minutes</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl md:text-4xl font-bold text-blue-600 countdown-seconds">00</span>
+                    <span class="text-xs text-gray-500 font-semibold uppercase">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const eventDate = new Date("{{ $event->start_date->format('Y-m-d H:i:s') }}").getTime();
+        
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance < 0) {
+                document.querySelector('.countdown-days').innerText = "00";
+                document.querySelector('.countdown-hours').innerText = "00";
+                document.querySelector('.countdown-minutes').innerText = "00";
+                document.querySelector('.countdown-seconds').innerText = "00";
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.querySelector('.countdown-days').innerText = days < 10 ? '0' + days : days;
+            document.querySelector('.countdown-hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.querySelector('.countdown-minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.querySelector('.countdown-seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        };
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    });
+</script>
+@endif
 
 <!-- Success Modal Popup -->
 @if(session('success'))
@@ -63,7 +145,7 @@
 @endif
 
 <!-- Event Details Section -->
-<section class="py-16 bg-white">
+<section id="event-details" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Main Content -->
