@@ -1415,5 +1415,119 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 @endpush
+
+<!-- News Modal -->
+<div id="news-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity opacity-0" id="news-modal-backdrop"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div id="news-modal-panel" class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                <div class="bg-gradient-to-r from-green-600 to-blue-600 px-4 py-3 sm:px-6 flex justify-between items-center">
+                    <h3 class="text-lg font-bold leading-6 text-white flex items-center gap-2" id="modal-title">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                        </svg>
+                        Latest ICCRTZ News
+                    </h3>
+                    <button type="button" id="close-news-modal-x" class="text-white hover:text-gray-200 focus:outline-none transition-colors">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h4 class="text-base font-semibold leading-6 text-gray-900 mb-2">Stay updated with our work</h4>
+                            
+                            <!-- Featured News Item -->
+                            <div class="mt-4 bg-blue-50 rounded-xl p-4 border border-blue-100">
+                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-2">New</span>
+                                <h5 class="font-bold text-gray-900 text-lg mb-1">Open Gate Camp Success</h5>
+                                <p class="text-sm text-gray-600 mb-3">Over 200 students gathered for the Open Gate Camp in Moshi & Arusha, experiencing powerful worship and spiritual growth.</p>
+                                <a href="{{ route('media') }}" class="text-blue-600 hover:text-blue-800 text-sm font-bold inline-flex items-center gap-1">
+                                    Read full story 
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <div class="mt-6">
+                                <p class="text-sm text-gray-500 mb-3">Subscribe to our newsletter for more updates:</p>
+                                <form class="flex gap-2">
+                                    <input type="email" placeholder="Enter your email" class="flex-1 rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-green-500 focus:ring-green-500">
+                                    <button type="button" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition shadow-md">
+                                        Subscribe
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button type="button" id="close-news-modal-btn" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('news-modal');
+        const backdrop = document.getElementById('news-modal-backdrop');
+        const panel = document.getElementById('news-modal-panel');
+        const closeBtnX = document.getElementById('close-news-modal-x');
+        const closeBtn = document.getElementById('close-news-modal-btn');
+        
+        // Show modal after 3 seconds if not seen in this session
+        if (!sessionStorage.getItem('newsModalSeen')) {
+            setTimeout(() => {
+                modal.classList.remove('hidden');
+                // Trigger reflow
+                void modal.offsetWidth;
+                
+                // Animate in
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                
+                panel.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+                panel.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
+            }, 3000);
+            
+            sessionStorage.setItem('newsModalSeen', 'true');
+        }
+
+        function closeModal() {
+            // Animate out
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0');
+            
+            panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            
+            // Hide after animation
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        if (closeBtnX) closeBtnX.addEventListener('click', closeModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        
+        // Close on backdrop click
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === window.document.querySelector('#news-modal > div:nth-child(2) > div')) {
+                    closeModal();
+                }
+            });
+        }
+    });
+</script>
 @endsection
 
