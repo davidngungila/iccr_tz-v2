@@ -106,7 +106,7 @@
 
     <!-- Carousel Indicators -->
     @if($slides->count() > 0)
-    <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2.5 bg-black/50 backdrop-blur-md rounded-full pointer-events-auto shadow-2xl" style="z-index: 50 !important;">
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center space-x-2 sm:space-x-3 pointer-events-auto" style="z-index: 50 !important;">
         @foreach($slides as $index => $slide)
         <button class="carousel-indicator transition-all duration-300 focus:outline-none {{ $index === 0 ? 'text-white scale-125 opacity-100' : 'text-white/60 hover:text-white/90 scale-100 opacity-80' }} shadow-sm cursor-pointer px-1" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}" title="Slide {{ $index + 1 }}">
             <svg class="w-3 h-3 sm:w-4 sm:h-4 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
