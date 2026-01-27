@@ -51,13 +51,123 @@
                 <div class="text-4xl md:text-5xl font-bold text-white mb-2">15+</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Campus Chapters</div>
             </div>
-            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+                <div class="test-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
                 <div class="text-4xl md:text-5xl font-bold text-white mb-2">12</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Regions Covered</div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Next Big Event Countdown -->
+@if($upcomingEvents->count() > 0)
+    @php $nextEvent = $upcomingEvents->first(); @endphp
+    <section class="py-12 bg-gray-900 text-white relative overflow-hidden">
+        <!-- Background Image with Overlay -->
+        @if($nextEvent->banner_image)
+            <div class="absolute inset-0 z-0">
+                <img src="{{ $nextEvent->banner_image }}" alt="Background" class="w-full h-full object-cover opacity-20 filter blur-sm">
+                <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-900/80"></div>
+            </div>
+        @endif
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="lg:w-1/2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-600 rounded-full text-xs font-bold uppercase tracking-wider mb-4 animate-pulse">
+                        <span class="w-2 h-2 bg-white rounded-full"></span>
+                        Next Big Event
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+                        {{ $nextEvent->title }}
+                    </h2>
+                    <p class="text-gray-300 text-lg mb-6 line-clamp-2">
+                        {{ $nextEvent->description ?: \Illuminate\Support\Str::limit(strip_tags($nextEvent->content ?? ''), 150) }}
+                    </p>
+                    <div class="flex flex-wrap gap-6 text-sm text-gray-300 mb-8">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>{{ $nextEvent->start_date->format('F d, Y') }}</span>
+                        </div>
+                        @if($nextEvent->location)
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>{{ $nextEvent->location }}</span>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="{{ route('event.show', $nextEvent->slug) }}" class="px-8 py-3 bg-white text-gray-900 rounded-lg font-bold hover:bg-gray-100 transition shadow-lg">
+                            Event Details
+                        </a>
+                        <a href="{{ route('get-involved') }}" class="px-8 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-bold hover:from-green-700 hover:to-blue-700 transition shadow-lg">
+                            Register Now
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 w-full">
+                    <div class="grid grid-cols-4 gap-4 text-center">
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-1 countdown-days">00</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Days</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-1 countdown-hours">00</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Hours</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-1 countdown-minutes">00</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Minutes</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                            <div class="text-4xl md:text-5xl font-bold text-green-400 mb-1 countdown-seconds">00</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Seconds</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Countdown Script -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const eventDate = new Date("{{ $nextEvent->start_date->format('Y-m-d H:i:s') }}").getTime();
+                            
+                            const updateCountdown = () => {
+                                const now = new Date().getTime();
+                                const distance = eventDate - now;
+                                
+                                if (distance < 0) {
+                                    document.querySelector('.countdown-days').innerText = "00";
+                                    document.querySelector('.countdown-hours').innerText = "00";
+                                    document.querySelector('.countdown-minutes').innerText = "00";
+                                    document.querySelector('.countdown-seconds').innerText = "00";
+                                    return;
+                                }
+                                
+                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                
+                                document.querySelector('.countdown-days').innerText = days < 10 ? '0' + days : days;
+                                document.querySelector('.countdown-hours').innerText = hours < 10 ? '0' + hours : hours;
+                                document.querySelector('.countdown-minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                                document.querySelector('.countdown-seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+                            };
+                            
+                            updateCountdown();
+                            setInterval(updateCountdown, 1000);
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+@endif
 
 <!-- Event Categories Filter Section -->
 <section class="py-12 bg-white border-b-2 border-gray-100">
@@ -248,16 +358,35 @@
                                 @endif
                             </span>
                         </div>
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-4 mt-auto">
                             <a href="{{ route('event.show', $event->slug) }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl transform hover:scale-105">
                                 <span>Learn More</span>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                 </svg>
                             </a>
-                            <a href="{{ route('get-involved') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 transition shadow-md hover:shadow-lg">
-                                <span>Register</span>
+                            
+                            @php
+                                $googleCalendarUrl = 'https://www.google.com/calendar/render?action=TEMPLATE';
+                                $googleCalendarUrl .= '&text=' . urlencode($event->title);
+                                $googleCalendarUrl .= '&dates=' . $event->start_date->format('Ymd\THis\Z') . '/' . ($event->end_date ? $event->end_date->format('Ymd\THis\Z') : $event->start_date->addHours(2)->format('Ymd\THis\Z'));
+                                $googleCalendarUrl .= '&details=' . urlencode($event->description);
+                                $googleCalendarUrl .= '&location=' . urlencode($event->location);
+                                $googleCalendarUrl .= '&sf=true&output=xml';
+                            @endphp
+                            
+                            <a href="{{ $googleCalendarUrl }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 hover:border-gray-300 transition shadow-sm hover:shadow-md">
+                                <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z"/>
+                                </svg>
+                                <span>Add to Calendar</span>
                             </a>
+                            
+                            <button onclick="navigator.share({title: '{{ $event->title }}', text: 'Check out this event: {{ $event->title }}', url: '{{ route('event.show', $event->slug) }}'})" class="inline-flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-600 rounded-lg font-semibold hover:bg-gray-200 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
