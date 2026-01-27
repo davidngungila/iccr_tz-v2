@@ -278,6 +278,9 @@
                     <a href="{{ route('home') }}" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('home') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }}">
                         Home
                     </a>
+                    <a href="{{ route('graduate') }}" class="px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }}">
+                        Graduate
+                    </a>
                     
                     <!-- About Dropdown -->
                     <div class="relative nav-dropdown-parent">
@@ -382,6 +385,7 @@
         <div id="mobile-menu" class="hidden md:hidden border-t-2 border-gray-100 bg-white/95 backdrop-blur-md">
             <div class="px-2 pt-2 pb-4 space-y-1">
                 <a href="{{ route('home') }}" class="block px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('home') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }}">Home</a>
+                <a href="{{ route('graduate') }}" class="block px-4 py-3 rounded-lg text-base font-bold transition-all duration-200 {{ request()->routeIs('graduate') ? 'text-green-600 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 shadow-md' : 'text-gray-700 hover:text-green-600 hover:bg-green-50' }}">Graduate Community</a>
                 
                 <!-- Mobile About Dropdown -->
                 <div class="mobile-dropdown">

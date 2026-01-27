@@ -108,7 +108,11 @@
     @if($slides->count() > 0)
     <div class="absolute bottom-6 sm:bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center space-x-2 sm:space-x-3 px-4 py-2.5 bg-black/50 backdrop-blur-md rounded-full pointer-events-auto shadow-2xl" style="z-index: 50 !important;">
         @foreach($slides as $index => $slide)
-        <button class="carousel-indicator w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-full bg-white transition-all duration-300 border-2 border-white {{ $index === 0 ? 'opacity-100 scale-125 ring-2 ring-white/70' : 'opacity-70' }} hover:opacity-100 hover:scale-125 shadow-lg cursor-pointer" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}" title="Slide {{ $index + 1 }}" style="min-width: 16px; min-height: 16px; display: block !important; visibility: visible !important;"></button>
+        <button class="carousel-indicator transition-all duration-300 focus:outline-none {{ $index === 0 ? 'text-white scale-125 opacity-100' : 'text-white/60 hover:text-white/90 scale-100 opacity-80' }} shadow-sm cursor-pointer px-1" data-slide="{{ $index }}" aria-label="Go to slide {{ $index + 1 }}" title="Slide {{ $index + 1 }}">
+            <svg class="w-3 h-3 sm:w-4 sm:h-4 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+            </svg>
+        </button>
         @endforeach
     </div>
     @endif
@@ -1116,18 +1120,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Active indicator - fully visible and larger
                 indicator.style.opacity = '1';
                 indicator.style.transform = 'scale(1.25)';
-                indicator.style.borderColor = 'rgba(255, 255, 255, 1)';
-                indicator.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-                indicator.classList.add('ring-2', 'ring-white/70', 'active');
-                indicator.classList.remove('border-white/70');
+                indicator.classList.add('text-white');
+                indicator.classList.remove('text-white/60');
             } else {
                 // Inactive indicators - visible but dimmed
                 indicator.style.opacity = '0.7';
                 indicator.style.transform = 'scale(1)';
-                indicator.style.borderColor = 'rgba(255, 255, 255, 0.8)';
-                indicator.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                indicator.classList.remove('ring-2', 'ring-white/70', 'active');
+                indicator.classList.add('text-white/60');
+                indicator.classList.remove('text-white');
             }
+            // Ensure no background/border colors interfere with SVG icons
+            indicator.style.backgroundColor = 'transparent';
+            indicator.style.borderColor = 'transparent';
+            indicator.classList.remove('ring-2', 'ring-white/70', 'active', 'border-white/70');
         });
 
         currentSlide = index;
