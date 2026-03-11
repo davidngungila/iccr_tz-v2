@@ -8,7 +8,7 @@
 <section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
     <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/07.jpg') }}" alt="Contact Us" class="w-full h-full object-cover object-center">
+        {!! cloudinary_image('07.jpg', 'Contact Us', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
@@ -148,24 +148,29 @@
                 </div>
                 <div class="space-y-4">
                     <div class="p-4 bg-white rounded-lg border border-purple-100 hover:border-purple-300 transition">
-                        <h4 class="font-bold text-gray-900 mb-1">General Inquiries</h4>
-                        <p class="text-sm text-gray-600 mb-2">info@icccr.or.tz</p>
-                        <p class="text-xs text-gray-500">For general questions and information</p>
+                        <h4 class="font-bold text-gray-900 mb-1">Leadership & Training</h4>
+                        <p class="text-sm text-gray-600 mb-2">leadership@icccr.or.tz</p>
+                        <p class="text-xs text-gray-500">For leadership programs, training opportunities, and development</p>
                     </div>
                     <div class="p-4 bg-white rounded-lg border border-purple-100 hover:border-purple-300 transition">
                         <h4 class="font-bold text-gray-900 mb-1">Events & Registration</h4>
                         <p class="text-sm text-gray-600 mb-2">events@icccr.or.tz</p>
-                        <p class="text-xs text-gray-500">For event inquiries and registrations</p>
+                        <p class="text-xs text-gray-500">For event inquiries, registrations, and logistics</p>
                     </div>
                     <div class="p-4 bg-white rounded-lg border border-purple-100 hover:border-purple-300 transition">
                         <h4 class="font-bold text-gray-900 mb-1">Media & Communications</h4>
                         <p class="text-sm text-gray-600 mb-2">media@icccr.or.tz</p>
-                        <p class="text-xs text-gray-500">For media inquiries and press releases</p>
+                        <p class="text-xs text-gray-500">For media inquiries, partnerships, and press releases</p>
                     </div>
                     <div class="p-4 bg-white rounded-lg border border-purple-100 hover:border-purple-300 transition">
                         <h4 class="font-bold text-gray-900 mb-1">Campus Chapters</h4>
                         <p class="text-sm text-gray-600 mb-2">chapters@icccr.or.tz</p>
-                        <p class="text-xs text-gray-500">For campus chapter inquiries</p>
+                        <p class="text-xs text-gray-500">For campus chapter establishment and support</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg border border-purple-100 hover:border-purple-300 transition">
+                        <h4 class="font-bold text-gray-900 mb-1">Prayer & Spiritual Support</h4>
+                        <p class="text-sm text-gray-600 mb-2">prayer@icccr.or.tz</p>
+                        <p class="text-xs text-gray-500">For prayer requests and spiritual guidance</p>
                     </div>
                 </div>
             </div>

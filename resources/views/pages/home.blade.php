@@ -2,6 +2,33 @@
 
 @section('title', 'Home - ICCR Tanzania')
 @section('description', 'Inter-Colleges Catholic Charismatic Renewal Tanzania - Uniting Catholic students through the Holy Spirit')
+@section('keywords', 'ICCR Tanzania, Catholic Charismatic Renewal, Tanzania, Catholic students, spiritual growth, prayer, worship, campus ministry, leadership, events')
+
+<!-- Structured Data for SEO -->
+@php
+$structuredData = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Organization',
+    'name' => 'ICCR Tanzania - Inter-Colleges Catholic Charismatic Renewal',
+    'url' => url('/'),
+    'logo' => asset('images/logo.png'),
+    'description' => 'Uniting Catholic students across Tanzania through the Charismatic Renewal movement, fostering spiritual growth, genuine love, and evangelizing leadership.',
+    'address' => [
+        '@type' => 'PostalAddress',
+        'addressCountry' => 'Tanzania',
+        'addressLocality' => 'Dar es Salaam'
+    ],
+    'contactPoint' => [
+        '@type' => 'ContactPoint',
+        'telephone' => '+255 123 456 789',
+        'contactType' => 'Customer Service',
+        'availableLanguage' => 'English'
+    ],
+    'sameAs' => [
+        // Add social media URLs when available
+    ]
+];
+@endphp
 
 @section('content')
 <!-- Hero Carousel Section -->
@@ -964,6 +991,11 @@
 </section>
 
 @push('scripts')
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json">
+{!! json_encode($structuredData) !!}
+</script>
+
 <style>
     /* Sponsors Moving Animation */
     .sponsors-track {
@@ -1073,8 +1105,31 @@
     .carousel-indicator {
         display: block !important;
         visibility: visible !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 2px solid rgba(255, 255, 255, 0.5) !important;
+        border-radius: 50% !important;
+        padding: 2px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .carousel-indicator:hover {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border-color: rgba(255, 255, 255, 0.8) !important;
+        transform: scale(1.1) !important;
+    }
+    
+    .carousel-indicator.active {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-color: white !important;
+        transform: scale(1.3) !important;
+    }
+    
+    .carousel-indicator svg {
+        width: 8px !important;
+        height: 8px !important;
+        fill: white !important;
     }
 </style>
 <script>
@@ -1108,31 +1163,45 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Update indicators - ensure all dots are visible
+        // Update indicators - ensure all dots are visible and styled properly
         indicators.forEach((indicator, i) => {
-            // Ensure indicator is visible
+            // Remove all existing classes and add base carousel-indicator class
+            indicator.className = 'carousel-indicator transition-all duration-300 focus:outline-none cursor-pointer';
+            
+            // Ensure indicator is visible with proper styling
             indicator.style.display = 'block';
             indicator.style.visibility = 'visible';
-            indicator.style.minWidth = '16px';
-            indicator.style.minHeight = '16px';
+            indicator.style.minWidth = '20px';
+            indicator.style.minHeight = '20px';
+            indicator.style.background = 'rgba(255, 255, 255, 0.3)';
+            indicator.style.border = '2px solid rgba(255, 255, 255, 0.5)';
+            indicator.style.borderRadius = '50%';
+            indicator.style.padding = '2px';
+            indicator.style.opacity = '0.7';
+            indicator.style.transform = 'scale(1)';
+            
+            // Update SVG styling
+            const svg = indicator.querySelector('svg');
+            if (svg) {
+                svg.style.width = '8px';
+                svg.style.height = '8px';
+                svg.style.fill = 'white';
+            }
             
             if (i === index) {
                 // Active indicator - fully visible and larger
+                indicator.classList.add('active');
                 indicator.style.opacity = '1';
-                indicator.style.transform = 'scale(1.25)';
-                indicator.classList.add('text-white');
-                indicator.classList.remove('text-white/60');
+                indicator.style.transform = 'scale(1.3)';
+                indicator.style.background = 'rgba(255, 255, 255, 0.8)';
+                indicator.style.borderColor = 'white';
             } else {
                 // Inactive indicators - visible but dimmed
                 indicator.style.opacity = '0.7';
                 indicator.style.transform = 'scale(1)';
-                indicator.classList.add('text-white/60');
-                indicator.classList.remove('text-white');
+                indicator.style.background = 'rgba(255, 255, 255, 0.3)';
+                indicator.style.borderColor = 'rgba(255, 255, 255, 0.5)';
             }
-            // Ensure no background/border colors interfere with SVG icons
-            indicator.style.backgroundColor = 'transparent';
-            indicator.style.borderColor = 'transparent';
-            indicator.classList.remove('ring-2', 'ring-white/70', 'active', 'border-white/70');
         });
 
         currentSlide = index;
@@ -1194,6 +1263,23 @@ document.addEventListener('DOMContentLoaded', function() {
             showSlide(index);
             stopAutoSlide();
             startAutoSlide();
+        });
+        
+        // Add hover effects
+        indicator.addEventListener('mouseenter', () => {
+            if (!indicator.classList.contains('active')) {
+                indicator.style.background = 'rgba(255, 255, 255, 0.5)';
+                indicator.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+                indicator.style.transform = 'scale(1.1)';
+            }
+        });
+        
+        indicator.addEventListener('mouseleave', () => {
+            if (!indicator.classList.contains('active')) {
+                indicator.style.background = 'rgba(255, 255, 255, 0.3)';
+                indicator.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                indicator.style.transform = 'scale(1)';
+            }
         });
     });
 

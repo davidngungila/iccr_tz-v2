@@ -508,10 +508,10 @@
                 </div>
             @else
                 <!-- NORMAL ADMIN SIDEBAR -->
-            <!-- 1️⃣ Dashboard -->
+            <!-- 1️⃣ Website Overview -->
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-green-600 hover:to-blue-600 hover:text-white transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-green-600 to-blue-600 text-white shadow-lg' : '' }}">
                 <span class="text-xl">🧭</span>
-                <span class="font-medium">Dashboard</span>
+                <span class="font-medium">Website Overview</span>
             </a>
             
             <!-- 3️⃣ Homepage -->
@@ -804,7 +804,7 @@
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                     </svg>
-                                    <span>Dashboard</span>
+                                    <span>Website Overview</span>
                                 </a>
                                 <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 hover:text-green-600 transition">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

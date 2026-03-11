@@ -1,53 +1,68 @@
 @extends('layouts.app')
 
-@section('title', 'Media - ICCR Tanzania')
-@section('description', 'Photo gallery, videos, testimonials, newsletters, and media resources from ICCR Tanzania events and activities')
+@section('title', 'Media Gallery - ICCR Tanzania')
+@section('description', 'Explore our media gallery featuring photos and videos from ICCR Tanzania events, ministries, and activities across campuses')
+@section('keywords', 'ICCR Tanzania media, photos, videos, gallery, events, ministries, campus activities, Catholic charismatic renewal')
 
 @section('content')
 <!-- Hero Section - Advanced -->
-<section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
-    <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/09.jpg') }}" alt="ICCR Tanzania Media" class="w-full h-full object-cover object-center">
+<section class="relative min-h-[60vh] h-[60vh] max-h-[700px] overflow-hidden">
+    <div class="relative h-full bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        {!! cloudinary_image('hero-media.jpg', 'ICCR Tanzania Media Gallery', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-6">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
-                    <span>Media & Resources</span>
+                    <span>Media Gallery</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-2xl leading-tight">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">Media Center</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 drop-shadow-2xl leading-tight">
+                    Visual <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">Stories</span>
                 </h1>
-                <p class="text-sm sm:text-base md:text-lg text-green-100 mb-6 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
-                    Explore our photo galleries, video library, testimonials, and media resources
+                <p class="text-xl sm:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+                    Experience the vibrant life of ICCR Tanzania through our collection of photos and videos from events, ministries, and campus activities
                 </p>
             </div>
         </div>
     </div>
     <!-- Decorative Wave -->
     <div class="absolute bottom-0 left-0 right-0">
-        <svg class="w-full h-12 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <svg class="w-full h-16 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z"></path>
         </svg>
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="py-12 bg-gradient-to-br from-gray-50 via-white to-green-50 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-64 h-64 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-    <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-    
+<!-- Media Statistics Section -->
+<section class="py-16 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="text-center p-6 bg-white rounded-xl shadow-md border-2 border-gray-100 hover:shadow-lg transition">
-                <div class="text-3xl md:text-4xl font-bold text-green-600 mb-2">500+</div>
-                <div class="text-sm md:text-base text-gray-600 font-medium">Photos</div>
+            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">5000+</div>
+                <div class="text-sm md:text-base text-blue-100 font-medium">Photos</div>
+                <div class="text-xs text-blue-200 mt-1">Events & Activities</div>
             </div>
-            <div class="text-center p-6 bg-white rounded-xl shadow-md border-2 border-gray-100 hover:shadow-lg transition">
-                <div class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">50+</div>
-                <div class="text-sm md:text-base text-gray-600 font-medium">Videos</div>
+            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">200+</div>
+                <div class="text-sm md:text-base text-blue-100 font-medium">Videos</div>
+                <div class="text-xs text-blue-200 mt-1">Worship & Teachings</div>
+            </div>
+            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">50+</div>
+                <div class="text-sm md:text-base text-blue-100 font-medium">Events Covered</div>
+                <div class="text-xs text-blue-200 mt-1">This Year</div>
+            </div>
+            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">25+</div>
+                <div class="text-sm md:text-base text-blue-100 font-medium">Campus Chapters</div>
+                <div class="text-xs text-blue-200 mt-1">Featured</div>
+            </div>
+        </div>
+    </div>
+</section>
         </div>
             <div class="text-center p-6 bg-white rounded-xl shadow-md border-2 border-gray-100 hover:shadow-lg transition">
                 <div class="text-3xl md:text-4xl font-bold text-green-600 mb-2">100+</div>
@@ -118,12 +133,25 @@
                     ['category' => 'retreats', 'title' => 'Spiritual Camp', 'date' => 'April 2024'],
                     ['category' => 'events', 'title' => 'Evangelization Event', 'date' => 'March 2024'],
                 ];
+                $photoImages = [
+                    'v1769248781/03_bcnodq',
+                    'v1769248781/02_ktgnj1', 
+                    'v1769248781/03_bcnodq',
+                    'v1769248784/04_zaxbya',
+                    'v1769248782/05_rzjpac',
+                    'v1769248781/06_pjvhpm',
+                    'v1769248783/08_hkg76y',
+                    'v1769248783/08_hkg76y',
+                    'v1769248783/09_tmuarx',
+                    'v1769248784/10_nkfum5',
+                    'v1769248788/11_siu1wx'
+                ];
             @endphp
             
             @foreach($photos as $index => $photo)
             <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-category="{{ $photo['category'] }}">
                 <div class="aspect-square bg-gradient-to-br from-green-500 via-blue-500 to-green-600">
-                    <img src="{{ asset('images/' . sprintf('%02d.jpg', (($index % 11) + 1))) }}" alt="{{ $photo['title'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <img src="https://res.cloudinary.com/dpyppzvzj/image/upload/w_400,h_400,c_fill,g_auto,q_auto:good,f_auto/{{ $photoImages[$index % 11] }}.jpg" alt="{{ $photo['title'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div class="absolute bottom-0 left-0 right-0 p-4 text-white">

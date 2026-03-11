@@ -1,33 +1,39 @@
 @extends('layouts.app')
 
 @section('title', 'FAQ - ICCR Tanzania')
-@section('description', 'Frequently asked questions about ICCR Tanzania - Membership, events, and participation')
+@section('description', 'Frequently asked questions about ICCR Tanzania - Find answers about our ministries, events, membership, and activities')
+@section('keywords', 'ICCR Tanzania FAQ, frequently asked questions, Catholic charismatic renewal, Tanzania, campus ministry, how to join')
 
 @section('content')
 <!-- Hero Section - Advanced -->
-<section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
-    <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/11.jpg') }}" alt="ICCR FAQ" class="w-full h-full object-cover object-center">
+<section class="relative min-h-[60vh] h-[60vh] max-h-[700px] overflow-hidden">
+    <div class="relative h-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        {!! cloudinary_image('hero-faq.jpg', 'ICCR Tanzania FAQ', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-6">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    <span>Frequently Asked Questions</span>
+                    <span>Help Center</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-2xl leading-tight">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">FAQ</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 drop-shadow-2xl leading-tight">
+                    Frequently Asked <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">Questions</span>
                 </h1>
-                <p class="text-sm sm:text-base md:text-lg text-blue-100 mb-6 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
-                    Find Answers to Your Questions
+                <p class="text-xl sm:text-2xl text-purple-100 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+                    Find answers to common questions about ICCR Tanzania, our ministries, and how to get involved
                 </p>
             </div>
         </div>
     </div>
     <!-- Decorative Wave -->
     <div class="absolute bottom-0 left-0 right-0">
+        <svg class="w-full h-16 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z"></path>
+        </svg>
+    </div>
+</section>
         <svg class="w-full h-12 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z"></path>
         </svg>

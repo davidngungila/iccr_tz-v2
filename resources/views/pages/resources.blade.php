@@ -1,33 +1,39 @@
 @extends('layouts.app')
 
 @section('title', 'Resources - ICCR Tanzania')
-@section('description', 'Downloadable guides, manuals, and resources from ICCR Tanzania including constitution, prayer guides, and leadership materials')
+@section('description', 'Download resources, guides, and materials from ICCR Tanzania - Prayer guides, ministry resources, leadership materials')
+@section('keywords', 'ICCR Tanzania resources, downloads, guides, prayer, ministry materials, leadership, Catholic formation')
 
 @section('content')
 <!-- Hero Section - Advanced -->
-<section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
-    <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/06.jpg') }}" alt="ICCR Resources" class="w-full h-full object-cover object-center">
+<section class="relative min-h-[60vh] h-[60vh] max-h-[700px] overflow-hidden">
+    <div class="relative h-full bg-gradient-to-br from-teal-600 via-blue-600 to-indigo-700">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        {!! cloudinary_image('hero-resources.jpg', 'ICCR Tanzania Resources', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-6">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
-                    <span>Resources & Materials</span>
+                    <span>Resource Library</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-2xl leading-tight">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">Resources</span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 drop-shadow-2xl leading-tight">
+                    Download <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-green-300">Resources</span>
                 </h1>
-                <p class="text-sm sm:text-base md:text-lg text-blue-100 mb-6 leading-relaxed max-w-3xl mx-auto drop-shadow-md">
-                    Tools and Materials for Your Spiritual Journey
+                <p class="text-xl sm:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+                    Access prayer guides, ministry materials, leadership resources, and formation documents
                 </p>
             </div>
         </div>
     </div>
     <!-- Decorative Wave -->
     <div class="absolute bottom-0 left-0 right-0">
+        <svg class="w-full h-16 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z"></path>
+        </svg>
+    </div>
+</section>
         <svg class="w-full h-12 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z"></path>
         </svg>

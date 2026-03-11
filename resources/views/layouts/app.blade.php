@@ -7,6 +7,43 @@
 
     <title>@yield('title', 'ICCR Tanzania - Inter-Colleges Catholic Charismatic Renewal')</title>
     <meta name="description" content="@yield('description', 'ICCR Tanzania - Uniting Catholic students in colleges and higher education institutions through the Charismatic Renewal movement.')">
+    
+    <!-- Enhanced SEO Meta Tags -->
+    <meta name="keywords" content="@yield('keywords', 'ICCR Tanzania, Catholic Charismatic Renewal, Tanzania, Catholic students, colleges, universities, spiritual growth, prayer, worship, leadership, campus ministry')">
+    <meta name="author" content="ICCR Tanzania">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="@yield('og-type', 'website')">
+    <meta property="og:title" content="@yield('title', 'ICCR Tanzania - Inter-Colleges Catholic Charismatic Renewal')">
+    <meta property="og:description" content="@yield('description', 'ICCR Tanzania - Uniting Catholic students in colleges and higher education institutions through the Charismatic Renewal movement.')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="ICCR Tanzania">
+    <meta property="og:image" content="@yield('og-image', asset('images/og-default.jpg'))">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="@yield('og-image-alt', 'ICCR Tanzania - Catholic Charismatic Renewal')">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'ICCR Tanzania - Inter-Colleges Catholic Charismatic Renewal')">
+    <meta name="twitter:description" content="@yield('description', 'ICCR Tanzania - Uniting Catholic students in colleges and higher education institutions through the Charismatic Renewal movement.')">
+    <meta name="twitter:image" content="@yield('og-image', asset('images/og-default.jpg'))">
+    <meta name="twitter:image:alt" content="@yield('og-image-alt', 'ICCR Tanzania - Catholic Charismatic Renewal')">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#10b981">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="application-name" content="ICCR Tanzania">
+    <meta name="apple-mobile-web-app-title" content="ICCR Tanzania">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Fonts - Mazzard (Primary) with Inter as fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -209,6 +246,16 @@
             }
         }
     </style>
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-95269HJMQW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-95269HJMQW');
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-900 antialiased">
     <!-- Top Header with Contact Info - Advanced -->
@@ -264,7 +311,7 @@
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
                         <div class="flex-shrink-0">
-                            <img src="{{ asset('images/logo.png') }}" alt="ICCR Tanzania Logo" class="h-16 w-auto group-hover:scale-110 transition-transform duration-300">
+                            {!! cloudinary_image('logo.png', 'ICCR Tanzania Logo', 'logo', 'h-16 w-auto group-hover:scale-110 transition-transform duration-300') !!}
                         </div>
                         <div class="hidden sm:block">
                             <span class="text-2xl font-bold text-gray-900 block group-hover:text-green-600 transition">ICCR Tanzania</span>
@@ -294,7 +341,7 @@
                             <div class="p-4">
                                 <a href="{{ route('about') }}" class="group flex items-start gap-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 transition-all duration-300 {{ request()->routeIs('about') ? 'bg-gradient-to-r from-green-50 to-blue-50' : '' }}">
                                     <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition">
-                                        <img src="{{ asset('images/03.jpg') }}" alt="About Us" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                        {!! cloudinary_image('03.jpg', 'About Us', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <h3 class="text-sm font-bold text-gray-900 group-hover:text-green-600 transition mb-1">About Us</h3>
@@ -304,7 +351,7 @@
                                 <div class="my-2 border-t border-gray-100"></div>
                                 <a href="{{ route('faq') }}" class="group flex items-start gap-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 transition-all duration-300 {{ request()->routeIs('faq') ? 'bg-gradient-to-r from-green-50 to-blue-50' : '' }}">
                                     <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition">
-                                        <img src="{{ asset('images/04.jpg') }}" alt="FAQ" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                        {!! cloudinary_image('04.jpg', 'FAQ', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <h3 class="text-sm font-bold text-gray-900 group-hover:text-green-600 transition mb-1">FAQ</h3>
@@ -328,28 +375,28 @@
                                 <div class="grid grid-cols-2 gap-3">
                                     <a href="{{ route('ministries') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('ministries') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
                                         <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/05.jpg') }}" alt="Ministries" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            {!! cloudinary_image('05.jpg', 'Ministries', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Ministries</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Explore our ministries</p>
                                     </a>
                                     <a href="{{ route('events') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('events') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
                                         <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/06.jpg') }}" alt="Events" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            {!! cloudinary_image('06.jpg', 'Events', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Events</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Join our gatherings</p>
                                     </a>
                                     <a href="{{ route('media') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('media') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
                                         <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/07.jpg') }}" alt="Media" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            {!! cloudinary_image('07.jpg', 'Media', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Media</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Photos & videos</p>
                                     </a>
                                     <a href="{{ route('resources') }}" class="group flex flex-col p-3 rounded-lg hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50 transition-all duration-300 border border-transparent hover:border-green-200 {{ request()->routeIs('resources') ? 'bg-gradient-to-br from-green-50 to-blue-50 border-green-200' : '' }}">
                                         <div class="w-full h-16 rounded-lg overflow-hidden shadow-md group-hover:shadow-lg transition mb-2">
-                                            <img src="{{ asset('images/08.jpg') }}" alt="Resources" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                            {!! cloudinary_image('08.jpg', 'Resources', 'thumbnail', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-300') !!}
                                         </div>
                                         <h3 class="text-xs font-bold text-gray-900 group-hover:text-green-600 transition mb-1">Resources</h3>
                                         <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">Download materials</p>

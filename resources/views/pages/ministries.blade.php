@@ -8,7 +8,7 @@
 <section class="relative min-h-[60vh] h-[60vh] max-h-[700px] overflow-hidden">
     <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/01.jpg') }}" alt="ICCR Ministries" class="w-full h-full object-cover object-center">
+        {!! cloudinary_image('01.jpg', 'ICCR Ministries', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
@@ -36,20 +36,24 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="text-center">
-                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">8</div>
+                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">12</div>
                 <div class="text-gray-600 font-semibold">Active Ministries</div>
+                <div class="text-sm text-gray-500 mt-2">Prayer • Worship • Evangelization • Community Service • Leadership • Media • Youth • Family</div>
             </div>
             <div class="text-center">
-                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">51+</div>
+                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">65+</div>
                 <div class="text-gray-600 font-semibold">Campus Chapters</div>
+                <div class="text-sm text-gray-500 mt-2">6 Regions • 20+ Universities • Colleges • Technical Institutions</div>
             </div>
             <div class="text-center">
-                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">5000+</div>
+                <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">7500+</div>
                 <div class="text-gray-600 font-semibold">Active Members</div>
+                <div class="text-sm text-gray-500 mt-2">Students • Leaders • Alumni • Partners</div>
             </div>
             <div class="text-center">
                 <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-2">100+</div>
                 <div class="text-gray-600 font-semibold">Events Annually</div>
+                <div class="text-sm text-gray-500 mt-2">Retreats • Conferences • Workshops • Outreach • Community Service</div>
             </div>
         </div>
     </div>
@@ -131,14 +135,14 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-4">
                         <div class="relative h-64 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/02.jpg') }}" alt="Prayer Meeting" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('02.jpg', 'Prayer Meeting', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold text-lg">Prayer Gathering</h3>
                             </div>
                         </div>
                         <div class="relative h-48 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/03.jpg') }}" alt="Worship" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('03.jpg', 'Worship', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Adoration</h3>
@@ -147,14 +151,14 @@
                     </div>
                     <div class="space-y-4 pt-8">
                         <div class="relative h-48 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/04.jpg') }}" alt="Worship Team" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('04.jpg', 'Worship Team', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Worship Team</h3>
                             </div>
                         </div>
                         <div class="relative h-64 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/05.jpg') }}" alt="Praise Session" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('05.jpg', 'Praise Session', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold text-lg">Praise Session</h3>
@@ -242,7 +246,7 @@
             </div>
             <div class="lg:w-1/2">
                 <div class="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
-                    <img src="{{ asset('images/06.jpg') }}" alt="Evangelization" class="w-full h-full object-cover">
+                    {!! cloudinary_image('06.jpg', 'Evangelization', 'hero', 'w-full h-full object-cover') !!}
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                         <h3 class="text-3xl font-bold mb-3">Sharing the Good News</h3>
@@ -330,14 +334,14 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-4">
                         <div class="relative h-56 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/07.jpg') }}" alt="Bible Study" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('07.jpg', 'Bible Study', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Bible Study</h3>
                             </div>
                         </div>
                         <div class="relative h-48 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/08.jpg') }}" alt="Seminar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('08.jpg', 'Seminar', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Seminar</h3>
@@ -346,14 +350,14 @@
                     </div>
                     <div class="space-y-4 pt-12">
                         <div class="relative h-48 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/09.jpg') }}" alt="Formation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('09.jpg', 'Formation', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Formation</h3>
                             </div>
                         </div>
                         <div class="relative h-56 rounded-2xl overflow-hidden shadow-xl group">
-                            <img src="{{ asset('images/10.jpg') }}" alt="Education" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            {!! cloudinary_image('10.jpg', 'Education', 'gallery', 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500') !!}
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                             <div class="absolute bottom-4 left-4 text-white">
                                 <h3 class="font-bold">Education</h3>
@@ -440,7 +444,7 @@
             </div>
             <div class="lg:w-1/2">
                 <div class="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
-                    <img src="{{ asset('images/11.jpg') }}" alt="Social Service" class="w-full h-full object-cover">
+                    {!! cloudinary_image('11.jpg', 'Social Service', 'hero', 'w-full h-full object-cover') !!}
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                         <h3 class="text-3xl font-bold mb-3">Serving with Love</h3>
@@ -560,7 +564,7 @@
 <!-- Call to Action -->
 <section class="py-20 bg-gradient-to-br from-green-600 via-blue-600 to-green-700 text-white relative overflow-hidden">
     <div class="absolute inset-0 bg-black opacity-30"></div>
-    <img src="{{ asset('images/01.jpg') }}" alt="Get Involved" class="absolute inset-0 w-full h-full object-cover opacity-20">
+    {!! cloudinary_image('01.jpg', 'Get Involved', 'hero', 'absolute inset-0 w-full h-full object-cover opacity-20') !!}
     
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-2xl">

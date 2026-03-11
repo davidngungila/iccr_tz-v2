@@ -8,7 +8,7 @@
 <section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
     <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/09.jpg') }}" alt="ICCR Events" class="w-full h-full object-cover object-center">
+        {!! cloudinary_image('09.jpg', 'ICCR Events', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
@@ -40,20 +40,24 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
-                <div class="text-4xl md:text-5xl font-bold text-white mb-2">50+</div>
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">75+</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Events This Year</div>
+                <div class="text-xs text-green-200 mt-1">Retreats • Conferences • Workshops</div>
             </div>
             <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
-                <div class="text-4xl md:text-5xl font-bold text-white mb-2">2000+</div>
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">5000+</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Participants</div>
+                <div class="text-xs text-green-200 mt-1">Students • Leaders • Alumni • Community</div>
             </div>
             <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
                 <div class="text-4xl md:text-5xl font-bold text-white mb-2">15+</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Campus Chapters</div>
+                <div class="text-xs text-green-200 mt-1">Active Participation</div>
             </div>
-                <div class="test-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
+            <div class="text-center p-6 bg-white/10 backdrop-blur-md rounded-xl border-2 border-white/20">
                 <div class="text-4xl md:text-5xl font-bold text-white mb-2">12</div>
                 <div class="text-sm md:text-base text-green-100 font-medium">Regions Covered</div>
+                <div class="text-xs text-green-200 mt-1">Nationwide Reach</div>
             </div>
         </div>
     </div>

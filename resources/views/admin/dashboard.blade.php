@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('title', 'Dashboard')
-@section('subtitle', 'Website Overview & Quick Actions')
+@section('title', 'Website Overview')
+@section('subtitle', 'Quick Actions & System Status')
 
 @section('content')
 <!-- Welcome Banner with Time -->

@@ -8,7 +8,7 @@
 <section class="relative min-h-[50vh] h-[50vh] max-h-[600px] overflow-hidden">
     <div class="relative h-full bg-gradient-to-br from-green-600 via-blue-600 to-green-700">
         <div class="absolute inset-0 bg-black opacity-50"></div>
-        <img src="{{ asset('images/11.jpg') }}" alt="ICCR Tanzania Community" class="w-full h-full object-cover object-center">
+        {!! cloudinary_image('11.jpg', 'ICCR Tanzania Community', 'hero', 'w-full h-full object-cover object-center') !!}
         <div class="absolute inset-0 flex items-center justify-center py-8">
             <div class="text-center text-white px-4 sm:px-6 lg:px-8 z-10 max-w-5xl w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-4">
